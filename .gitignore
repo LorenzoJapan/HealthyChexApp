@@ -1,0 +1,19 @@
+# HealthyChex is a single self-contained HTML file — there is no build step
+# and no node_modules. This ignore list only covers OS/editor cruft and the
+# optional Node deps if you ever run the validation harness locally.
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node (only if you install anything to run validation/ locally)
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Local env / secrets (none needed today, kept for safety)
+.env
+*.local
