@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- HealthyChex v4.1 — July 2026 · UI redesign (Clinical Calm design system); recommendation engine unchanged: logic v4.0 -->
+<!-- HealthyChex v4.1.1 — Sep 2026 · CRC aligned to ACS 2026 update (Wolf et al., CA Cancer J Clin 2026;e70083) + new >85 'discourage' card (crcstop); engine logic v4.0, RULES 2026-09-13, 58 recommendation types · Pro Max frame (440x956 cap, fluid below); intake split into one-screen steps with a review-and-edit step · Design review items 1,2,5,6,10: type scale raised to iOS HIG and expressed in rem (Dynamic Type), real labels + autocomplete + numeric keyboard, visible unanswered state with aria-live hint, profile name in brand strip, persistent disclaimer on the results view -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -69,7 +69,69 @@
 .ti-virus{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M7 12a5 5 0 1 0 10 0a5 5 0 1 0 -10 0%22 /%3E %3Cpath d=%22M12 7v-4%22 /%3E %3Cpath d=%22M11 3h2%22 /%3E %3Cpath d=%22M15.536 8.464l2.828 -2.828%22 /%3E %3Cpath d=%22M17.657 4.929l1.414 1.414%22 /%3E %3Cpath d=%22M17 12h4%22 /%3E %3Cpath d=%22M21 11v2%22 /%3E %3Cpath d=%22M15.535 15.536l2.829 2.828%22 /%3E %3Cpath d=%22M19.071 17.657l-1.414 1.414%22 /%3E %3Cpath d=%22M12 17v4%22 /%3E %3Cpath d=%22M13 21h-2%22 /%3E %3Cpath d=%22M8.465 15.536l-2.829 2.828%22 /%3E %3Cpath d=%22M6.343 19.071l-1.413 -1.414%22 /%3E %3Cpath d=%22M7 12h-4%22 /%3E %3Cpath d=%22M3 13v-2%22 /%3E %3Cpath d=%22M8.464 8.464l-2.828 -2.828%22 /%3E %3Cpath d=%22M4.929 6.343l1.414 -1.413%22 /%3E%3C/svg%3E")}
 .ti-wifi{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M12 18l.01 0%22 /%3E %3Cpath d=%22M9.172 15.172a4 4 0 0 1 5.656 0%22 /%3E %3Cpath d=%22M6.343 12.343a8 8 0 0 1 11.314 0%22 /%3E %3Cpath d=%22M3.515 9.515c4.686 -4.687 12.284 -4.687 17 0%22 /%3E%3C/svg%3E")}
 .ti-x{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M18 6l-12 12%22 /%3E %3Cpath d=%22M6 6l12 12%22 /%3E%3C/svg%3E")}
-.ti-x-circle{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0%22 /%3E %3Cpath d=%22M10 10l4 4m0 -4l-4 4%22 /%3E%3C/svg%3E")}</style>
+.ti-x-circle{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0%22 /%3E %3Cpath d=%22M10 10l4 4m0 -4l-4 4%22 /%3E%3C/svg%3E")}/* ── Stepped intake (v4.1.1) ── Additive: no existing selector, class or ID is
+   modified. Each original section is moved into a .fstep wrapper at init; the
+   sections themselves are untouched, so every existing handler still binds. */
+.fstep{display:none}
+.fstep.on{display:block;animation:viewIn .26s var(--ease-out)}
+.fnav{display:flex;gap:9px;align-items:center;margin:14px 0 4px;position:sticky;bottom:0;z-index:25;padding:8px 0 6px;background:linear-gradient(to bottom,rgba(244,247,245,0) 0,var(--canvas) 12px,var(--canvas) 100%)}
+.fnavb{flex:1;min-height:var(--touch);padding:12px 14px;border-radius:var(--r-md);font-size:var(--f-callout);font-weight:600;font-family:inherit;cursor:pointer;border:1.5px solid var(--line-2);background:var(--paper);color:var(--ink-2);display:flex;align-items:center;justify-content:center;gap:6px;transition:var(--tap)}
+.fnavb:active{transform:scale(.98)}
+.fnavb[disabled]{opacity:.38;pointer-events:none}
+.fhint{display:none;font-size:var(--f-cap);color:var(--rust-fill);background:var(--rust-tint,#FDF1EC);border:1px solid rgba(153,60,29,.22);border-radius:var(--r-sm);padding:5px 9px;margin-top:6px;line-height:1.3}
+.fhint.on{display:block}
+/* Persistent, quiet disclaimer on the screen where recommendations are read. */
+.rtopdisc{font-size:var(--f-cap);line-height:1.4;color:#7A3417;background:#FDF1EC;border-bottom:1px solid rgba(153,60,29,.18);padding:50px 16px 8px}
+.rtopdisc+.rhero{padding-top:14px}
+.rtopdisc strong{font-weight:600}
+/* An unanswered control is marked in place, so the footer hint confirms rather than
+   sends the reader hunting. Cleared the moment the question is answered. */
+.unans{outline:1.5px dashed rgba(153,60,29,.45);outline-offset:3px;border-radius:var(--r-sm)}
+.fi.unans{outline-offset:1px}
+.fnavb.pri{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 3px 10px rgba(12,107,84,.24)}
+.fnavb.go{background:var(--teal);color:#fff;border-color:var(--teal);font-size:var(--f-body);box-shadow:0 4px 14px rgba(12,107,84,.28)}
+.ctaw.stepped{display:none}
+/* Entry-screen chrome (import, privacy notice, install banner) belongs on step 1;
+   past it, that 260px is given back to the questions so each step fits one screen. */
+#vf.fdeep .fintro{display:none!important}
+#vf:not(.frv) .foutro{display:none!important}
+/* Past the entry step the app title is redundant — the progress bar names the step —
+   so its 118px goes to the questions. .fb takes over clearing the Dynamic Island. */
+#vf.fdeep .hero{display:none}
+#vf.fdeep{padding-top:48px}
+/* slightly tighter option rows; min-height keeps the 44pt touch target intact */
+#fstep-2b .famopt{padding:6px 11px;margin-bottom:3px}
+#fstep-2b .slbl{margin-bottom:3px}
+#fstep-rv .slbl{display:none}
+#fstep-2b .rev{margin-top:2px!important}
+/* The step is now titled "Family cancer history", so the card's own heading repeats it;
+   the per-option descriptions stay — they are what separates the two Colorectal rows. */
+#fstep-2b .famq{display:none}
+#fstep-2b .bsubc{padding:8px 9px}
+#fstep-2b .famsub{display:none}
+#fstep-2b .pnote{margin-top:2px}
+.fstep{padding-bottom:2px}
+/* Let the form column fill the screen so the nav rests at the bottom on short steps
+   instead of floating directly under the last question. */
+#vf.active{display:flex;flex-direction:column;min-height:100%}
+.fb{display:flex;flex-direction:column;flex:1 0 auto}
+.fnav{margin-top:auto}
+/* Review screen — one compact block per section so every answer is visible at once */
+.rvw{padding-top:2px}
+.rvwh{font-size:var(--f-cap);color:var(--ink-3);margin-bottom:1px;line-height:1.2}
+.rvwg{display:block;width:100%;min-height:var(--touch);padding:3px 2px;border:none;border-bottom:0.5px solid var(--line);background:transparent;font-family:inherit;text-align:left;cursor:pointer;transition:var(--tap)}
+.rvwg:active{background:var(--mint-3)}
+.rvwg:last-child{border-bottom:none}
+.rvwgh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:1px}
+.rvws{display:block}
+.rvwgt{font-size:0.6875rem;font-weight:700;letter-spacing:.04em;line-height:1.2;text-transform:uppercase;color:var(--teal-ink)}
+.rvwe{color:var(--blue-ink);font-size:0.6875rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;gap:2px}
+.rvws{font-size:var(--f-cap);color:var(--ink);line-height:1.3}
+.rvws .sep{color:var(--line-2);padding:0 2px}
+.rvws b{font-weight:600}
+.rvws .miss{color:var(--rust-fill);font-weight:600}
+</style>
+</style>
 <style>
 /* ═══════════════════════════════════════════════════════════
    HealthyChex v4.1 design system — "Clinical Calm"
@@ -105,7 +167,7 @@
   /* Olive (low-risk tier) */
   --olive-fill:#3E6C15;
   /* Type scale (SF system stack) */
-  --f-display:22px; --f-title:17px; --f-body:15px; --f-callout:13px; --f-foot:12px; --f-cap:11px;
+  --f-display:1.375rem;  /* 22px @ default — HIG title2 */ --f-title:1.1875rem;   /* 19px — HIG title3-ish */ --f-body:1.0625rem;    /* 17px — HIG body */ --f-callout:1rem;      /* 16px — HIG callout */ --f-foot:0.8125rem;    /* 13px — HIG footnote */ --f-cap:0.75rem;       /* 12px — HIG caption1 */
   /* Radii */
   --r-lg:16px; --r-md:12px; --r-sm:10px; --r-pill:999px;
   /* Elevation */
@@ -125,18 +187,40 @@ button{touch-action:manipulation}
 ::placeholder{color:var(--ink-3);opacity:1}
 @keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+/* html and body share the rule above, so padding and min-height were applied twice: body
+   (min-height:100vh) started inside html's 20px padding, forcing a permanent 20px page
+   overflow behind the .screen scroller, and the 10px side padding was charged twice.
+   The page chrome belongs to body alone. */
+html{padding:0;min-height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* html is a flex container too, so body was a centered flex item sizing itself to its
+   content — the phone frame then changed width from step to step. Stretch pins body to
+   the viewport so the frame is identical on every screen. */
+body{align-self:stretch;width:auto}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* ── Demo chrome (bezel) ── */
-.brand{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:430px;margin-bottom:12px}
-.brand h1{color:#fff;font-size:14px;font-weight:600;letter-spacing:-.1px;display:flex;align-items:center;gap:7px}
-.brand h1 i{color:#7FD6BC;font-size:16px}
-.brand small{color:rgba(255,255,255,.55);font-size:11px;font-weight:500}
-.iphone{width:393px;background:var(--paper);border-radius:50px;overflow:hidden;position:relative;box-shadow:0 0 0 2px #39413E,0 0 0 6px #171D1B,0 0 0 8px #39413E,0 28px 80px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.12);flex-shrink:0}
+.brand{display:flex;align-items:center;justify-content:space-between;width:auto;align-self:stretch;max-width:440px;margin-bottom:12px}
+.brand h1{color:#fff;font-size:0.875rem;font-weight:600;letter-spacing:-.1px;display:flex;align-items:center;gap:7px}
+.brand h1 i{color:#7FD6BC;font-size:1rem}
+.brand small{color:rgba(255,255,255,.55);font-size:0.6875rem;font-weight:500}
+.iphone{width:auto;align-self:stretch;max-width:440px;background:var(--paper);border-radius:50px;overflow:hidden;position:relative;box-shadow:0 0 0 2px #39413E,0 0 0 6px #171D1B,0 0 0 8px #39413E,0 28px 80px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.12);flex-shrink:0}
 .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:126px;height:34px;background:#0E1613;border-radius:20px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
-.island .time{color:#fff;font-size:12px;font-weight:600;letter-spacing:-.2px}
-.island .icons{display:flex;align-items:center;gap:4px;color:#fff;font-size:10px}
-.screen{height:calc(100vh - 130px);max-height:852px;overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;background:var(--canvas)}
-.screen::-webkit-scrollbar{display:none}
+.island .time{color:#fff;font-size:0.75rem;font-weight:600;letter-spacing:-.2px}
+.island .icons{display:flex;align-items:center;gap:4px;color:#fff;font-size:0.625rem}
+.screen{height:calc(100vh - 113px);height:calc(100dvh - 113px);max-height:956px;overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;background:var(--canvas)}
+.screen{scrollbar-width:thin;scrollbar-color:rgba(26,36,33,.30) transparent}
+.screen::-webkit-scrollbar{width:6px}
+.screen::-webkit-scrollbar-track{background:transparent}
+.screen::-webkit-scrollbar-thumb{background:rgba(26,36,33,.30);border-radius:4px}
+.screen::-webkit-scrollbar-thumb:hover,.screen::-webkit-scrollbar-thumb:active{background:rgba(26,36,33,.50)}
+/* iOS hides overlay scrollbars until you scroll, so a tap-to-scroll cue appears
+   whenever there is more content below. 44pt target, hidden when fully scrolled. */
+.scue{position:absolute;right:12px;bottom:16px;z-index:60;width:var(--touch);height:var(--touch);border-radius:50%;
+  border:1px solid var(--line-2);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 3px 12px rgba(10,18,15,.20);color:var(--teal-ink);font-family:inherit;font-size:1.0625rem;font-weight:700;
+  cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;padding:0;transition:var(--tap)}
+.scue.on{display:flex;animation:viewIn .2s var(--ease-out)}
+.scue:active{transform:scale(.94)}
+@media print{.scue{display:none!important}}
 .hp{background:var(--canvas);padding:10px 0 20px;display:flex;justify-content:center}
 .hpill{width:134px;height:5px;background:rgba(26,36,33,.22);border-radius:3px}
 /* ── Header: iOS large-title on canvas ── */
@@ -153,7 +237,7 @@ button{touch-action:manipulation}
 .wbsub{font-size:var(--f-foot);color:var(--ink-3);margin-bottom:14px}
 .wbstats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .wbst{background:var(--mint-3);border:1px solid var(--mint-2);border-radius:var(--r-sm);padding:9px 10px;text-align:center}
-.wbstn{font-size:20px;font-weight:700;letter-spacing:-.3px;color:var(--teal-ink)}
+.wbstn{font-size:1.25rem;font-weight:700;letter-spacing:-.3px;color:var(--teal-ink)}
 .wbstl{font-size:var(--f-cap);font-weight:500;color:var(--ink-3);margin-top:1px}
 .wbht{font-size:var(--f-cap);font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
 .wbi{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
@@ -227,7 +311,7 @@ button{touch-action:manipulation}
 .instbar{display:none;align-items:flex-start;gap:8px;margin:0 14px 10px;padding:10px 12px;background:var(--blue-tint);border:1px solid var(--blue-line);border-radius:var(--r-sm);color:var(--blue-ink)}
 .instbar.on{display:flex;animation:viewIn .3s var(--ease-out)}
 .instbar-t{font-size:var(--f-cap);line-height:1.5;flex:1}
-.instbar-x{background:none;border:none;color:var(--blue-ink);font-size:17px;line-height:1;cursor:pointer;padding:2px 4px;min-height:28px;flex-shrink:0;opacity:.65}
+.instbar-x{background:none;border:none;color:var(--blue-ink);font-size:1.0625rem;line-height:1;cursor:pointer;padding:2px 4px;min-height:28px;flex-shrink:0;opacity:.65}
 .famq{font-size:var(--f-foot);font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px;margin-bottom:2px}
 .famsub{font-size:var(--f-cap);color:var(--ink-3);margin-bottom:8px}
 .famopt{display:flex;align-items:center;gap:9px;width:100%;min-height:var(--touch);text-align:left;padding:10px 11px;margin-bottom:6px;border:1.5px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper);font-family:inherit;cursor:pointer;transition:var(--tap)}
@@ -235,7 +319,7 @@ button{touch-action:manipulation}
 .famopt-x{flex:1;min-width:0}
 .famopt-t{display:block;font-size:var(--f-callout);font-weight:600;color:var(--ink);line-height:1.25}
 .famopt-d{display:block;font-size:var(--f-cap);color:var(--ink-3);line-height:1.4;margin-top:1px}
-.famopt-i{font-size:17px;color:var(--line-2);flex-shrink:0}
+.famopt-i{font-size:1.0625rem;color:var(--line-2);flex-shrink:0}
 .famopt.sel{background:var(--rust-tint);border-color:var(--rust-fill)}
 .famopt.sel .famopt-t{color:var(--rust-ink)}
 .famopt.sel .famopt-d{color:var(--rust-ink);opacity:.85}
@@ -261,7 +345,7 @@ button{touch-action:manipulation}
 .ast-hint{font-size:var(--f-cap);color:var(--ink-3);font-style:italic;margin-bottom:4px;display:flex;align-items:center;gap:3px;padding-left:10px}
 /* ── SMART on FHIR ── */
 .smart-btn{width:100%;min-height:var(--touch);padding:12px 14px;background:var(--blue-fill);color:#fff;border:none;border-radius:var(--r-md);font-size:var(--f-callout);font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:8px;position:relative;overflow:hidden;transition:var(--tap)}
-.smart-btn::after{content:'REQUIRES HOSTING';position:absolute;top:4px;right:8px;font-size:8px;opacity:.65;font-weight:500;letter-spacing:.04em}
+.smart-btn::after{content:'REQUIRES HOSTING';position:absolute;top:4px;right:8px;font-size:0.625rem;opacity:.65;font-weight:500;letter-spacing:.04em}
 .smart-btn:hover{background:#1747B8}
 .smart-btn:active{transform:scale(.98)}
 .smart-badge{display:inline-flex;align-items:center;gap:3px;background:var(--blue-tint);color:var(--blue-ink);font-size:var(--f-cap);font-weight:600;padding:3px 9px;border-radius:var(--r-pill);margin-bottom:6px}
@@ -307,7 +391,7 @@ button{touch-action:manipulation}
 .fhir-rc.warn{background:var(--amber-tint);color:var(--amber-ink)}
 .fhir-rc.miss{background:#fff;color:var(--slate-ink)}
 .smart-file-zone p{font-size:var(--f-foot);color:var(--blue-ink);margin-top:4px}
-.smart-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.85);font-size:20px;padding:4px 8px;float:right;margin-top:-4px}
+.smart-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.85);font-size:1.25rem;padding:4px 8px;float:right;margin-top:-4px}
 /* ── Varicella acknowledgement ── */
 .vzv-ack{display:none;margin-top:6px;background:var(--amber-tint);border:1.5px solid var(--amber-line);border-radius:var(--r-sm);padding:10px 12px}
 .vzv-ack.on{display:block;animation:viewIn .25s var(--ease-out)}
@@ -332,7 +416,7 @@ button{touch-action:manipulation}
 .pop-sti{background:var(--paper);border:1.5px solid #F3C4D8}
 .pop-vax{background:var(--paper);border:1.5px solid var(--mint-2)}
 .ptitle{font-size:var(--f-foot);font-weight:600;color:var(--ink-2);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
-.pcls{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:16px;padding:4px 6px}
+.pcls{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:1rem;padding:4px 6px}
 .plist{list-style:none;padding:0;margin:0}
 .plist li{font-size:var(--f-foot);color:var(--ink-3);padding:6px 0;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:7px;line-height:1.5}
 .plist li:last-child{border-bottom:none;padding-bottom:0}
@@ -395,7 +479,7 @@ button{touch-action:manipulation}
 /* evidence-grade badge (body + signed-off grade) */
 .gbadge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 4px;border-radius:var(--r-pill);font-family:inherit;font-size:var(--f-cap);font-weight:600;cursor:pointer;border:1px solid transparent;flex-shrink:0;transition:var(--tap);line-height:1.3}
 .gbadge:active{transform:scale(.95)}
-.gbadge .gb-sys{padding:1px 6px;border-radius:var(--r-pill);font-weight:700;letter-spacing:.01em;font-size:10px}
+.gbadge .gb-sys{padding:1px 6px;border-radius:var(--r-pill);font-weight:700;letter-spacing:.01em;font-size:0.625rem}
 .gbadge .gb-grade{font-weight:600;font-family:Georgia,'Times New Roman',serif;letter-spacing:.01em}
 .gbadge i{opacity:.55}
 .gb-a{background:var(--mint);color:var(--teal-ink);border-color:var(--mint-2)}.gb-a .gb-sys{background:var(--teal);color:#fff}
@@ -407,7 +491,7 @@ button{touch-action:manipulation}
 .gpop.on{display:block;animation:viewIn .22s var(--ease-out)}
 .gpop-h{display:flex;align-items:flex-start;gap:8px;padding:10px 12px 8px;background:var(--mint-3);border-bottom:1px solid var(--line)}
 .gpop-body{flex:1;font-size:var(--f-foot);font-weight:600;color:var(--ink);line-height:1.4}
-.gpop-x{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:18px;line-height:1;padding:0 2px;flex-shrink:0}
+.gpop-x{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:1.125rem;line-height:1;padding:0 2px;flex-shrink:0}
 .gpop-grade{display:inline-block;margin:9px 12px 0;padding:3px 10px;border-radius:var(--r-pill);font-size:var(--f-cap);font-weight:700}
 .gpop-grade .gv{font-family:Georgia,'Times New Roman',serif;letter-spacing:.01em}
 .gpop-note{padding:7px 12px 11px;font-size:var(--f-foot);color:var(--ink-2);line-height:1.55}
@@ -446,7 +530,7 @@ button{touch-action:manipulation}
 .dl{font-size:var(--f-cap);font-weight:500;color:var(--ink-3);white-space:nowrap;min-width:76px;flex-shrink:0}
 input[type=date]{flex:1;min-height:40px;padding:8px 10px;border:1.5px solid var(--line-2);border-radius:var(--r-sm);font-size:var(--f-foot);font-family:inherit;background:var(--paper);color:var(--ink);outline:none;cursor:pointer;transition:border-color .16s ease}
 input[type=date]:focus{border-color:var(--teal)}
-input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;font-size:12px}
+input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;font-size:0.75rem}
 .ndb{display:inline-flex;align-items:center;gap:4px;font-size:var(--f-cap);padding:3px 10px;border-radius:var(--r-pill);font-weight:600;margin-top:6px}
 .ndb.fut{background:var(--blue-tint);color:var(--blue-ink)}
 .ndb.ds2{background:var(--amber-tint);color:var(--amber-ink)}
@@ -552,7 +636,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 
 <div class="brand">
   <h1><i class="ti ti-heart-rate-monitor"></i> HealthyChex</h1>
-  <small>iPhone 17 preview &nbsp;·&nbsp; data saved in browser</small>
+  <small id="brandsub">Saved on this device</small>
 </div>
 
 <!-- DISCLAIMER / CONSENT MODAL -->
@@ -776,14 +860,14 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
         </div>
         <div class="slbl" data-sec="1"><i class="ti ti-user" style="font-size:11px"></i>About you</div>
         <div class="row">
-          <div class="blk"><span class="bl">First name</span><input class="fi" type="text" id="fn" placeholder="First name" oninput="mi(this)"></div>
-          <div class="blk"><span class="bl">Last name</span><input class="fi" type="text" id="ln" placeholder="Last name" oninput="mi(this)"></div>
+          <div class="blk"><label class="bl" for="fn">First name</label><input class="fi" type="text" id="fn" name="given-name" autocomplete="given-name" autocapitalize="words" placeholder="First name" oninput="mi(this)"></div>
+          <div class="blk"><label class="bl" for="ln">Last name</label><input class="fi" type="text" id="ln" name="family-name" autocomplete="family-name" autocapitalize="words" placeholder="Last name" oninput="mi(this)"></div>
         </div>
         <div class="row">
-          <div class="blk"><span class="bl">Age</span><input class="fi" type="number" id="ag" placeholder="e.g. 42" min="18" max="110" oninput="mi(this)"></div>
+          <div class="blk"><label class="bl" for="ag">Age</label><input class="fi" type="number" inputmode="numeric" pattern="[0-9]*" id="ag" name="age" placeholder="e.g. 42" min="18" max="110" oninput="mi(this)"></div>
           <div class="blk">
-            <span class="bl">Biological sex</span>
-            <div class="grow">
+            <span class="bl" id="sexlbl">Biological sex</span>
+            <div class="grow" role="group" aria-labelledby="sexlbl">
               <button class="gbtn" id="bm" onclick="sg(&#39;M&#39;)"><i class="ti ti-mars" style="font-size:14px"></i> Male</button>
               <button class="gbtn" id="bf" onclick="sg(&#39;F&#39;)"><i class="ti ti-venus" style="font-size:14px"></i> Female</button>
             </div>
@@ -922,6 +1006,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 
     <!-- RESULTS VIEW -->
     <div class="rw" id="vr">
+      <div class="rtopdisc">Informational only — <strong>not a diagnosis and not a substitute for professional medical advice.</strong> Discuss these with your clinician.</div>
       <div class="rhero">
         <div class="rht"><i class="ti ti-clipboard-check" style="margin-right:4px"></i>Yearly Preventative Health Checklist</div>
         <div id="rmeta" class="rhs"></div>
@@ -1349,7 +1434,7 @@ function renderFHIRPreview(data, source){
   if(parsed.vaxReceived&&parsed.vaxReceived.length)chips.push('<span class="fhir-chip">&#10003; Immunizations: '+[...new Set(parsed.vaxReceived)].length+' types found</span>');
 
   var el=document.getElementById(resultId);
-  el.innerHTML='<strong style="font-size:10px;color:#1e293b">Data found in your health record:</strong><br>'+chips.join('')+'<div style="font-size:9px;color:#64748b;margin-top:6px">Review and apply — you can adjust any field after import.</div>';
+  el.innerHTML='<strong style="font-size:0.625rem;color:#1e293b">Data found in your health record:</strong><br>'+chips.join('')+'<div style="font-size:0.6875rem;color:#64748b;margin-top:6px">Review and apply — you can adjust any field after import.</div>';
   el.style.display='block';
 
   // Store parsed for apply
@@ -1441,7 +1526,7 @@ function acceptDisc(){
 function declineDisc(){
   document.getElementById('disc-modal').style.display='none';
   // Show a message in the iphone area
-  document.querySelector('.screen').innerHTML='<div style="padding:40px 20px;text-align:center;color:#64748b;font-size:12px"><i class="ti ti-x-circle" style="font-size:40px;color:#e2e8f0;margin-bottom:12px;display:block"></i>HealthyChex requires agreement to the terms to continue.<br><br><button onclick="location.reload()" style="padding:8px 16px;background:#0F6E56;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer">Try Again</button></div>';
+  document.querySelector('.screen').innerHTML='<div style="padding:40px 20px;text-align:center;color:#64748b;font-size:0.75rem"><i class="ti ti-x-circle" style="font-size:40px;color:#e2e8f0;margin-bottom:12px;display:block"></i>HealthyChex requires agreement to the terms to continue.<br><br><button onclick="location.reload()" style="padding:8px 16px;background:#0F6E56;color:#fff;border:none;border-radius:8px;font-size:0.75rem;cursor:pointer">Try Again</button></div>';
 }
 // Enable accept button only when checkbox ticked
 document.addEventListener('DOMContentLoaded',function(){
@@ -1467,7 +1552,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 (function tick(){var n=new Date();var h=n.getHours();var m=n.getMinutes();var ap=h>=12?'PM':'AM';h=h%12||12;var ms=m<10?'0'+m:m;var el=document.getElementById('clk');if(el)el.textContent=h+':'+ms+' '+ap;setTimeout(tick,10000);})();
 
-var S={gender:'',tobacco:'none',smkYears:'',smkPacks:'',smkQuitYears:'',alcoholyn:'no',alcohol:'none',drugs:'no',ivdrug:'no',sexactive:'no',partnerSex:'',unprotected:'no',multipartner:'no',msm:'no',prevsti:'no',cvrisk:'no',famcancer:'no',famcancerTypes:[],syndrome:'no',syndromeTypes:[],childvax:'yes',hadPox:'no',name:'',lastname:'',age:0,showRefs:false};
+var S={gender:'',tobacco:'',smkYears:'',smkPacks:'',smkQuitYears:'',alcoholyn:'',alcohol:'none',drugs:'',ivdrug:'',sexactive:'',partnerSex:'',unprotected:'',multipartner:'',msm:'no',prevsti:'',cvrisk:'',famcancer:'',famcancerTypes:[],syndrome:'',syndromeTypes:[],childvax:'',hadPox:'',name:'',lastname:'',age:0,showRefs:false,_ansv:2};
 var IS={},tot=0,uR=[],RPTMODE='full';
 var SK='healthychex_v1';
 // Stored results HTML for re-display
@@ -1479,7 +1564,7 @@ var lastProgress={done:0,pct:0,txt:'0 done'};
 var STORE_KEY='healthychex_store_v2';
 var activeId='';
 function genId(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function blankProfile(){return {gender:'',tobacco:'none',smkYears:'',smkPacks:'',smkQuitYears:'',alcoholyn:'no',alcohol:'none',drugs:'no',ivdrug:'no',sexactive:'no',partnerSex:'',unprotected:'no',multipartner:'no',msm:'no',prevsti:'no',cvrisk:'no',famcancer:'no',famcancerTypes:[],syndrome:'no',syndromeTypes:[],childvax:'yes',hadPox:'no',name:'',lastname:'',age:0,showRefs:false};}
+function blankProfile(){return {gender:'',tobacco:'',smkYears:'',smkPacks:'',smkQuitYears:'',alcoholyn:'',alcohol:'none',drugs:'',ivdrug:'',sexactive:'',partnerSex:'',unprotected:'',multipartner:'',msm:'no',prevsti:'',cvrisk:'',famcancer:'',famcancerTypes:[],syndrome:'',syndromeTypes:[],childvax:'',hadPox:'',name:'',lastname:'',age:0,showRefs:false,_ansv:2};}
 function fullName(p){return ((p&&p.name?p.name:'')+(p&&p.lastname?' '+p.lastname:'')).trim();}
 function loadStore(){
   var raw;try{raw=localStorage.getItem(STORE_KEY);}catch(e){raw=null;}
@@ -1496,7 +1581,17 @@ function sv(){
   saveStore(store);
 }
 function ld(){var store=loadStore();if(!activeId)activeId=store.activeId||Object.keys(store.profiles)[0]||'';var p=store.profiles[activeId];if(p)migrateIS(p.items);return p?{profile:p.profile,items:p.items,savedAt:p.savedAt,resultsHTML:p.resultsHTML,ebrHTML:p.ebrHTML,meta:p.meta,progress:p.progress}:null;}
-function loadProfileIntoState(p){if(!p)p={};S=p.profile||blankProfile();IS=migrateIS(p.items||{});lastResultsHTML=p.resultsHTML||'';lastEBRHTML=p.ebrHTML||'';lastMeta=p.meta||'';lastProgress=p.progress||{done:0,pct:0,txt:'0 done'};}
+var ANSV=2;
+var AMBIG=['cvrisk','famcancer','syndrome','tobacco','alcoholyn','drugs','ivdrug','sexactive','unprotected','multipartner','prevsti','childvax','hadPox'];
+function migrateAnswers(pr){
+  if(!pr||pr._ansv>=ANSV)return pr;
+  // pre-v2 profiles were seeded with 'no'/'none'/'yes' defaults the user may never have
+  // touched; blank them so the form asks rather than assumes.
+  AMBIG.forEach(function(k){ pr[k]=''; });
+  pr.alcohol='none'; pr.famcancerTypes=pr.famcancerTypes||[]; pr.syndromeTypes=pr.syndromeTypes||[];
+  pr._ansv=ANSV; return pr;
+}
+function loadProfileIntoState(p){if(!p)p={};S=migrateAnswers(p.profile||blankProfile());IS=migrateIS(p.items||{});lastResultsHTML=p.resultsHTML||'';lastEBRHTML=p.ebrHTML||'';lastMeta=p.meta||'';lastProgress=p.progress||{done:0,pct:0,txt:'0 done'};}
 function profileList(){var store=loadStore();return Object.keys(store.profiles).map(function(k){return store.profiles[k];});}
 function renderProfiles(){var bar=document.getElementById('profile-bar');if(!bar)return;var list=profileList();var html='';list.forEach(function(p){var nm=fullName(p.profile)||'Unnamed';var act=p.id===activeId;html+='<button class="pchip'+(act?' act':'')+'" onclick="switchProfile(\''+p.id+'\')"><i class="ti ti-user" style="font-size:10px"></i> '+nm+'</button>';});html+='<button class="pchip add" onclick="newProfile()"><i class="ti ti-plus" style="font-size:10px"></i> Add person</button>';bar.innerHTML=html;}
 function switchProfile(id){if(id===activeId){var d0=ld();if(d0&&d0.items&&Object.keys(d0.items).length>0){showWS(d0);}return;}sv();var store=loadStore();var p=store.profiles[id];if(!p)return;activeId=id;store.activeId=id;saveStore(store);loadProfileIntoState(p);if(p.items&&Object.keys(p.items).length>0){showWS(ld());}else{resetF();rf();showF();}}
@@ -1523,7 +1618,7 @@ function exportICS(){
 function initApp(){var store=loadStore();var ids=Object.keys(store.profiles);if(ids.length){activeId=(store.activeId&&store.profiles[store.activeId])?store.activeId:ids[0];var p=store.profiles[activeId];loadProfileIntoState(p);if(p.items&&Object.keys(p.items).length>0){showWS(ld());}else{rf();showF();}}else{showF();}}
 var REC={bp:12,bmi:12,chol:60,dm:36,dxa:24,dep:12,anx:12,eye:24,hear:12,skin:12,tob:12,alc:12,alcmon:12,drug:12,sex:12,prep:12,sti:12,syph:12,hcv:12,hiv:12,cerv1:36,cerv2:60,breast:24,crc:12,psafh:12,psa:12,lung:12,vflu:12,breastfh:12,lungfh:12};
 // Human-readable schedule labels for each test
-var SCHED_LABEL={crcfh1:'Start at 40 \u2014 usual modality/interval (ACG family hx)',crcfh2:'Colonoscopy every 5 yrs from 40, or 10 yrs before youngest dx',lynch:'Colonoscopy every 1\u20132 yrs from age 20\u201325 (genetics-managed)',lynchendo:'Endometrial surveillance discussion from ~30 (genetics-managed)',fap:'Specialist-managed endoscopic surveillance \u2014 referral',brcaknown:'Genetics-managed surveillance \u2014 referral',bp:'Yearly (USPSTF Grade A)',bmi:'Every visit',chol:'Every 5 yrs (every 1–3 yrs if CV risk)',dm:'Every 3 years',dxa:'Every 2 years if normal; more often if abnormal',dep:'Yearly',anx:'Yearly',eye:'Every 1–4 years (age-based)',hear:'Yearly from age 50',skin:'Yearly',tob:'Every visit while smoking',alc:'Yearly AUDIT screening',alcmon:'Yearly AUDIT-C screening',drug:'Yearly',sex:'Yearly with primary care provider',prep:'Every 3 months while on PrEP',sti:'Yearly (every 3–6 months if high risk)',syph:'Yearly (every 3–6 months if MSM or high risk)',hcv:'Once for all adults 18–79; yearly if high risk',hiv:'Yearly if elevated risk; once for all adults 15–65',cerv1:'Every 3 years (ages 21–29)',cerv2:'Every 3–5 years (ages 30–65)',breast:'Every 2 years (yearly if family hx)',brca:'One-time assessment; follow-up per genetics team',ovarian:'One-time; follow-up per oncology team',crc:'ACS 2026: FIT/gFOBT yearly · mt-sDNA/ColoSense every 3 yrs · Colonoscopy every 10 yrs · CT colonography/Flex sig every 5 yrs · Blood cfDNA every 3 yrs (rescue only)',crcsel:'ACS 2026: Individualize — same options as 45–75 if screening offered; discourage in adults >85 or life expectancy <10 yrs',psafh:'Yearly (earlier due to family history)',psa:'Yearly if pursuing screening (ages 55–69)',lung:'Yearly (adults 50–80 with ≥20 pack-year history)',lungc:'Discuss with provider',vflu:'Yearly — best time: September–October (before end of October). Still beneficial if received later.',breastfh:'Yearly (family history protocol)',lungfh:'Yearly'};
+var SCHED_LABEL={crcfh1:'Start at 40 \u2014 usual modality/interval (ACG family hx)',crcfh2:'Colonoscopy every 5 yrs from 40, or 10 yrs before youngest dx',lynch:'Colonoscopy every 1\u20132 yrs from age 20\u201325 (genetics-managed)',lynchendo:'Endometrial surveillance discussion from ~30 (genetics-managed)',fap:'Specialist-managed endoscopic surveillance \u2014 referral',brcaknown:'Genetics-managed surveillance \u2014 referral',bp:'Yearly (USPSTF Grade A)',bmi:'Every visit',chol:'Every 5 yrs (every 1–3 yrs if CV risk)',dm:'Every 3 years',dxa:'Every 2 years if normal; more often if abnormal',dep:'Yearly',anx:'Yearly',eye:'Every 1–4 years (age-based)',hear:'Yearly from age 50',skin:'Yearly',tob:'Every visit while smoking',alc:'Yearly AUDIT screening',alcmon:'Yearly AUDIT-C screening',drug:'Yearly',sex:'Yearly with primary care provider',prep:'Every 3 months while on PrEP',sti:'Yearly (every 3–6 months if high risk)',syph:'Yearly (every 3–6 months if MSM or high risk)',hcv:'Once for all adults 18–79; yearly if high risk',hiv:'Yearly if elevated risk; once for all adults 15–65',cerv1:'Every 3 years (ages 21–29)',cerv2:'Every 3–5 years (ages 30–65)',breast:'Every 2 years (yearly if family hx)',brca:'One-time assessment; follow-up per genetics team',ovarian:'One-time; follow-up per oncology team',crc:'ACS 2026: FIT/gFOBT yearly · mt-sDNA/ColoSense every 3 yrs · Colonoscopy every 10 yrs · CT colonography/Flex sig every 5 yrs · Continue through 75 if life expectancy >10 yrs · Blood cfDNA (not preferred; CMS interval 3 yrs) only if preferred tests are declined or not completed',crcsel:'ACS 2026: Individualize — same options as 45–75 if screening offered; discourage in adults >85 or life expectancy <10 yrs',crcstop:'ACS 2026: Screening generally stops after 85 — discuss with your clinician; new symptoms still need prompt assessment',psafh:'Yearly (earlier due to family history)',psa:'Yearly if pursuing screening (ages 55–69)',lung:'Yearly (adults 50–80 with ≥20 pack-year history)',lungc:'Discuss with provider',vflu:'Yearly — best time: September–October (before end of October). Still beneficial if received later.',breastfh:'Yearly (family history protocol)',lungfh:'Yearly'};
 /* HealthyChex recommendation engine — logic v4.0 (June 2026) */
 var TITLE2CODE={"Blood pressure check":'bp',"Height & weight (BMI)":'bmi',"Cholesterol panel":'chol',"Diabetes / prediabetes screen":'dm',"Bone density scan (DXA)":'dxa',"Abdominal aortic aneurysm ultrasound":'aaa',"Depression screening":'dep',"Anxiety screening":'anx',"Eye exam":'eye',"Hearing evaluation":'hear',"Full-body skin exam":'skin',"Tobacco cessation counseling":'tob',"Alcohol use counseling":'alc',"Alcohol use — monitoring":'alcmon',"Drug use counseling":'drug',"Motor vehicle safety":'mvs',"Sexual health counseling":'sex',"PrEP (HIV pre-exposure prophylaxis)":'prep',"Sexually Transmitted Infection (STI) screen — chlamydia & gonorrhea":'sti',"Syphilis screening":'syph',"Hepatitis C (HCV) screening":'hcv',"HIV screening":'hiv',"Cervical cancer — Pap smear":'cerv1',"Cervical cancer — Pap + HPV co-test":'cerv2',"Cervical cancer — HPV primary screening":'cerv2',"Breast cancer — mammogram":'breast',"Breast cancer — mammogram (age ≥75)":'breast75',"BRCA genetic risk assessment":'brca',"Ovarian cancer — genetic counseling":'ovarian',"Colorectal cancer screening":'crc',"Colorectal cancer (selective 76–85)":'crcsel',"Prostate cancer — PSA (family hx)":'psafh',"Prostate cancer — PSA (shared decision)":'psa',"Lung cancer — low-dose CT":'lung',"Lung cancer — family history counseling":'lungc',"Influenza (flu) vaccine":'vflu',"RSV vaccine":'vrsv',"COVID-19 vaccine":'vcovid',"Tdap / Td booster":'vtdap',"Shingles vaccine (Shingrix)":'vshin',"Pneumococcal vaccine":'vpneu',"HPV vaccine — catch-up":'vhpv',"HPV vaccine (shared decision)":'vhpvs',"Varicella (VZV) vaccine":'vvzv',"Hepatitis B — verify / catch-up":'vhepb',"Hepatitis B vaccine":'vhepb',"Hepatitis A — verify / catch-up":'vhepa',"Hepatitis A vaccine":'vhepa',"MMR — verify / catch-up":'vmmr',"MMR vaccine":'vmmr',"Polio (IPV) — verify":'vpolio',"MenB vaccine":'vmenb',"MenACWY vaccine":'vmenacwy',"Breast cancer — mammogram (family hx)":'breastfh',"Lung cancer — low-dose CT (family hx)":'lungfh'};
 function migrateIS(items){if(!items)return items;Object.keys(items).forEach(function(k){var r=items[k];if(r&&!r.code){var code=r.title&&TITLE2CODE[r.title]?TITLE2CODE[r.title]:null;r.code=code;r.rec=code?gr(code):null;r.sched=code?getSchedLabel(code):null;r.crc=code?isCRC(code):false;}});return items;}
@@ -1574,7 +1669,7 @@ function showWS(d){
   var dl=Object.values(IS).filter(function(v){return v.status==='done'&&v.doneDate;});
   dl.sort(function(a,b){return(b.doneDate||'').localeCompare(a.doneDate||'');});
   var sh=dl.slice(0,6);
-  if(!sh.length){el.innerHTML='<div style="font-size:10px;color:#64748b;padding:4px 0">No completed items yet.</div>';}
+  if(!sh.length){el.innerHTML='<div style="font-size:0.625rem;color:#64748b;padding:4px 0">No completed items yet.</div>';}
   else{el.innerHTML=sh.map(function(v){var st=v.nextDue?ns(v.nextDue):null;var b=st?'<span class="wbadge '+st+'">'+(st==='fut'?'On track':st==='ds2'?'Due soon':'Overdue')+'</span>':'';return'<div class="wbi"><span class="wbin">'+v.title+'</span><span class="wbid">'+fd(v.doneDate)+'</span>'+b+'</div>';}).join('');}
   // Show "View last results" button if saved results exist
   var vrb=document.getElementById('view-results-btn');
@@ -1632,8 +1727,8 @@ function setOutputMode(mode){
   var intro=document.getElementById('rintro');
   if(intro){
     intro.innerHTML=(mode==='simple')
-      ?'<div style="font-size:13px;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Your recommended preventive care</div><div style="font-size:12px;color:#0C6B54">A summary you can print or save as PDF for your physician — you can switch views above at any time</div>'
-      :'<div style="font-size:13px;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Review and update your suggested annual health checklist</div><div style="font-size:12px;color:#0C6B54">You can print a report for your physician or save as PDF at the end</div>';
+      ?'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Your recommended preventive care</div><div style="font-size:0.75rem;color:#0C6B54">A summary you can print or save as PDF for your physician — you can switch views above at any time</div>'
+      :'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Review and update your suggested annual health checklist</div><div style="font-size:0.75rem;color:#0C6B54">You can print a report for your physician or save as PDF at the end</div>';
   }
   var m=document.getElementById('omodal');if(m)m.classList.remove('on');
   var sc=document.querySelector('.screen');if(sc)sc.scrollTop=0;
@@ -1726,8 +1821,8 @@ function rf(){
   if(S.age){document.getElementById('ag').value=S.age;mi(document.getElementById('ag'));}
   if(S.gender)sg(S.gender);
   // Tobacco
-  var tv=S.tobacco||'none';
-  document.querySelectorAll('[data-g="tobacco"][data-v="'+tv+'"]').forEach(function(b){b.classList.add(b.dataset.c);});
+  var tv=S.tobacco;
+  if(tv)document.querySelectorAll('[data-g="tobacco"][data-v="'+tv+'"]').forEach(function(b){b.classList.add(b.dataset.c);});
   if(S.smkYears){var e=document.getElementById('smkYears');if(e){e.value=S.smkYears;mi(e);}}
   if(S.smkPacks){var e2=document.getElementById('smkPacks');if(e2){e2.value=S.smkPacks;mi(e2);}}
   if(S.smkQuitYears){var e3=document.getElementById('smkQuitYears');if(e3){e3.value=S.smkQuitYears;mi(e3);}}
@@ -1736,28 +1831,28 @@ function rf(){
   if(S.alcoholyn==='yes'){pyd('alcoholyn','yes');ta(true);if(S.alcohol&&S.alcohol!=='none'){document.querySelectorAll('.ab[data-v="'+S.alcohol+'"]').forEach(function(b){b.classList.add(S.alcohol==='low'?'sl':S.alcohol==='moderate'?'sm':'sh');});}}
   else if(S.alcoholyn==='no'){pyd('alcoholyn','no');}
   // Drugs
-  if(S.drugs==='yes'){pyd('drugs','yes');tiv(true);if(S.ivdrug==='yes')piv('yes');else piv('no');}
+  if(S.drugs==='yes'){pyd('drugs','yes');tiv(true);if(S.ivdrug==='yes')piv('yes');else if(S.ivdrug==='no')piv('no');}
   else if(S.drugs==='no'){pyd('drugs','no');}
   // Sexually active
-  if(S.sexactive==='yes'){piySA('yes');if(S.partnerSex)pp(S.partnerSex);if(S.unprotected==='yes')pyd('unprotected','yes');else pyd('unprotected','no');if(S.multipartner==='yes')pyd('multipartner','yes');else pyd('multipartner','no');}
+  if(S.sexactive==='yes'){piySA('yes');if(S.partnerSex)pp(S.partnerSex);if(S.unprotected)pyd('unprotected',S.unprotected);if(S.multipartner)pyd('multipartner',S.multipartner);}
   else if(S.sexactive==='no'){piySA('no');}
   // Prior Sexually Transmitted Infection (STI) — inline iyn button
   (function(){
-    var val=S.prevsti||'no';
+    var val=S.prevsti; if(!val)return;
     var btnId=val==='yes'?'sty':'stn';
     var b=document.getElementById(btnId);
     if(b)piy('prevsti',val,b);
   })();
   // CV risk factors — inline iyn button (restore both Yes and No)
   (function(){
-    var val=S.cvrisk||'no';
+    var val=S.cvrisk; if(!val)return;
     var btnId=val==='yes'?'cvy':'cvn';
     var b=document.getElementById(btnId);
     if(b)piy('cvrisk',val,b);
   })();
   // Family cancer history — inline iyn button (restore both Yes and No)
   (function(){
-    var val=S.famcancer||'no';
+    var val=S.famcancer; if(!val)return;
     var btnId=val==='yes'?'fay':'fan';
     var b=document.getElementById(btnId);
     if(b){
@@ -1771,13 +1866,13 @@ function rf(){
   // Known genetic syndrome
   (function(){
     if(!S.syndromeTypes)S.syndromeTypes=[];
-    tsyn(S.syndrome==='yes');
+    if(S.syndrome)tsyn(S.syndrome==='yes');
     var SYID={brca:'sybrca',lynch:'sylynch',fap:'syfap'};
     (S.syndromeTypes||[]).forEach(function(t){var c=document.getElementById(SYID[t]);if(c)c.classList.add('sel');});
   })();
   // Childhood vaccines
-  var cv=S.childvax||'yes';
-  document.querySelectorAll('[data-g="childvax"][data-v="'+cv+'"]').forEach(function(b){b.classList.add(b.dataset.c);});
+  var cv=S.childvax;
+  if(cv)document.querySelectorAll('[data-g="childvax"][data-v="'+cv+'"]').forEach(function(b){b.classList.add(b.dataset.c);});
   if(S.hadPox)setPox(S.hadPox);
 }
 function piySA(v){
@@ -1848,7 +1943,7 @@ var CRC_OPTS=[
   {v:60,  group:'struct', l:'CT colonography — 5 years',        full:'CT colonography every 5 years (preferred, ACS 2026)'},
   {v:60,  group:'struct', l:'Flex sigmoidoscopy — 5 years',     full:'Flexible sigmoidoscopy every 5 years — normal result (preferred, ACS 2026)'},
   {v:36,  group:'struct', l:'Flex sigmoidoscopy — 3 years',     full:'Repeat flexible sigmoidoscopy in 3 years — abnormal finding requiring follow-up'},
-  {v:36,  group:'rescue', l:'Blood cfDNA (Guardant Shield) — 3 yrs', full:'Blood-based cfDNA test every 3 years — rescue option only if patient declines preferred tests (CMS coverage; NOT preferred, ACS 2026)'},
+  {v:36,  group:'rescue', l:'Blood cfDNA (Guardant Shield) — 3 yrs', full:'Blood-based cfDNA — NOT preferred (ACS 2026): only for patients who decline or have not completed a preferred test, after discussion. Lower sensitivity for advanced precancerous lesions and stage I cancer. No manufacturer interval; CMS covers every 3 years.'},
 ];
 function isCRC(c){return c==='crc'||c==='crcsel';}
 function isVax(key){return key&&key[0]==='V';}
@@ -1898,7 +1993,7 @@ function redo(key){sst(key,'pending');}
 function rn(k){var i=uR.indexOf(k);if(i===-1){uR.push(k);i=uR.length-1;}return i+1;}
 function rt(k){return'<sup class="rs"><a href="'+RF[k].u+'" target="_blank" rel="noopener">*'+rn(k)+'</a></sup>';}
 var RULES={
-  _version:'2026-07-17',
+  _version:'2026-09-13',
   _note:'Every clinical threshold the engine reads, in one place. These are DATA, read by fixed logic \u2014 never expressions the app evaluates. Update a guideline here, not in gen(). The oracle in validation/oracle.js deliberately does NOT read this object: it hardcodes the thresholds independently from the guideline text, so a typo here is caught by the harness rather than silently agreed with.',
   chol:{start:20},
   dm:{start:35},
@@ -1916,6 +2011,7 @@ var RULES={
   breast75:{start:75},
   crc:{start:45,stop:75},
   crcsel:{start:76,stop:85},
+  crcstop:{start:86},
   crcFam:{start:40,stop:75},
   crcGradeA:{start:50},
   psa:{start:55,stop:69},
@@ -1929,7 +2025,7 @@ var RULES={
   vhpv:{stop:26},
   vhpvs:{start:27,stop:45}
 };
-var GRADE={crcfh1:['ACG','2021','a','American College of Gastroenterology','A family history of colorectal cancer moves the start age earlier. This follows ACG/NCCN family-history guidance rather than a USPSTF letter grade \u2014 the USPSTF grades average-risk screening only.'],crcfh2:['ACG','2021','a','American College of Gastroenterology','A close relative diagnosed young, or two or more affected relatives, calls for colonoscopy from 40 every 5 years. This follows ACG/NCCN family-history guidance; the USPSTF grades average-risk screening only.'],lynch:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for Lynch syndrome carriers. This is surveillance, not average-risk screening, so no USPSTF letter grade applies.'],lynchendo:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance on endometrial and ovarian risk in Lynch syndrome. There is no graded population screening for endometrial cancer; this is syndrome-specific surveillance.'],fap:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for familial adenomatous polyposis. Management is specialist-led, so no USPSTF letter grade applies.'],brcaknown:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for known BRCA1/2 carriers. The USPSTF Grade B covers risk assessment to decide who should be tested \u2014 once a variant is known, management follows NCCN.'],bp:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: the Task Force is highly confident this has substantial net benefit — one of its strongest recommendations.'],bmi:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit. The grade formally covers screening for obesity and referral to behavioral help; measuring BMI is the trigger for that.'],chol:['AHA/ACC','Class I','a','American Heart Association / American College of Cardiology','A Class I recommendation from the AHA/ACC — their strongest tier, meaning the benefit clearly outweighs the risk. (This app follows AHA/ACC, which starts cholesterol testing earlier than the USPSTF statin recommendation, Grade B for ages 40–75.)'],dm:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence. The formal grade covers adults 35–70 with overweight or obesity; this app also offers screening from 35 more broadly, following American Diabetes Association guidance.'],dxa:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],aaa:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — a one-time screen for men 65–75 who have ever smoked.'],dep:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],anx:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit (adults up to 64).'],eye:['AAO','Guideline','na','American Academy of Ophthalmology','A professional-society guideline from the AAO. The USPSTF considers evidence insufficient to grade routine adult vision screening (Grade I), so no letter grade applies here.'],hear:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: current evidence is insufficient to weigh benefit versus harm. This app offers it from 50 as a reasonable option, but it is not a settled recommendation.'],skin:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: current evidence is insufficient to weigh benefit versus harm of a routine whole-body skin exam.'],tob:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial net benefit — asking about tobacco and offering help to quit.'],alc:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],alcmon:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: part of the same recommendation — screening and brief counseling for unhealthy alcohol use.'],drug:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],mvs:['CDC','Guidance','na','Centers for Disease Control and Prevention','General CDC safety guidance. The older USPSTF recommendation on this has been withdrawn, so no current letter grade applies.'],sex:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],prep:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit for people at increased risk of HIV.'],sti:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],syph:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit for people at increased risk.'],hcv:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — one-time screening for adults 18–79.'],hiv:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit — screening adults 15–65.'],cerv1:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit — cytology every 3 years for ages 21–29.'],cerv2:['ACS','Strong','a','American Cancer Society (with USPSTF)','A strong recommendation from the American Cancer Society (2025) for primary HPV testing; the USPSTF grades HPV testing every 5 years as Grade A.'],breast:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — mammography every 2 years for ages 40–74.'],breastfh:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B for routine screening; a family history may warrant starting earlier — discuss with your clinician.'],breast75:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: evidence is insufficient at age 75 and older, so the decision should be individual, based on overall health and preferences.'],brca:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended for women with a personal/family history or ancestry that raises BRCA risk.'],ovarian:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','This BRCA-pathway risk assessment is Grade B. Note: routine ovarian cancer screening of women without symptoms is separately graded D (not recommended).'],crc:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: the Task Force is highly confident this has substantial net benefit — colorectal screening for adults 50–75. The American Cancer Society also rates this a strong recommendation.'],crcsel:['USPSTF','Grade C','c','U.S. Preventive Services Task Force','Grade C: offer selectively for ages 76–85 based on overall health, prior screening, and preferences.'],psafh:['USPSTF','Grade C','c','U.S. Preventive Services Task Force (with NCCN)','The USPSTF grades PSA discussion C (an individual decision) for ages 55–69; NCCN supports an earlier discussion (40–45) when there is a family history.'],psa:['USPSTF','Grade C','c','U.S. Preventive Services Task Force','Grade C: an individual choice for men 55–69 after discussing benefits and harms with a clinician.'],lungc:['USPSTF','See note','na','U.S. Preventive Services Task Force','This is family-history counseling, which is not itself letter-graded. The graded lung screening (Grade B) is a CT scan for people 50–80 with a heavy smoking history.'],vflu:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as a routine recommendation for all adults each year. (ACIP uses categories like routine and shared decision rather than letter grades.)'],vrsv:['ACIP','Routine / Shared','c','CDC Advisory Committee on Immunization Practices','ACIP: routine at 75 and older; a shared decision with your clinician at 60–74; and offered at 50–59 for those at increased risk.'],vcovid:['ACIP','Shared','c','CDC Advisory Committee on Immunization Practices','ACIP currently frames this as a shared clinical decision for many adults. This guidance has been changing recently — confirm the latest with your clinician.'],vtdap:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine — a booster every 10 years.'],vshin:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists shingles vaccination as routine for adults 50 and older.'],vpneu:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine from age 50. Some repeat-dose combinations are a shared decision with your clinician.'],vhpv:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine catch-up through age 26.'],vhpvs:['ACIP','Shared','c','CDC Advisory Committee on Immunization Practices','ACIP: a shared decision with your clinician for ages 27–45.'],vvzv:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine for adults without evidence of immunity.'],vhepb:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine for adults 19–59; a shared decision at 60 and older without specific risk factors.'],vhepa:['ACIP','Risk-based','c','CDC Advisory Committee on Immunization Practices','ACIP: recommended based on risk factors (such as liver disease or travel) or on request.'],vmmr:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine for adults without presumptive immunity.'],vpolio:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: complete the primary series if not already done.'],vmenb:['ACIP','Shared / Risk','c','CDC Advisory Committee on Immunization Practices','ACIP: a shared decision for ages 16–23, and risk-based for certain medical conditions.'],vmenacwy:['ACIP','Risk-based','c','CDC Advisory Committee on Immunization Practices','ACIP: recommended based on risk factors such as certain medical conditions, travel, or outbreaks.']};
+var GRADE={crcfh1:['ACG','2021','a','American College of Gastroenterology','A family history of colorectal cancer moves the start age earlier. This follows ACG/NCCN family-history guidance rather than a USPSTF letter grade \u2014 the USPSTF grades average-risk screening only.'],crcfh2:['ACG','2021','a','American College of Gastroenterology','A close relative diagnosed young, or two or more affected relatives, calls for colonoscopy from 40 every 5 years. This follows ACG/NCCN family-history guidance; the USPSTF grades average-risk screening only.'],lynch:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for Lynch syndrome carriers. This is surveillance, not average-risk screening, so no USPSTF letter grade applies.'],lynchendo:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance on endometrial and ovarian risk in Lynch syndrome. There is no graded population screening for endometrial cancer; this is syndrome-specific surveillance.'],fap:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for familial adenomatous polyposis. Management is specialist-led, so no USPSTF letter grade applies.'],brcaknown:['NCCN','Guideline','a','National Comprehensive Cancer Network','NCCN guidance for known BRCA1/2 carriers. The USPSTF Grade B covers risk assessment to decide who should be tested \u2014 once a variant is known, management follows NCCN.'],bp:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: the Task Force is highly confident this has substantial net benefit — one of its strongest recommendations.'],bmi:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit. The grade formally covers screening for obesity and referral to behavioral help; measuring BMI is the trigger for that.'],chol:['AHA/ACC','Class I','a','American Heart Association / American College of Cardiology','A Class I recommendation from the AHA/ACC — their strongest tier, meaning the benefit clearly outweighs the risk. (This app follows AHA/ACC, which starts cholesterol testing earlier than the USPSTF statin recommendation, Grade B for ages 40–75.)'],dm:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence. The formal grade covers adults 35–70 with overweight or obesity; this app also offers screening from 35 more broadly, following American Diabetes Association guidance.'],dxa:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],aaa:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — a one-time screen for men 65–75 who have ever smoked.'],dep:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],anx:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit (adults up to 64).'],eye:['AAO','Guideline','na','American Academy of Ophthalmology','A professional-society guideline from the AAO. The USPSTF considers evidence insufficient to grade routine adult vision screening (Grade I), so no letter grade applies here.'],hear:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: current evidence is insufficient to weigh benefit versus harm. This app offers it from 50 as a reasonable option, but it is not a settled recommendation.'],skin:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: current evidence is insufficient to weigh benefit versus harm of a routine whole-body skin exam.'],tob:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial net benefit — asking about tobacco and offering help to quit.'],alc:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],alcmon:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: part of the same recommendation — screening and brief counseling for unhealthy alcohol use.'],drug:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],mvs:['CDC','Guidance','na','Centers for Disease Control and Prevention','General CDC safety guidance. The older USPSTF recommendation on this has been withdrawn, so no current letter grade applies.'],sex:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],prep:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit for people at increased risk of HIV.'],sti:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence of benefit.'],syph:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit for people at increased risk.'],hcv:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — one-time screening for adults 18–79.'],hiv:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit — screening adults 15–65.'],cerv1:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: highly confident of substantial benefit — cytology every 3 years for ages 21–29.'],cerv2:['ACS','Strong','a','American Cancer Society (with USPSTF)','A strong recommendation from the American Cancer Society (2025) for primary HPV testing; the USPSTF grades HPV testing every 5 years as Grade A.'],breast:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended with moderate confidence — mammography every 2 years for ages 40–74.'],breastfh:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B for routine screening; a family history may warrant starting earlier — discuss with your clinician.'],breast75:['USPSTF','Grade I','i','U.S. Preventive Services Task Force','Grade I: evidence is insufficient at age 75 and older, so the decision should be individual, based on overall health and preferences.'],brca:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','Grade B: recommended for women with a personal/family history or ancestry that raises BRCA risk.'],ovarian:['USPSTF','Grade B','b','U.S. Preventive Services Task Force','This BRCA-pathway risk assessment is Grade B. Note: routine ovarian cancer screening of women without symptoms is separately graded D (not recommended).'],crc:['USPSTF','Grade A','a','U.S. Preventive Services Task Force','Grade A: the Task Force is highly confident this has substantial net benefit — colorectal screening for adults 50–75. The American Cancer Society also rates this a strong recommendation.'],crcsel:['USPSTF','Grade C','c','U.S. Preventive Services Task Force','Grade C: offer selectively for ages 76–85 based on overall health, prior screening, and preferences.'],crcstop:['ACS','Qualified','c','American Cancer Society','A qualified recommendation from the ACS 2026 update: clinicians should discourage colorectal cancer screening in adults older than 85. Qualified means the evidence of benefit or harm is clear, but the balance depends on individual circumstances and preferences. The USPSTF grades screening D (recommend against) from 86.'],psafh:['USPSTF','Grade C','c','U.S. Preventive Services Task Force (with NCCN)','The USPSTF grades PSA discussion C (an individual decision) for ages 55–69; NCCN supports an earlier discussion (40–45) when there is a family history.'],psa:['USPSTF','Grade C','c','U.S. Preventive Services Task Force','Grade C: an individual choice for men 55–69 after discussing benefits and harms with a clinician.'],lungc:['USPSTF','See note','na','U.S. Preventive Services Task Force','This is family-history counseling, which is not itself letter-graded. The graded lung screening (Grade B) is a CT scan for people 50–80 with a heavy smoking history.'],vflu:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as a routine recommendation for all adults each year. (ACIP uses categories like routine and shared decision rather than letter grades.)'],vrsv:['ACIP','Routine / Shared','c','CDC Advisory Committee on Immunization Practices','ACIP: routine at 75 and older; a shared decision with your clinician at 60–74; and offered at 50–59 for those at increased risk.'],vcovid:['ACIP','Shared','c','CDC Advisory Committee on Immunization Practices','ACIP currently frames this as a shared clinical decision for many adults. This guidance has been changing recently — confirm the latest with your clinician.'],vtdap:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine — a booster every 10 years.'],vshin:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists shingles vaccination as routine for adults 50 and older.'],vpneu:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine from age 50. Some repeat-dose combinations are a shared decision with your clinician.'],vhpv:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine catch-up through age 26.'],vhpvs:['ACIP','Shared','c','CDC Advisory Committee on Immunization Practices','ACIP: a shared decision with your clinician for ages 27–45.'],vvzv:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine for adults without evidence of immunity.'],vhepb:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: routine for adults 19–59; a shared decision at 60 and older without specific risk factors.'],vhepa:['ACIP','Risk-based','c','CDC Advisory Committee on Immunization Practices','ACIP: recommended based on risk factors (such as liver disease or travel) or on request.'],vmmr:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP lists this as routine for adults without presumptive immunity.'],vpolio:['ACIP','Routine','a','CDC Advisory Committee on Immunization Practices','ACIP: complete the primary series if not already done.'],vmenb:['ACIP','Shared / Risk','c','CDC Advisory Committee on Immunization Practices','ACIP: a shared decision for ages 16–23, and risk-based for certain medical conditions.'],vmenacwy:['ACIP','Risk-based','c','CDC Advisory Committee on Immunization Practices','ACIP: recommended based on risk factors such as certain medical conditions, travel, or outbreaks.']};
 
 var GTIER={a:'gb-a',b:'gb-b',c:'gb-c',i:'gb-i',na:'gb-na'};
 function gradeFor(cid){
@@ -1985,7 +2081,7 @@ function mkc(item,key){var sup=item.refs?item.refs.map(function(r){return rt(r);
       opts.forEach(function(o){
         var active=IS[key]&&IS[key].crcV===o.v&&IS[key].crcL===o.l;
         var esc=function(s){return s.replace(/'/g,"\\'");};
-        out+='<button class="crc-opt type-'+grp+(active?' sel':'')+' crc-opt-'+key+'"  data-v="'+o.v+'" data-l="'+encodeURIComponent(o.l)+'"  onclick="setCRCInterval(\''+key+'\','+o.v+',\''+esc(o.l)+'\',  \''+esc(o.full)+'\')"><span style="font-weight:600">'+o.l+'</span><br><span style="font-size:8.5px;opacity:0.85">'+o.full+'</span></button>';
+        out+='<button class="crc-opt type-'+grp+(active?' sel':'')+' crc-opt-'+key+'"  data-v="'+o.v+'" data-l="'+encodeURIComponent(o.l)+'"  onclick="setCRCInterval(\''+key+'\','+o.v+',\''+esc(o.l)+'\',  \''+esc(o.full)+'\')"><span style="font-weight:600">'+o.l+'</span><br><span style="font-size:var(--f-cap);opacity:0.85">'+o.full+'</span></button>';
       });
     });
     return out;
@@ -2024,7 +2120,7 @@ function doPrint(mode){
   function buildRow(key,v,cat){
     var isDone=v.status==='done';
     var gcode=v.code||key;
-    var gprint=(function(){var g=gradeFor(gcode);if(!g)return'';var opt=(g[2]==='i')?' <span style="color:#55636B;font-weight:600">&middot; Optional</span>':'';return '<br><span style="font-size:9.5px;color:#0C6B54;font-weight:600">Evidence: '+g[0]+' &middot; <span style="font-family:Georgia,\'Times New Roman\',serif">'+g[1]+'</span>'+opt+'</span>';})();
+    var gprint=(function(){var g=gradeFor(gcode);if(!g)return'';var opt=(g[2]==='i')?' <span style="color:#55636B;font-weight:600">&middot; Optional</span>':'';return '<br><span style="font-size:0.6875rem;color:#0C6B54;font-weight:600">Evidence: '+g[0]+' &middot; <span style="font-family:Georgia,\'Times New Roman\',serif">'+g[1]+'</span>'+opt+'</span>';})();
     var isPoxImmune=isDone&&v.poxImmune;
     var sched=v.crc&&v.crcL?(v.crcL+' — '+v.crcFull):(v.sched||null);
     var ndSt=v.nextDue?ns(v.nextDue):null;
@@ -2033,30 +2129,30 @@ function doPrint(mode){
     var isDeclined=v.status==='declined';
     var statusCell=isPoxImmune
       ? '<span style="color:#0F6E56;font-weight:700">&#10003; Immune — Prior Chickenpox</span>'
-        +'<br><span style="font-size:10px;color:#64748b;font-style:italic">Natural immunity confirmed. VZV vaccine not required (CDC ACIP).</span>'
+        +'<br><span style="font-size:0.625rem;color:#64748b;font-style:italic">Natural immunity confirmed. VZV vaccine not required (CDC ACIP).</span>'
       : isDone
       ? '<span style="color:#0F6E56;font-weight:700">&#10003; Done</span>'
-        +(v.doneDate?'<br><span style="font-size:10px;color:#64748b">Completed: '+fd(v.doneDate)+'</span>':'')
-        +(v.nextDue?'<br><span style="font-size:10px;font-weight:600;color:'+ndColor+'">Next due: '+fd(v.nextDue)+'</span>':'')
+        +(v.doneDate?'<br><span style="font-size:0.625rem;color:#64748b">Completed: '+fd(v.doneDate)+'</span>':'')
+        +(v.nextDue?'<br><span style="font-size:0.625rem;font-weight:600;color:'+ndColor+'">Next due: '+fd(v.nextDue)+'</span>':'')
       : isReview
         ? '<span style="color:#7C3AED;font-weight:700">&#128269; Review Med Records</span>'
         : isDeclined
         ? '<span style="color:#64748b;font-weight:700">&#10005; Declined at this time</span>'
-          +(v.declinedDate?'<br><span style="font-size:10px;color:#94a3b8">Declined: '+fd(v.declinedDate)+'</span>':'')
+          +(v.declinedDate?'<br><span style="font-size:0.625rem;color:#94a3b8">Declined: '+fd(v.declinedDate)+'</span>':'')
         : '<span style="color:#BA7517;font-weight:700">&#9888; Needed</span>';
     var schedCell=sched
-      ? '<span style="font-size:10px;color:#64748b;font-style:italic">'+sched+'</span>'
-      : '<span style="font-size:10px;color:#cbd5e1">—</span>';
+      ? '<span style="font-size:0.625rem;color:#64748b;font-style:italic">'+sched+'</span>'
+      : '<span style="font-size:0.625rem;color:#cbd5e1">—</span>';
     if(RPTMODE==='simple'){
       return '<tr style="background:'+cat.rowBg+'">'
-        +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:11.5px;color:#1e293b;vertical-align:top;width:55%">'+v.title+gprint+'</td>'
-        +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;vertical-align:top;width:45%">'+schedCell+'</td>'
+        +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:0.7188rem;color:#1e293b;vertical-align:top;width:55%">'+v.title+gprint+'</td>'
+        +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;vertical-align:top;width:45%">'+schedCell+'</td>'
         +'</tr>';
     }
     return '<tr style="background:'+(isDone?'#fff':cat.rowBg)+'">'
-      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:11.5px;color:#1e293b;vertical-align:top;width:38%">'+v.title+gprint+'</td>'
-      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;vertical-align:top;width:22%">'+statusCell+'</td>'
-      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;vertical-align:top;width:40%">'+schedCell+'</td>'
+      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:0.7188rem;color:#1e293b;vertical-align:top;width:38%">'+v.title+gprint+'</td>'
+      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;vertical-align:top;width:22%">'+statusCell+'</td>'
+      +'<td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;vertical-align:top;width:40%">'+schedCell+'</td>'
       +'</tr>';
   }
 
@@ -2073,13 +2169,13 @@ function doPrint(mode){
       +'<thead>'
       +'<tr style="background:'+cat.hdrBg+'">'
       +'<td colspan="'+(RPTMODE==='simple'?2:3)+'" style="padding:10px 12px;color:'+cat.hdrTxt+'">'
-      +'<span style="font-size:14px;font-weight:700">'+cat.icon+' '+cat.label+'</span>'
-      +'<span style="font-size:11px;opacity:0.8;margin-left:10px">'+(RPTMODE==='simple'?(totalCount+' recommendations'):(doneCount+' of '+totalCount+' completed'))+'</span>'
+      +'<span style="font-size:0.875rem;font-weight:700">'+cat.icon+' '+cat.label+'</span>'
+      +'<span style="font-size:0.6875rem;opacity:0.8;margin-left:10px">'+(RPTMODE==='simple'?(totalCount+' recommendations'):(doneCount+' of '+totalCount+' completed'))+'</span>'
       +'</td></tr>'
       +'<tr style="background:'+cat.accentBg+';border-top:1px solid '+cat.accentBorder+'">'
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Screening / Test</th>'
-      +(RPTMODE==='simple'?'':'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Status</th>')
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Recommended Schedule</th>'
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Screening / Test</th>'
+      +(RPTMODE==='simple'?'':'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Status</th>')
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:'+cat.accentTxt+';border-bottom:1px solid '+cat.accentBorder+'">Recommended Schedule</th>'
       +'</tr>'
       +'</thead>'
       +'<tbody>'+rows+'</tbody>'
@@ -2095,10 +2191,10 @@ function doPrint(mode){
     var ndWeight=ndSt&&ndSt!=='fut'?'font-weight:700':'font-weight:400';
     var nd=v.nextDue?fd(v.nextDue):'—';
     return '<tr>'
-      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;color:#1e293b">'+v.title+'</td>'
-      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;color:#64748b">'+fd(v.doneDate)+'</td>'
-      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;color:'+ndColor+';'+ndWeight+'">'+nd+'</td>'
-      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;color:#64748b;font-style:italic">'+sched+'</td>'
+      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;color:#1e293b">'+v.title+'</td>'
+      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;color:#64748b">'+fd(v.doneDate)+'</td>'
+      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;color:'+ndColor+';'+ndWeight+'">'+nd+'</td>'
+      +'<td style="padding:6px 10px;border-bottom:1px solid #f1f5f9;font-size:0.6875rem;color:#64748b;font-style:italic">'+sched+'</td>'
       +'</tr>';
   }).join('');
 
@@ -2107,7 +2203,7 @@ function doPrint(mode){
   var allDone=Object.values(IS).filter(function(v){return v.status==='done'&&v.title;});
 
   // EBR
-  var ebrList=uR.map(function(k,i){return '<li style="font-size:10px;color:#475569;margin-bottom:3px;line-height:1.5">'+(i+1)+'. '+RF[k].l+' &lt;'+RF[k].u+'&gt;</li>';}).join('');
+  var ebrList=uR.map(function(k,i){return '<li style="font-size:0.625rem;color:#475569;margin-bottom:3px;line-height:1.5">'+(i+1)+'. '+RF[k].l+' &lt;'+RF[k].u+'&gt;</li>';}).join('');
 
   var printHTML='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HealthyChex — '+nm+'</title>'
     +'<style>*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#1e293b;margin:0;padding:0;font-size:12px}'
@@ -2116,22 +2212,22 @@ function doPrint(mode){
 
     // ── HEADER
     +'<div style="background:#0F6E56;padding:18px 24px;color:#fff;display:flex;justify-content:space-between;align-items:center">'
-    +'<div><div style="font-size:22px;font-weight:700;margin-bottom:2px">HealthyChex</div>'
-    +'<div style="font-size:12px;opacity:0.8">Yearly Preventative Health Checklist — For Primary Care Physician</div></div>'
-    +'<div style="text-align:right;font-size:11px;opacity:0.8">'+date+'</div></div>'
+    +'<div><div style="font-size:1.375rem;font-weight:700;margin-bottom:2px">HealthyChex</div>'
+    +'<div style="font-size:0.75rem;opacity:0.8">Yearly Preventative Health Checklist — For Primary Care Physician</div></div>'
+    +'<div style="text-align:right;font-size:0.6875rem;opacity:0.8">'+date+'</div></div>'
 
     // ── PATIENT NAME + DATE ONLY
     +'<div style="padding:12px 24px;background:#f8fafc;border-bottom:2px solid #0F6E56">'
-    +'<span style="font-size:17px;font-weight:600;color:#1e293b">'+nm+'</span>'
-    +'<span style="font-size:12px;color:#64748b;margin-left:12px">Date of review: '+date+'</span>'
+    +'<span style="font-size:1.0625rem;font-weight:600;color:#1e293b">'+nm+'</span>'
+    +'<span style="font-size:0.75rem;color:#64748b;margin-left:12px">Date of review: '+date+'</span>'
     +'</div>'
 
     // ── INTRO NOTE
     +(RPTMODE==='simple'
-      ?'<div style="margin:16px 24px 8px;background:#EFF6FF;border-left:4px solid #185FA5;padding:10px 14px;border-radius:0 6px 6px 0;font-size:11.5px;color:#1e40af">These are the preventive-care screenings and vaccines recommended based on the information provided. Please review them with your physician.</div>'
+      ?'<div style="margin:16px 24px 8px;background:#EFF6FF;border-left:4px solid #185FA5;padding:10px 14px;border-radius:0 6px 6px 0;font-size:0.7188rem;color:#1e40af">These are the preventive-care screenings and vaccines recommended based on the information provided. Please review them with your physician.</div>'
       :(allPending.length>0
-      ?'<div style="margin:16px 24px 8px;background:#FFFBF0;border-left:4px solid #BA7517;padding:10px 14px;border-radius:0 6px 6px 0;font-size:11.5px;color:#633806"><strong>⚠ Items marked "Needed" below have not yet been completed.</strong> Please discuss these with your patient at this visit.</div>'
-      :'<div style="margin:16px 24px 8px;background:#F0FBF6;border-left:4px solid #0F6E56;padding:10px 14px;border-radius:0 6px 6px 0;font-size:11.5px;color:#085041"><strong>✓ All recommended items have been completed.</strong> Review upcoming schedule below.</div>'))
+      ?'<div style="margin:16px 24px 8px;background:#FFFBF0;border-left:4px solid #BA7517;padding:10px 14px;border-radius:0 6px 6px 0;font-size:0.7188rem;color:#633806"><strong>⚠ Items marked "Needed" below have not yet been completed.</strong> Please discuss these with your patient at this visit.</div>'
+      :'<div style="margin:16px 24px 8px;background:#F0FBF6;border-left:4px solid #0F6E56;padding:10px 14px;border-radius:0 6px 6px 0;font-size:0.7188rem;color:#085041"><strong>✓ All recommended items have been completed.</strong> Review upcoming schedule below.</div>'))
 
     // ── CATEGORY SECTIONS
     +'<div style="height:12px"></div>'
@@ -2141,24 +2237,24 @@ function doPrint(mode){
     +(schedRows
       ?'<div style="margin:4px 24px 20px;page-break-inside:avoid">'
       +'<table style="width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08)">'
-      +'<thead><tr style="background:#1e40af"><td colspan="4" style="padding:10px 12px;color:#fff;font-size:14px;font-weight:700">📅 Recommended Screening Schedule</td></tr>'
+      +'<thead><tr style="background:#1e40af"><td colspan="4" style="padding:10px 12px;color:#fff;font-size:0.875rem;font-weight:700">📅 Recommended Screening Schedule</td></tr>'
       +'<tr style="background:#EFF6FF;border-top:1px solid #3B82F6">'
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Test / Screening</th>'
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Last Completed</th>'
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Next Due</th>'
-      +'<th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Frequency</th>'
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Test / Screening</th>'
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Last Completed</th>'
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Next Due</th>'
+      +'<th style="padding:6px 10px;text-align:left;font-size:0.625rem;font-weight:600;color:#1e40af;border-bottom:1px solid #BFDBFE">Frequency</th>'
       +'</tr></thead><tbody>'+schedRows+'</tbody></table></div>'
       :'')
 
     // ── EVIDENCE REFS (only when the user has opted in)
     +((S.showRefs===true&&ebrList)
       ?'<div style="margin:4px 24px 20px;border-top:1px solid #e2e8f0;padding-top:12px">'
-      +'<div style="font-size:11px;font-weight:700;color:#1e293b;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Evidence Based References</div>'
+      +'<div style="font-size:0.6875rem;font-weight:700;color:#1e293b;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Evidence Based References</div>'
       +'<ol style="padding-left:0;list-style:none">'+ebrList+'</ol></div>'
       :'')
 
     // ── FOOTER
-    +'<div style="background:#f8fafc;padding:12px 24px;border-top:1px solid #e2e8f0;font-size:9.5px;color:#94a3b8">'
+    +'<div style="background:#f8fafc;padding:12px 24px;border-top:1px solid #e2e8f0;font-size:0.6875rem;color:#94a3b8">'
     +'HealthyChex · Generated '+date+' · Based on USPSTF &amp; CDC ACIP 2025 guidelines · Not a substitute for professional medical advice. For personal informational use only. This report was generated by a consumer wellness tool and does not constitute a clinical record. Data was stored locally on the user\'s device and was not transmitted to any server.'
     +'</div></body></html>';
 
@@ -2166,7 +2262,7 @@ function doPrint(mode){
   if(mode==='pdf'){
     printHTML=printHTML.replace(
       '<div style="background:#0F6E56;padding:18px 24px',
-      '<div style="background:#185FA5;padding:8px 24px;font-size:11px;color:#fff;display:flex;align-items:center;gap:7px"><i style="font-size:13px">&#128190;</i> <strong>Save as PDF:</strong> In the print dialog, set the Destination/Printer to &ldquo;Save as PDF&rdquo; then click Save.</div><div style="background:#0F6E56;padding:18px 24px'
+      '<div style="background:#185FA5;padding:8px 24px;font-size:0.6875rem;color:#fff;display:flex;align-items:center;gap:7px"><i style="font-size:0.8125rem">&#128190;</i> <strong>Save as PDF:</strong> In the print dialog, set the Destination/Printer to &ldquo;Save as PDF&rdquo; then click Save.</div><div style="background:#0F6E56;padding:18px 24px'
     );
   }
   // Print in-place via a hidden same-page iframe. Opening a new window/tab
@@ -2276,9 +2372,11 @@ function gen(){
     var crcBody=priorColo
       ? 'ACS 2026, average-risk adults 45–75. <strong>Choose one screening test</strong> — the options below are alternatives, not a combination; any one is a complete screen. '+crcStruct+'. '+crcStool+'.'
       : 'ACS 2026, average-risk adults 45–75. <strong>Choose one screening test</strong> — the options below are alternatives, not a combination; any one is a complete screen. '+crcStool+'. '+crcStruct+'.';
-    crcBody+=' Blood-based cfDNA (Guardant Shield) every 3 yrs is a rescue option only if you decline the preferred tests. Any positive non-colonoscopy test needs a follow-up colonoscopy within 6 months.';
+    crcBody+=' Continue through age 75 if you are in good health with a life expectancy greater than 10 years.';
+    crcBody+=' <strong>Blood-based cfDNA (Guardant Shield) is not a preferred option.</strong> ACS 2026 recommends it only for people who decline or have not completed a preferred stool-based or structural test, and it should not be ordered without a prior discussion with your clinician: it is less sensitive than the preferred tests for advanced precancerous lesions and stage I cancers. Manufacturers have not specified a testing interval; CMS covers it every 3 years for Medicare beneficiaries. Any positive non-colonoscopy test needs a follow-up colonoscopy within 6 months.';
     C.push({c:'crc',t:'Colorectal cancer screening',d:crcBody,f:'r',refs:['acs-crc-2026']});
   }
+  if(!crcSyn&&a>=RULES.crcstop.start)C.push({c:'crcstop',t:'Colorectal cancer screening — generally stops after 85',d:'ACS 2026 recommends that clinicians <strong>discourage</strong> continuing colorectal cancer screening beyond age 85: by this point the harms of screening — and of the follow-up colonoscopy a positive test would require — generally outweigh the benefit. The same reasoning applies at any age when life expectancy is less than 10 years or there is substantial comorbidity. Separately: new symptoms such as rectal bleeding, a change in bowel habit, unexplained anemia or weight loss are not a screening question and should be assessed promptly at any age.',f:'s',refs:['acs-crc-2026']});
   if(!crcSyn&&a>=RULES.crcsel.start&&a<=RULES.crcsel.stop)C.push({c:'crcsel',t:'Colorectal cancer (selective 76–85)',d:'ACS 2026: Individualize screening decisions for adults 76–85 based on patient preferences, life expectancy, health status, and prior screening history. Same modalities as 45–75 group apply if screening is offered. Blood-based tests have lower specificity in older adults — weigh harms carefully. Screening is discouraged in adults >85 or life expectancy <10 years.',f:'s',refs:['acs-crc-2026']});
   if(g==='M'&&a>=RULES.psaBlock.start&&a<=RULES.psaBlock.stop){if(fP&&a>=RULES.psaBlock.start)C.push({c:'psafh',t:'Prostate cancer — PSA (family hx)',d:'Family hx warrants earlier PSA discussion at age 40–45.',f:'s',refs:['uspstf-psa','nccn-prostate']});else if(a>=RULES.psa.start&&a<=RULES.psa.stop)C.push({c:'psa',t:'Prostate cancer — PSA (shared decision)',d:'Individual decision for men 55–69.',f:'s',refs:['uspstf-psa']});}
   var smoker=(S.tobacco==='current'||S.tobacco==='former');
@@ -2348,6 +2446,271 @@ function gen(){
   sv2('vr');sv();askOutputMode();
 }
 initApp();
+
+/* ══ Stepped intake + review screen (v4.1.1) ═══════════════════════════════
+   Additive layer. It relocates existing nodes into step wrappers and adds a
+   nav bar and a review screen. No existing element is rewritten, so every
+   original id, class and inline handler keeps working. The recommendation
+   engine is not touched. */
+var FST=[], FSTI=0, FSTEPPED=false;
+var FST_DEFS=[
+  {k:'1',  sec:'1', label:'About you'},
+  {k:'2',  sec:'2', label:'Medical history'},
+  {k:'2b', sec:null,label:'Family cancer history', optional:'famcancer'},
+  {k:'2c', sec:null,label:'Genetic syndrome', optional:'syndrome'},
+  {k:'3',  sec:'3', label:'Social history'},
+  {k:'4',  sec:'4', label:'Sexual history'},
+  {k:'5',  sec:'5', label:'Childhood vaccines'},
+  {k:'rv', sec:null,label:'Review your answers'}
+];
+function fstNeedsDetail(){return S&&(S.famcancer==='yes'||S.syndrome==='yes');}
+function fstShown(st){
+  if(!st.optional)return true;
+  return S&&S[st.optional]==='yes';   // 'famcancer' / 'syndrome'
+}
+function fstActive(){return FST.filter(fstShown);}
+function buildSteps(){
+  var fb=document.querySelector('.fb'); if(!fb||FSTEPPED)return;
+  var prog=document.getElementById('fprog');
+  // group the existing children by their preceding section label
+  var kids=[].slice.call(fb.children), groups={}, cur=null;
+  kids.forEach(function(el){
+    if(el===prog)return;
+    var lbl=el.classList&&el.classList.contains('slbl')&&el.getAttribute('data-sec');
+    if(lbl)cur=lbl;
+    if(cur){ (groups[cur]=groups[cur]||[]).push(el); }
+  });
+  FST_DEFS.forEach(function(d){
+    var w=document.createElement('div');
+    w.className='fstep'; w.setAttribute('data-k',d.k); w.id='fstep-'+d.k;
+    if(d.sec&&groups[d.sec])groups[d.sec].forEach(function(el){w.appendChild(el);});
+    fb.appendChild(w);
+    FST.push({k:d.k,label:d.label,el:w,optional:d.optional||null});
+  });
+  // split Medical history: the two detail lists move to their own step
+  [['2b','famchips','ti-dna','Family cancer history'],['2c','synchips','ti-dna','Genetic syndrome']].forEach(function(d){
+    var det=document.getElementById('fstep-'+d[0]); if(!det)return;
+    var dh=document.createElement('div');
+    dh.className='slbl'; dh.innerHTML='<i class="ti '+d[2]+'" style="font-size:11px"></i>'+d[3];
+    det.appendChild(dh);
+    var n=document.getElementById(d[1]); if(n)det.appendChild(n);
+  });
+  // review step
+  var rv=document.getElementById('fstep-rv');
+  rv.innerHTML='<div class="slbl"><i class="ti ti-circle-check" style="font-size:11px"></i>Review your answers</div>'+
+    '<div class="rvw"><div class="rvwh">Tap <strong>Edit</strong> on any section to change an answer.</div><div id="rvwbody"></div></div>';
+  // nav bar
+  var hint=document.createElement('div');
+  hint.className='fhint'; hint.id='fnav-hint';
+  hint.setAttribute('role','status'); hint.setAttribute('aria-live','polite');
+  fb.appendChild(hint);
+  var nav=document.createElement('div');
+  nav.className='fnav';
+  nav.innerHTML='<button class="fnavb" id="fnav-back" onclick="fstPrev()"><i class="ti ti-arrow-left" style="font-size:14px"></i> Back</button>'+
+                '<button class="fnavb pri" id="fnav-next" onclick="fstNext()">Next <i class="ti ti-chevron-right" style="font-size:14px"></i></button>';
+  fb.appendChild(nav);
+  var vf=document.getElementById('vf');
+  function markIntro(el){ if(!el||!vf)return; while(el&&el.parentElement!==vf)el=el.parentElement;
+    if(el&&el!==fb)el.classList.add('fintro'); }
+  markIntro(document.querySelector('.smart-btn'));
+  ['fhir-review-bar','fhir-review-chips'].forEach(function(id){markIntro(document.getElementById(id));});
+  function markOutro(el){ if(!el||!vf)return; while(el&&el.parentElement!==vf)el=el.parentElement;
+    if(el&&el!==fb)el.classList.add('foutro'); }
+  markOutro(document.getElementById('instbar'));
+  markOutro(vf&&vf.querySelector('.hipaa-banner'));
+  var resync=function(){setTimeout(fstSync,0);};
+  fb.addEventListener('click',resync); fb.addEventListener('input',resync); fb.addEventListener('change',resync);
+  var cw=document.querySelector('.ctaw'); if(cw)cw.classList.add('stepped');
+  FSTEPPED=true;
+  initScue();
+  goStep(0);
+}
+function goStep(i){
+  var act=fstActive();
+  if(i<0)i=0; if(i>act.length-1)i=act.length-1;
+  FSTI=i;
+  FST.forEach(function(st){st.el.classList.remove('on');});
+  var cur=act[i]; cur.el.classList.add('on');
+  if(cur.k==='rv')renderReview();
+  var back=document.getElementById('fnav-back'), next=document.getElementById('fnav-next');
+  if(back)back.disabled=(i===0);
+  if(next){
+    var last=(cur.k==='rv');
+    next.className='fnavb '+(last?'go':'pri');
+    next.innerHTML=last?'<i class="ti ti-clipboard-check" style="font-size:16px"></i> See my checklist'
+                       :'Next <i class="ti ti-chevron-right" style="font-size:14px"></i>';
+  }
+  var vfe=document.getElementById('vf');
+  if(vfe){ vfe.classList.toggle('fdeep', i>0); vfe.classList.toggle('frv', cur.k==='rv'); }
+  var dsc=document.querySelector('.disc'); if(dsc)dsc.style.display=(cur.k==='rv')?'':'none';
+  var sc=document.querySelector('.screen'); if(sc)sc.scrollTop=0;
+  fstSync();
+  updBrandSub();
+  updFProg();
+  setTimeout(scueUpdate,60);
+}
+/* Nothing is pre-answered any more, so each step states what it still needs.
+   Deliberate exception: the smoking pack-year fields stay optional — the engine has a
+   dedicated "check LDCT eligibility" card for exactly that missing-detail case. */
+function fstMissing(k){
+  var m=[], v=function(id){var e=document.getElementById(id);return e&&e.value?e.value.trim():'';};
+  function need(ok,label){ if(!ok)m.push(label); }
+  if(k==='1'){ var ag=parseInt(v('ag'),10);
+    need(isFinite(ag)&&ag>0,'Age'); need(!!S.gender,'Biological sex'); }
+  else if(k==='2'){ need(!!S.cvrisk,'CV risk factors'); need(!!S.famcancer,'Family cancer history'); need(!!S.syndrome,'Known genetic syndrome'); }
+  else if(k==='2b'){ need((S.famcancerTypes||[]).length>0,'at least one cancer type'); }
+  else if(k==='2c'){ need((S.syndromeTypes||[]).length>0,'which syndrome'); }
+  else if(k==='3'){ need(!!S.tobacco,'Tobacco use'); need(!!S.alcoholyn,'Alcohol use'); need(!!S.drugs,'Recreational drugs');
+    if(S.alcoholyn==='yes')need(!!S.alcohol&&S.alcohol!=='none','how much alcohol');
+    if(S.drugs==='yes')need(!!S.ivdrug,'Injection drug use'); }
+  else if(k==='4'){ need(!!S.sexactive,'Sexually active');
+    if(S.sexactive==='yes'){ need(!!S.partnerSex,'Partner sex'); need(!!S.unprotected,'Unprotected sex'); need(!!S.multipartner,'Multiple partners'); }
+    need(!!S.prevsti,'Prior STI'); }
+  else if(k==='5'){ need(!!S.childvax,'Childhood vaccines'); need(!!S.hadPox,'Had chickenpox'); }
+  return m;
+}
+/* Map each answer to the control group that collects it, so the group can be flagged. */
+var UNANS=[['cvrisk','#cvn'],['famcancer','#fan'],['syndrome','#syn'],['prevsti','#stn'],
+  ['hadPox','#pox-no'],['ivdrug','#ivn'],['sexactive','#sa-yes'],
+  ['tobacco','[data-g="tobacco"]'],['childvax','[data-g="childvax"]'],
+  ['alcoholyn','[data-g="alcoholyn"]'],['drugs','[data-g="drugs"]'],
+  ['unprotected','[data-g="unprotected"]'],['multipartner','[data-g="multipartner"]']];
+function markUnanswered(){
+  UNANS.forEach(function(pair){
+    var el=document.querySelector(pair[1]); if(!el)return;
+    var box=el.closest('.iyn,.s3,.yp,.ivyn')||el.parentElement; if(!box)return;
+    box.classList.toggle('unans', !S[pair[0]] && !!el.offsetParent);
+  });
+  var ag=document.getElementById('ag');
+  if(ag)ag.classList.toggle('unans', !(parseInt(ag.value,10)>0) && !!ag.offsetParent);
+  var grow=document.querySelector('.grow');
+  if(grow)grow.classList.toggle('unans', !S.gender && !!grow.offsetParent);
+  var fc=document.getElementById('famchips');
+  if(fc)fc.classList.toggle('unans', S.famcancer==='yes' && !(S.famcancerTypes||[]).length && !!fc.offsetParent);
+  var sy=document.getElementById('synchips');
+  if(sy)sy.classList.toggle('unans', S.syndrome==='yes' && !(S.syndromeTypes||[]).length && !!sy.offsetParent);
+}
+function fstSync(){
+  if(!FSTEPPED)return;
+  var act=fstActive(), cur=act[FSTI]; if(!cur)return;
+  var miss=fstMissing(cur.k);
+  markUnanswered();
+  var next=document.getElementById('fnav-next'), hint=document.getElementById('fnav-hint');
+  if(next)next.disabled=miss.length>0;
+  if(hint){
+    hint.classList.toggle('on', miss.length>0);
+    hint.textContent=miss.length?('Still needed: '+miss.join(' · ')):'';
+  }
+}
+function fstNext(){
+  var act=fstActive();
+  if(act[FSTI]&&act[FSTI].k==='rv'){ gen(); return; }
+  goStep(FSTI+1);
+}
+function fstPrev(){ goStep(FSTI-1); }
+function fstGoKey(k){ var act=fstActive(); for(var i=0;i<act.length;i++){ if(act[i].k===k){goStep(i);return;} } }
+/* progress bar now reflects the step you are on, not scroll position */
+updFProg=function(){
+  if(!FSTEPPED)return;
+  var vf=document.getElementById('vf'); if(!vf||!vf.classList.contains('active'))return;
+  var act=fstActive(), cur=act[FSTI]; if(!cur)return;
+  var n=document.getElementById('fprog-n'), l=document.getElementById('fprog-lbl'), f=document.getElementById('fprog-fill');
+  var cnt=document.querySelector('.fprog-cnt');
+  if(n)n.textContent=(FSTI+1);
+  if(cnt)cnt.innerHTML='<span id="fprog-n">'+(FSTI+1)+'</span> of '+act.length;
+  if(l)l.textContent=cur.label;
+  if(f)f.style.width=Math.round((FSTI+1)/act.length*100)+'%';
+};
+/* ── Review screen ── */
+function rvEsc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rvYN(v){return v==='yes'?'Yes':(v==='no'?'No':'');}
+var RV_CANCER={breast:'Breast',ovarian:'Ovarian',crc1:'Colorectal (relative \u226560)',crc2:'Colorectal (relative <60 or \u22652)',lung:'Lung',prostate:'Prostate'};
+var RV_SYN={brca:'BRCA1/2',lynch:'Lynch',fap:'FAP'};
+var RV_TOB={none:'Never smoked',former:'Former smoker',current:'Current smoker'};
+var RV_ALC={none:'None',moderate:'Moderate',heavy:'Heavy'};
+var RV_VAX={yes:'All received',partial:'Partial',no:'None / unknown'};
+var RV_PSEX={male:'Male',female:'Female',both:'Both'};
+function rvList(arr,map){ if(!arr||!arr.length)return ''; return arr.map(function(x){return map[x]||x;}).join(', '); }
+function rvPart(label,val){ return val?('<b>'+rvEsc(label)+':</b> '+rvEsc(val)):('<span class="miss">'+rvEsc(label)+': not answered</span>'); }
+function renderReview(){
+  var b=document.getElementById('rvwbody'); if(!b)return;
+  var h='';
+  function grp(title,key,parts){
+    parts=parts.filter(function(x){return !!x;});
+    h+='<button class="rvwg" onclick="fstGoKey(\''+key+'\')"><span class="rvwgh"><span class="rvwgt">'+rvEsc(title)+'</span>'+
+       '<span class="rvwe">Edit <i class="ti ti-chevron-right" style="font-size:11px"></i></span></span>'+
+       '<span class="rvws">'+parts.join('<span class="sep">\u00b7</span>')+'</span></button>';
+  }
+  var _v=function(id){var e=document.getElementById(id);return e&&e.value?e.value.trim():'';};
+  var nm=(_v('fn')+' '+_v('ln')).trim(), ag=parseInt(_v('ag'),10);
+  grp('About you','1',[ rvPart('Name', nm||''), rvPart('Age', isFinite(ag)&&ag>0?ag:''),
+    rvPart('Sex', S.gender==='M'?'Male':(S.gender==='F'?'Female':'')) ]);
+
+  grp('Medical history','2',[ rvPart('CV risk', rvYN(S.cvrisk)),
+    rvPart('Family cancer', rvYN(S.famcancer)), rvPart('Genetic syndrome', rvYN(S.syndrome)) ]);
+
+  if(S.famcancer==='yes')grp('Family cancer history','2b',[ rvPart('Cancers', rvList(S.famcancerTypes,RV_CANCER)) ]);
+  if(S.syndrome==='yes')grp('Genetic syndrome','2c',[ rvPart('Syndrome', rvList(S.syndromeTypes,RV_SYN)) ]);
+
+  var tob=RV_TOB[S.tobacco]||'';
+  if((S.tobacco==='current'||S.tobacco==='former')&&S.smkYears&&S.smkPacks){
+    var py=parseFloat(S.smkYears)*parseFloat(S.smkPacks);
+    tob+=' ('+(isFinite(py)?py:'?')+' pack-yrs'+(S.tobacco==='former'&&S.smkQuitYears!==''&&S.smkQuitYears!=null?(', quit '+S.smkQuitYears+' yrs ago'):'')+')';
+  }
+  grp('Social history','3',[ rvPart('Tobacco', tob),
+    rvPart('Alcohol', S.alcoholyn==='yes'?(RV_ALC[S.alcohol]||'Yes'):(S.alcoholyn==='no'?'None':'')),
+    rvPart('Drugs', rvYN(S.drugs)),
+    (S.drugs==='yes'?rvPart('Injection use', rvYN(S.ivdrug)):'') ]);
+
+  grp('Sexual history','4',[ rvPart('Sexually active', rvYN(S.sexactive)),
+    (S.sexactive==='yes'?rvPart('Partner', RV_PSEX[S.partnerSex]||''):''),
+    (S.sexactive==='yes'?rvPart('Unprotected', rvYN(S.unprotected)):''),
+    (S.sexactive==='yes'?rvPart('Multiple partners', rvYN(S.multipartner)):''),
+    rvPart('Prior STI', rvYN(S.prevsti)) ]);
+
+  grp('Childhood vaccines','5',[ rvPart('Childhood vaccines', RV_VAX[S.childvax]||''),
+    rvPart('Chickenpox', rvYN(S.hadPox)) ]);
+  b.innerHTML=h;
+}
+/* The brand strip is the most prominent line on screen; give it the one piece of
+   context that earns the position in a multi-profile app — whose checklist this is. */
+function updBrandSub(){
+  var el=document.getElementById('brandsub'); if(!el)return;
+  var n='';
+  try{ n=((S&&S.name?S.name:'')+' '+(S&&S.lastname?S.lastname:'')).trim(); }catch(e){}
+  if(!n){ var f=document.getElementById('fn'), l=document.getElementById('ln');
+    n=(((f&&f.value)||'')+' '+((l&&l.value)||'')).trim(); }
+  el.textContent = n ? (n+'  ·  saved on this device') : 'Saved on this device';
+}
+/* Scroll cue — shown only while the current screen actually has more below. */
+var SCUE=null;
+function scueUpdate(){
+  var sc=document.querySelector('.screen'); if(!sc||!SCUE)return;
+  var more=(sc.scrollHeight-sc.clientHeight-sc.scrollTop)>24;
+  SCUE.classList.toggle('on',more);
+}
+function initScue(){
+  var sc=document.querySelector('.screen'), ph=document.querySelector('.iphone');
+  if(!sc||!ph||SCUE)return;
+  SCUE=document.createElement('button');
+  SCUE.className='scue'; SCUE.id='scue'; SCUE.type='button';
+  SCUE.setAttribute('aria-label','Scroll down');
+  SCUE.innerHTML='\u2193';
+  SCUE.onclick=function(){ sc.scrollBy({top:Math.round(sc.clientHeight*0.82),behavior:'smooth'}); };
+  ph.appendChild(SCUE);
+  sc.addEventListener('scroll',scueUpdate,{passive:true});
+  window.addEventListener('resize',scueUpdate);
+  var mo=new MutationObserver(function(){ clearTimeout(SCUE._t); SCUE._t=setTimeout(scueUpdate,120); });
+  mo.observe(sc,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+  scueUpdate();
+}
+/* returning to the form always restarts at step 1 */
+(function(){
+  var _showF=showF;
+  showF=function(){ _showF.apply(this,arguments); if(FSTEPPED)goStep(0); };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSteps);
+  else buildSteps();
+})();
 </script>
 
 

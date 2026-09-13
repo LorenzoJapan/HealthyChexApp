@@ -8,7 +8,7 @@ const pick=arr=>arr[Math.floor(rnd()*arr.length)];
 const chance=p=>rnd()<p;
 
 // Spread ages across all guideline boundaries + random fill
-const boundaryAges=[18,19,20,21,25,26,27,29,30,34,35,39,40,44,45,49,50,54,55,60,64,65,66,69,70,74,75,76,79,80,84,85,90];
+const boundaryAges=[18,19,20,21,25,26,27,29,30,34,35,39,40,44,45,49,50,54,55,60,64,65,66,69,70,74,75,76,79,80,84,85,86,87,90,95];
 function genPatient(i){
   let age;
   if(i<boundaryAges.length) age=boundaryAges[i];
@@ -110,7 +110,7 @@ rows.forEach(r=>{
 });
 
 // ---- report ----
-console.log('=== HealthyChex v4.0 — Synthetic-Patient Validation ===');
+console.log('=== HealthyChex v4.1.1 — Synthetic-Patient Validation ===');
 console.log('Patients: '+N+'  (seeded, reproducible) | Recommendation types: '+codes.length);
 console.log('Total patient-by-recommendation decisions: '+total);
 console.log('Concordance (presence): '+match+'/'+total+' = '+(100*match/total).toFixed(2)+'%');
@@ -134,8 +134,9 @@ const fem=patients.filter(p=>p.gender==='F').length;
 const smk=patients.filter(p=>p.tobacco!=='none').length;
 const inc=patients.filter(p=>p.childvax!=='yes').length;
 const old75=patients.filter(p=>p.age>=75).length;
+const old85=patients.filter(p=>p.age>85).length;
 console.log('\n--- Cohort sanity ---');
-console.log(`  Female ${fem} | Male ${100-fem} | Ever-smokers ${smk} | Incomplete/unknown childhood vax ${inc} | Age>=75 ${old75}`);
+console.log(`  Female ${fem} | Male ${100-fem} | Ever-smokers ${smk} | Incomplete/unknown childhood vax ${inc} | Age>=75 ${old75} | Age>85 ${old85}`);
 
 // ---- RULES drift check: the app HTML and appcore.js must carry identical thresholds ----
 // appcore.js is a hand-maintained mirror of the engine in the HTML, so it can silently drift.

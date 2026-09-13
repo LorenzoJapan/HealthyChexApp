@@ -1,6 +1,6 @@
 // AUTO-EXTRACTED verbatim from index.html engine decision block. Not retyped.
 var RULES={
-  _version:'2026-07-17',
+  _version:'2026-09-13',
   _note:'Every clinical threshold the engine reads, in one place. These are DATA, read by fixed logic \u2014 never expressions the app evaluates. Update a guideline here, not in gen(). The oracle in validation/oracle.js deliberately does NOT read this object: it hardcodes the thresholds independently from the guideline text, so a typo here is caught by the harness rather than silently agreed with.',
   chol:{start:20},
   dm:{start:35},
@@ -18,6 +18,7 @@ var RULES={
   breast75:{start:75},
   crc:{start:45,stop:75},
   crcsel:{start:76,stop:85},
+  crcstop:{start:86},
   crcFam:{start:40,stop:75},
   crcGradeA:{start:50},
   psa:{start:55,stop:69},
@@ -87,7 +88,8 @@ function appEngine(s){
   if(syF)C.push({c:'fap',t:'Familial adenomatous polyposis (FAP) — genetics-managed surveillance',d:'',f:'s',refs:['nccn-fap']});
   if(crcFam&&fC2)C.push({c:'crcfh2',t:'Colorectal cancer — colonoscopy (high-risk family history)',d:'',f:'a',refs:['acg-crc-fh']});
   if(crcFam&&!fC2)C.push({c:'crcfh1',t:'Colorectal cancer — start at 40 (family history)',d:'',f:'a',refs:['acg-crc-fh']});
-  if(!crcSyn&&!crcFam&&a>=RULES.crc.start&&a<=RULES.crc.stop)C.push({c:'crc',t:'Colorectal cancer screening',d:'ACS 2026: Average-risk adults 45–75. Preferred stool-based: FIT yearly · gFOBT yearly · mt-sDNA (Cologuard/Cologuard Plus) every 3 yrs · mt-sRNA (ColoSense) every 3 yrs. Preferred structural: Colonoscopy every 10 yrs · CT colonography every 5 yrs · Flex sigmoidoscopy every 5 yrs. Blood-based cfDNA (Guardant Shield) every 3 yrs — rescue option only if patient declines preferred tests. Any positive non-colonoscopy test requires follow-up colonoscopy within 6 months.',f:'r',refs:['acs-crc-2026']});
+  if(!crcSyn&&!crcFam&&a>=RULES.crc.start&&a<=RULES.crc.stop)C.push({c:'crc',t:'Colorectal cancer screening',d:'ACS 2026: Average-risk adults 45–75; continue through 75 if life expectancy >10 yrs. Preferred stool-based: FIT yearly · gFOBT yearly · mt-sDNA (Cologuard/Cologuard Plus) every 3 yrs · mt-sRNA (ColoSense) every 3 yrs. Preferred structural: Colonoscopy every 10 yrs · CT colonography every 5 yrs · Flex sigmoidoscopy every 5 yrs. Blood-based cfDNA (Guardant Shield) is NOT preferred — only if the patient declines or has not completed a preferred test, after discussion; no manufacturer interval (CMS covers 3-yearly). Any positive non-colonoscopy test requires follow-up colonoscopy within 6 months.',f:'r',refs:['acs-crc-2026']});
+  if(!crcSyn&&a>=RULES.crcstop.start)C.push({c:'crcstop',t:'Colorectal cancer screening — generally stops after 85',d:'ACS 2026: clinicians should discourage continuing colorectal cancer screening beyond age 85; same reasoning when life expectancy <10 yrs. New symptoms are a diagnostic question, not screening.',f:'s',refs:['acs-crc-2026']});
   if(!crcSyn&&a>=RULES.crcsel.start&&a<=RULES.crcsel.stop)C.push({c:'crcsel',t:'Colorectal cancer (selective 76–85)',d:'ACS 2026: Individualize screening decisions for adults 76–85 based on patient preferences, life expectancy, health status, and prior screening history. Same modalities as 45–75 group apply if screening is offered. Blood-based tests have lower specificity in older adults — weigh harms carefully. Screening is discouraged in adults >85 or life expectancy <10 years.',f:'s',refs:['acs-crc-2026']});
   if(g==='M'&&a>=RULES.psaBlock.start&&a<=RULES.psaBlock.stop){if(fP&&a>=RULES.psaBlock.start)C.push({c:'psafh',t:'Prostate cancer — PSA (family hx)',d:'Family hx warrants earlier PSA discussion at age 40–45.',f:'s',refs:['uspstf-psa','nccn-prostate']});else if(a>=RULES.psa.start&&a<=RULES.psa.stop)C.push({c:'psa',t:'Prostate cancer — PSA (shared decision)',d:'Individual decision for men 55–69.',f:'s',refs:['uspstf-psa']});}
   var smoker=(S.tobacco==='current'||S.tobacco==='former');

@@ -1,0 +1,355 @@
+<title>HealthyChex Design Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F7F9F8;
+  --surface:#FFFFFF;
+  --surface-2:#EFF4F1;
+  --ink:#10201C;
+  --ink-2:#3C4B46;
+  --ink-3:#67766F;
+  --line:#DCE5E0;
+  --line-2:#C3D0CA;
+  --teal:#0C6B54;
+  --teal-deep:#0F4E5B;
+  --rust:#9A3B1C;
+  --rust-bg:#FBEFE9;
+  --ochre:#7D5A0B;
+  --ochre-bg:#FAF3E2;
+  --slate:#3F5A63;
+  --slate-bg:#EAF1F3;
+  --good:#0C6B54;
+  --good-bg:#E6F3EE;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1613;
+    --surface:#16211D;
+    --surface-2:#1D2A25;
+    --ink:#E9EFEC;
+    --ink-2:#B4C2BC;
+    --ink-3:#8A9993;
+    --line:#27352F;
+    --line-2:#35453E;
+    --teal:#4FBF9B;
+    --teal-deep:#7ED0C0;
+    --rust:#E89570;
+    --rust-bg:#2C1B13;
+    --ochre:#D9B45C;
+    --ochre-bg:#2A2313;
+    --slate:#9BBAC4;
+    --slate-bg:#16242A;
+    --good:#4FBF9B;
+    --good-bg:#12271F;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1613;
+  --surface:#16211D;
+  --surface-2:#1D2A25;
+  --ink:#E9EFEC;
+  --ink-2:#B4C2BC;
+  --ink-3:#8A9993;
+  --line:#27352F;
+  --line-2:#35453E;
+  --teal:#4FBF9B;
+  --teal-deep:#7ED0C0;
+  --rust:#E89570;
+  --rust-bg:#2C1B13;
+  --ochre:#D9B45C;
+  --ochre-bg:#2A2313;
+  --slate:#9BBAC4;
+  --slate-bg:#16242A;
+  --good:#4FBF9B;
+  --good-bg:#12271F;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  margin:0;
+  padding-block:40px 72px;
+  padding-left:20px;padding-right:20px;
+}
+.wrap{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+
+/* ── Masthead ── */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin:0
+}
+h1{
+  font-family:'IBM Plex Serif',Georgia,serif;
+  font-size:clamp(30px,6.2vw,44px);line-height:1.12;font-weight:600;
+  letter-spacing:-.015em;text-wrap:balance;margin:10px 0 0
+}
+.standfirst{
+  font-size:17px;line-height:1.55;color:var(--ink-2);margin:14px 0 0;max-width:62ch
+}
+.standfirst em{font-family:'IBM Plex Serif',Georgia,serif;font-style:italic;color:var(--ink)}
+.byline{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-3);
+  margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:6px 18px
+}
+
+/* ── Verdict panel ── */
+.verdict{
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--teal);
+  border-radius:3px;padding:22px 24px
+}
+.verdict h2{
+  font-family:'IBM Plex Serif',Georgia,serif;font-size:21px;font-weight:600;
+  line-height:1.3;margin:0 0 10px;text-wrap:balance
+}
+.verdict p{margin:0 0 12px;color:var(--ink-2);font-size:15.5px}
+.verdict p:last-child{margin-bottom:0}
+.verdict strong{color:var(--ink);font-weight:600}
+
+/* ── Pass/fail strip ── */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:16px 18px}
+.panel h3{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;margin:0 0 12px;color:var(--ink-3)
+}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.checks li{
+  display:flex;gap:9px;align-items:baseline;font-size:14px;line-height:1.45;color:var(--ink-2)
+}
+.mark{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0;width:14px
+}
+.mark.ok{color:var(--good)}
+.mark.no{color:var(--rust)}
+.checks b{color:var(--ink);font-weight:600}
+
+/* ── Findings ── */
+.findings{display:flex;flex-direction:column;gap:0}
+.finding{
+  display:grid;grid-template-columns:52px 1fr;gap:0 18px;
+  padding:26px 0;border-top:1px solid var(--line)
+}
+.finding:last-child{border-bottom:1px solid var(--line)}
+.rank{
+  font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:500;
+  color:var(--line-2);line-height:1.1;font-variant-numeric:tabular-nums;padding-top:2px
+}
+.fbody{min-width:0;display:flex;flex-direction:column;gap:11px}
+.fhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.finding h3{
+  font-family:'IBM Plex Serif',Georgia,serif;font-size:20px;font-weight:600;
+  line-height:1.28;margin:0;letter-spacing:-.01em;text-wrap:balance;flex:1;min-width:220px
+}
+.sev{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0
+}
+.sev.crit{background:var(--rust-bg);color:var(--rust)}
+.sev.high{background:var(--ochre-bg);color:var(--ochre)}
+.sev.med{background:var(--slate-bg);color:var(--slate)}
+.finding p{margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.6}
+.finding p strong{color:var(--ink);font-weight:600}
+.measured{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;
+  color:var(--ink-2);background:var(--surface-2);border-left:2px solid var(--line-2);
+  padding:10px 14px;border-radius:0 2px 2px 0;overflow-x:auto
+}
+.measured .lbl{color:var(--ink-3)}
+.measured b{color:var(--ink);font-weight:600}
+pre{
+  margin:0;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:3px;
+  padding:12px 14px;overflow-x:auto;color:var(--ink-2)
+}
+pre b{color:var(--teal);font-weight:600}
+.fix{
+  font-size:15.5px;color:var(--ink-2);border-left:2px solid var(--teal);padding-left:14px
+}
+.fix::before{
+  content:"Fix";font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:3px
+}
+.fix strong{color:var(--ink);font-weight:600}
+
+/* ── Close ── */
+.close{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:22px 24px}
+.close h2{
+  font-family:'IBM Plex Serif',Georgia,serif;font-size:19px;font-weight:600;margin:0 0 12px
+}
+.close ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.close li{color:var(--ink-2);font-size:15.5px;line-height:1.55}
+.close li strong{color:var(--ink);font-weight:600}
+.foot{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-3);
+  line-height:1.6;padding-top:18px;border-top:1px solid var(--line)
+}
+@media (max-width:520px){
+  .finding{grid-template-columns:1fr;gap:8px}
+  .rank{font-size:15px;padding-top:0}
+  .finding h3{min-width:0;font-size:18.5px}
+}
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Interface audit · iOS</p>
+    <h1>HealthyChex Design Review</h1>
+    <p class="standfirst">Ten prioritised changes, ranked by what they cost <em>the person filling in the form</em> — an adult somewhere between 45 and 85, often at a bedside or a kitchen table, answering questions about their own body.</p>
+    <p class="byline"><span>v4.1.1 · Sep 2026</span><span>Measured at 430×932 (Pro Max)</span><span>58 recommendation types</span></p>
+  </header>
+
+  <section class="verdict">
+    <h2>The engineering is ahead of the interface</h2>
+    <p>Contrast, touch targets, focus states and reduced-motion are all handled — that work is genuinely done, and most apps never get there. The recommendation engine is validated at 5,800/5,800. So this review spends no time on fundamentals that already pass.</p>
+    <p>The defining problem is <strong>type size</strong>, and it is not a matter of taste. This app begins screening at 45. Presbyopia — the loss of near focus that sends people to reading glasses — also begins around 45 and is effectively universal by 55. <strong>The app's entire user base is the population least able to read 11px text</strong>, and the results screen goes down to 8px. Findings 1 and 2 follow from that single fact and are worth more than the other eight combined.</p>
+  </section>
+
+  <section class="strip">
+    <div class="panel">
+      <h3>Already solid</h3>
+      <ul class="checks">
+        <li><span class="mark ok">✓</span><span><b>Contrast</b> — every sampled pair passes AA; body text at 8.99:1</span></li>
+        <li><span class="mark ok">✓</span><span><b>Touch targets</b> — zero controls under 44×44pt</span></li>
+        <li><span class="mark ok">✓</span><span><b>Focus + motion</b> — <code>:focus-visible</code> and <code>prefers-reduced-motion</code> both honoured</span></li>
+        <li><span class="mark ok">✓</span><span><b>Icon buttons</b> — all carry accessible labels</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Needs work</h3>
+      <ul class="checks">
+        <li><span class="mark no">✕</span><span><b>Type scale</b> — 2 steps below iOS HIG throughout</span></li>
+        <li><span class="mark no">✕</span><span><b>Dynamic Type</b> — 207 px-based declarations, no response to system text size</span></li>
+        <li><span class="mark no">✕</span><span><b>Dark mode</b> — no <code>prefers-color-scheme</code> block</span></li>
+        <li><span class="mark no">✕</span><span><b>Form semantics</b> — no <code>&lt;label for&gt;</code>, no autocomplete, wrong keyboard for age</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="findings">
+
+    <article class="finding">
+      <div class="rank">01</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Raise the type scale to iOS HIG</h3><span class="sev crit">Critical</span></div>
+        <p>Every token sits roughly two steps below Apple's scale. What the app calls <em>body</em> is Apple's <em>subhead</em>; what it calls <em>callout</em> is Apple's <em>footnote</em>. The result is a clinical form whose questions are set smaller than the caption under a photo.</p>
+        <div class="measured"><span class="lbl">HealthyChex</span> display <b>22</b> · title <b>17</b> · body <b>15</b> · callout <b>13</b> · foot <b>12</b> · cap <b>11</b><br><span class="lbl">iOS HIG   </span> title2 <b>22</b> · headline <b>17</b> · body <b>17</b> · callout <b>16</b> · foot <b>13</b> · cap <b>12</b><br><span class="lbl">Results view</span> contains <b>8px</b> and <b>9px</b> text — below the 11pt floor</div>
+        <p class="fix">Shift the whole ramp up: body <strong>17</strong>, callout <strong>16</strong>, foot <strong>13</strong>, caption <strong>12</strong>, and set an absolute floor of 11 — nothing in the results view below it. Because every size already comes from <code>--f-*</code> tokens, this is a six-line change, then a re-run of your fit measurements. Expect a step or two to overflow again; that is the real cost of this finding, and it is worth paying.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">02</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Support Dynamic Type</h3><span class="sev crit">Critical</span></div>
+        <p>A patient who has already turned up system text size in Settings — the single most-used accessibility feature on iOS, and near-ubiquitous past 60 — sees no change whatsoever in your app. Every size is a hard pixel.</p>
+        <div class="measured"><span class="lbl">Font declarations</span> <b>207</b> in <code>px</code> · <b>40</b> in <code>rem</code></div>
+        <p class="fix">Redefine the <code>--f-*</code> tokens in <code>rem</code> so they inherit the user's root size, and let the frame breathe rather than clamping it:</p>
+        <pre>:root{
+  <b>--f-body</b>:1.0625rem;   /* 17px at default */
+  <b>--f-callout</b>:1rem;     /* 16px */
+  <b>--f-foot</b>:0.8125rem;   /* 13px */
+  <b>--f-cap</b>:0.75rem;      /* 12px */
+}
+html{ -webkit-text-size-adjust:100%; }</pre>
+        <p>Then re-test at 200% text size. Steps will overflow — which is exactly why the scroll cue you just added matters, and why input steps should degrade to scrolling gracefully rather than being pinned to one screen at any cost.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">03</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Ship a dark theme</h3><span class="sev high">High</span></div>
+        <p>There is no <code>prefers-color-scheme</code> block anywhere in the file. A hospitalist checking something at 3am, or any patient whose phone is in dark mode all day, gets a full-brightness white sheet. The groundwork is already laid — the design tokens exist and the page ground is already a deep green-black.</p>
+        <p class="fix">Add a token-only dark block. Do not invert: keep the teal accent readable by lifting it (<code>#0C6B54</code> → roughly <code>#4FBF9B</code>) and let the card surfaces sit just above the ground rather than pure black. Roughly 20 token overrides, no component changes.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">04</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Drop the phone bezel on a phone</h3><span class="sev high">High</span></div>
+        <p>The simulated iPhone frame is lovely on a desktop preview and slightly absurd on an actual iPhone — a phone drawn inside a phone. It costs a rounded mask that clips content near the corners, plus vertical space you have spent this whole session fighting to reclaim.</p>
+        <p class="fix">Keep the bezel as a desktop affordance only, and go edge-to-edge on device:</p>
+        <pre>@media (max-width:500px){
+  .iphone{ border-radius:0; box-shadow:none; }
+  .screen{ height:calc(100dvh - <b>env(safe-area-inset-bottom)</b>); }
+  body{ padding:0; }
+}</pre>
+        <p>Use <code>env(safe-area-inset-*)</code> rather than fixed offsets so the home indicator and the Dynamic Island are handled by the system instead of by your arithmetic.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">05</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Fix the form semantics</h3><span class="sev high">High</span></div>
+        <p>Three separate problems in the first step. Age is <code>type="number"</code> with no <code>inputmode</code>, so iOS offers the full keyboard instead of a number pad. The name fields have no <code>autocomplete</code>, so nothing autofills. And none of the three has a real <code>&lt;label for&gt;</code> — the visible text is a <code>&lt;span&gt;</code>, so VoiceOver announces only the placeholder, which disappears the moment typing starts.</p>
+        <div class="measured"><span class="lbl">#ag</span> type=number · inputmode <b>none</b> · label <b>none</b><br><span class="lbl">#fn/#ln</span> autocomplete <b>none</b> · label <b>none</b></div>
+        <p class="fix">Use real labels tied by <code>for</code>, add <code>autocomplete="given-name"</code> / <code>"family-name"</code>, and give age <code>inputmode="numeric"</code>. Worth noting your smoking fields already do this correctly — <code>inputmode="numeric"</code> and a proper label — so the pattern exists in the file; it just needs applying to step 1.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">06</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Give "unanswered" a visible state</h3><span class="sev high">High</span></div>
+        <p>Now that nothing is pre-selected — the right call — an unanswered question and a question the person deliberately skipped past look identical. The only signal is the footer hint, which names what is missing but doesn't point at it. On a step with three questions, the person has to map a list of names back onto rows.</p>
+        <p class="fix">Mark the row itself. A 2px dashed left rail in your rust tint on any <code>.irow</code> whose value is still empty, cleared the moment it's answered, turns the hint into a confirmation rather than a lookup. Pair it with <code>aria-live="polite"</code> on the hint so VoiceOver announces what remains as it changes.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">07</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Stop the progress bar moving backwards</h3><span class="sev med">Medium</span></div>
+        <p>The denominator changes mid-flow. Answering "Yes" to family cancer history takes the count from 6 steps to 7, and Yes to genetic syndrome takes it to 8 — so the bar can visibly retreat as a reward for giving more information. The count is honest, but the <em>fill</em> reads as lost ground.</p>
+        <p class="fix">Two clean options. Either keep the proportional fill and compute the denominator from the maximum possible path so it only ever shrinks the remaining distance, or drop the proportional fill on this screen and show discrete pips — one per step — which handles a changing count without implying regression.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">08</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Let the results card lead with the action</h3><span class="sev med">Medium</span></div>
+        <p>Each recommendation currently carries the guideline body, a grade badge, a frequency pill, a status control and a reference superscript at near-equal weight, much of it at 8–9px. The one thing the person came for — <em>what do I do, and when</em> — competes with its own provenance.</p>
+        <p class="fix">Set a clear primary line per card (the action and the interval, at body size), keep the status control prominent because it's the interactive part, and demote the grade badge and citation into a tap-to-expand row. You already have the disclosure pattern working in the grade popovers — reuse it. The evidence stays one tap away, which is the right distance for a patient and no real cost to a clinician.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">09</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Make step transitions directional</h3><span class="sev med">Medium</span></div>
+        <p>Forward and back currently use the same fade, so the interface gives no spatial feedback about which way the person moved. Across eight steps plus edit-jumps from the review screen, that's the difference between a flow someone holds a mental model of and one they merely endure.</p>
+        <p class="fix">Slide the incoming step in from the right on Next and from the left on Back, ~200ms, with the existing <code>prefers-reduced-motion</code> guard already in the file collapsing it to a plain swap. An edit jump from the review screen should use the Back direction, then return forward — that's what makes "go fix that one answer" feel like a round trip rather than a detour.</p>
+      </div>
+    </article>
+
+    <article class="finding">
+      <div class="rank">10</div>
+      <div class="fbody">
+        <div class="fhead"><h3>Clean up two pieces of stray chrome</h3><span class="sev med">Medium</span></div>
+        <p>The brand bar reads <strong>"iPhone 17 preview"</strong> — developer scaffolding sitting in the most prominent horizontal strip on the screen, telling the person nothing about their own health. And the medical disclaimer now appears only on the review step, which I moved there to buy vertical space; for a tool that generates clinical recommendations, that trade deserves your explicit sign-off rather than mine.</p>
+        <p class="fix">Replace the preview label with the active profile name — it's the one piece of context that earns that position in a multi-profile app — or drop the strip entirely on device. For the disclaimer, consider a persistent one-line footnote in the results view, where recommendations are actually read, rather than only on the screen before they're generated.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="close">
+    <h2>If you only do three</h2>
+    <ol>
+      <li><strong>Findings 1 and 2 together.</strong> They are the same fix approached twice — get the scale right, then make it respond to the system. Everything else is refinement on top of a form your users can read.</li>
+      <li><strong>Finding 5.</strong> An afternoon's work, and it makes the first screen — the one with the highest abandonment risk in any form — autofill, open the right keyboard, and read correctly under VoiceOver.</li>
+      <li><strong>Finding 6.</strong> It completes the change you just made. Removing the defaults was the clinically correct decision; showing people what's still blank is what makes it feel like care rather than an obstacle.</li>
+    </ol>
+  </section>
+
+  <p class="foot">Measured against index.html v4.1.1 in a 430×932 viewport: computed styles, contrast ratios sampled per element against their resolved backgrounds, and control bounding boxes. Contrast and touch-target results reflect the form view; the results view was sampled separately for type size only.</p>
+
+</div>

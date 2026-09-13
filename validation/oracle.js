@@ -68,6 +68,10 @@ function oracleEngine(S){
     if(crcFamHx && a>=40 && a<=75) E.push(fam('crc2')?'crcfh2':'crcfh1');
     else if(a>=45 && a<=75) E.push('crc');
     if(a>=76 && a<=85) E.push('crcsel');
+    // ACS 2026 Table 1: "clinicians discourage individuals older than 85 years from
+    // continuing colorectal cancer screening" (qualified recommendation). Derived from the
+    // guideline's own wording — older than 85 — not from the app's RULES.crcstop.start.
+    if(a>85) E.push('crcstop');
   }
   if(g==='M'&&a>=40&&a<=69){ if(fam('prostate')) E.push('psafh'); else if(a>=55&&a<=69) E.push('psa'); }
   // USPSTF 2021 LDCT: age 50-80, >=20 pack-years, current smoker or quit <=15 yrs.
