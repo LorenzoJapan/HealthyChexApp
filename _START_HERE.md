@@ -71,4 +71,19 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
 
-Open design-review items: 3 (dark theme), 4 (drop the bezel on device / `env(safe-area-inset-*)`), 7 (progress denominator changes mid-flow), 8 (results card density), 9 (directional step transitions). See `docs/HealthyChex_Design_Review_091326.html`.
+### v4.1.2 — screen fit and streamlining (October 2026)
+
+UI layer only: the engine, `RULES` (still `_version 2026-09-13`) and the 58 recommendation types are untouched; no changed line falls inside `gen()` or `RULES`. Every addition uses new `hcx-` class names, and the existing functions it touches (`goStep`, `sv2`, `showWS`, `setOutputMode`, `updFProg`) are wrapped or reassigned at the end of the script rather than edited. Spec workbook held at v4.1.1 (no clinical content changed).
+
+- **Screen fit (item 4).** On touch devices the demo bezel, brand strip, drawn island and home pill are dropped; the app runs edge to edge with `env(safe-area-inset-*)`. On desktop the frame is locked to iPhone 13 Pro Max (428 × 926 pt) and scaled to fit the window (`--hcx-fit`).
+- **Spare height.** `hcxRoom()` measures each intake step on entry, with every conditional reveal forced open: 120px+ spare → `.hcx-roomy` enlarges prompts and targets (kept only if it still fits); the rest becomes a top offset (`--hcx-pad`), not flex centring, so a "Yes" reveal grows downward. Review step excluded.
+- **Copy.** "Known genetic syndrome" → "Inherited cancer gene" (row, `*` popover listing BRCA1/2, Lynch, FAP, step title, review, hint). `S.syndrome` unchanged.
+- **Remove this person** from intake, results and Welcome (Manage data), confirmed through an in-app action sheet (`hcxConfirm`) — `window.confirm()` is silently blocked in sandboxed previews. Unsaved drafts are just cleared.
+- **Welcome back (suggestion 2).** One primary "Open my checklist" (regenerates, keeps statuses, skips the view prompt); "Edit my answers" opens Review; "Due now" list opens and highlights the card. Backup/Restore/Remove/Clear moved into a collapsed "Manage data".
+- **First screen (3).** Import is a header link to the same panel; privacy + Add-to-Home-Screen notes moved off Review into a one-time sheet after the first checklist (`healthychex_onboard_v1`).
+- **Consistency (4, item 7).** One prompt style for every question; progress always "n of 6" (detail steps count inside Medical history).
+- **Native feel (5, items 3, 9).** Dark mode via `prefers-color-scheme` (screen only; print stays light); each step and screen is a history entry, so Safari's edge-swipe/Back go back one step, and a left-edge swipe does it in the Home Screen app; directional slide transitions (off under Reduce Motion).
+
+> **Known issues, not changed:** the first-launch disclaimer modal ships with `style="display: none;"` and no code ever shows it (present in v4.1.1). The FHIR "reviewed imported data?" check in `gen()` still uses `confirm()`. "Clear all data" also still uses `confirm()`.
+
+Open design-review items: 8 (results card density — triage into Due now / Coming up / Up to date). See `docs/HealthyChex_Design_Review_091326.html`.

@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="HealthyChex">
-<meta name="theme-color" content="#0C6B54">
+<meta name="theme-color" content="#0C6B54" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1412" media="(prefers-color-scheme: dark)">
 <meta name="description" content="Preventive health checklist, tailored to current screening guidelines. Your data stays on your device.">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADOUlEQVR42u3dzVHbQBiAYbHDkVSSdkgLXMg5ReTMiRaoJ5XQAAdmNJ78OGN7JX0/z3sNxNbu49UaJHz38Py4SH9rGALBITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHNqg+3qH9Ovn61EP/fXHk5WDjIiPDkf0uankY5DBhw2p4BAcgkNwKGTRfwj2/vJ2/gu+fP/m+ffC8d8xLdN6pAGVDDIcdY6VoyeL3w4/zhIyyLCERMdBRsDR8FZWsXHc8kJZvzfOtRTrM5lyXK1xTByFCD4mPofDfVQ4rZwO4rE+Th+9wC6qyGWC7y9v6zvACOtHjf31KDOIceajzEGVusD48B8iFXtDXvDqcz8ysSEVHIJDcAgOwSE4BIcEh+AQHIJDcAgOwSE4BIfgkODYo+B/PgSOg2Xk9QHHHmtGUh9w7GclHRE4dt1q5PIBx96b0EQ+4Djg7UkWH3Ac88Y1xRYEjhyY4Gg308Fv64WDDDganx3gSFaKvxMBhxMKHGTAQQYcNqFw2ITC4YQCBxlwkFFCBhw2oXDYhMLhhAIHGXDYasARfP6u+5993kosGXFe32U+tmHUkLHR+tFzq1EEx5+TN9FHcxm5cWx6V1nbTWgFHJveVdZ5E5oeR8C7ykp+dtgoKeMWH7YaWXFcOnNbf/1S+vMGk+G4Yia2XmlsSLv4sGyk35Bu4cMJpc5b2bk+yCiFY6IPMgrimOLDJrQsjkP2p02WjaXGr+yv9uGEUh/HbutHKxlLpcsEt565bjKWYteQNpw/OI730ZNdwavPp09k2wWp5q0JE6ez86mq7H0r9h9wbOujubDid7zdMrvWnvq3Q143x2QsTe6VvXSmyWiEw3zDMccHRh1xnJ/4z38i47T7bgf8Of2nv5JdQZDRHQcHTiuCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOATHufxhncjjY+UQHMqIw5kl7MgMo0CG04rS4rB4BByNYUTI+Fd3D8+P0Uan7U0l0V4ewxg56kwrR6tVJPIrIToOOa0IDsEhOASH4JDgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkNwGALBoYv7AFy2NrMNLvLOAAAAAElFTkSuQmCC">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADOUlEQVR42u3dzVHbQBiAYbHDkVSSdkgLXMg5ReTMiRaoJ5XQAAdmNJ78OGN7JX0/z3sNxNbu49UaJHz38Py4SH9rGALBITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHNqg+3qH9Ovn61EP/fXHk5WDjIiPDkf0uankY5DBhw2p4BAcgkNwKGTRfwj2/vJ2/gu+fP/m+ffC8d8xLdN6pAGVDDIcdY6VoyeL3w4/zhIyyLCERMdBRsDR8FZWsXHc8kJZvzfOtRTrM5lyXK1xTByFCD4mPofDfVQ4rZwO4rE+Th+9wC6qyGWC7y9v6zvACOtHjf31KDOIceajzEGVusD48B8iFXtDXvDqcz8ysSEVHIJDcAgOwSE4BIcEh+AQHIJDcAgOwSE4BIfgkODYo+B/PgSOg2Xk9QHHHmtGUh9w7GclHRE4dt1q5PIBx96b0EQ+4Djg7UkWH3Ac88Y1xRYEjhyY4Gg308Fv64WDDDganx3gSFaKvxMBhxMKHGTAQQYcNqFw2ITC4YQCBxlwkFFCBhw2oXDYhMLhhAIHGXDYasARfP6u+5993kosGXFe32U+tmHUkLHR+tFzq1EEx5+TN9FHcxm5cWx6V1nbTWgFHJveVdZ5E5oeR8C7ykp+dtgoKeMWH7YaWXFcOnNbf/1S+vMGk+G4Yia2XmlsSLv4sGyk35Bu4cMJpc5b2bk+yCiFY6IPMgrimOLDJrQsjkP2p02WjaXGr+yv9uGEUh/HbutHKxlLpcsEt565bjKWYteQNpw/OI730ZNdwavPp09k2wWp5q0JE6ez86mq7H0r9h9wbOujubDid7zdMrvWnvq3Q143x2QsTe6VvXSmyWiEw3zDMccHRh1xnJ/4z38i47T7bgf8Of2nv5JdQZDRHQcHTiuCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOATHufxhncjjY+UQHMqIw5kl7MgMo0CG04rS4rB4BByNYUTI+Fd3D8+P0Uan7U0l0V4ewxg56kwrR6tVJPIrIToOOa0IDsEhOASH4JDgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkNwGALBoYv7AFy2NrMNLvLOAAAAAElFTkSuQmCC">
@@ -627,6 +628,172 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 .icsb{min-height:var(--touch);padding:12px 8px;background:var(--ink);color:#fff;border:none;border-radius:var(--r-md);font-size:var(--f-callout);font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;width:calc(100% - 28px);margin:8px 14px 0;transition:var(--tap)}
 .icsb:active{transform:scale(.98)}
 </style>
+<style id="hcx-fit">
+/* ── v4.1.2 screen fit ── Additive: no existing selector, class or ID is modified.
+   Two modes, chosen by input type rather than width so a narrow desktop window is still a preview:
+   1. ON DEVICE (touch-primary: iPhone, iPad, or touch emulation). The demo chrome — brand strip,
+      bezel, drawn Dynamic Island and home pill — was being rendered inside the real phone, costing
+      ~150px of height and 20px of width on every screen. It is dropped; the app runs edge to edge,
+      clearing the real status bar and home indicator with env(safe-area-inset-*).
+      Closes design-review item 4.
+   2. DESKTOP PREVIEW (mouse/trackpad). The frame is locked to iPhone 13 Pro Max logical size,
+      428 x 926 pt — the smallest supported device — so what you see is exactly what that phone
+      gets. If the window is shorter than the phone, the whole frame scales down to fit (JS sets
+      --hcx-fit) instead of the layout reflowing to a shorter screen. */
+@media (hover:none) and (pointer:coarse){
+  html,body{background:var(--canvas)}
+  body{padding:0;min-height:0}
+  .brand,.island,.hpill{display:none}
+  .iphone{width:100%;max-width:600px;align-self:center;border-radius:0;box-shadow:none}
+  .screen{height:100vh;height:100dvh;max-height:none;overscroll-behavior-y:contain}
+  .hero,.rhero{padding-top:calc(env(safe-area-inset-top,0px) + 14px)}
+  .rtopdisc{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}
+  #vf.fdeep{padding-top:env(safe-area-inset-top,0px)}
+  .hp{padding:0 0 env(safe-area-inset-bottom,0px)}
+  #vf .hp{display:none}
+  .fnav{padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
+  .scue{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+}
+@media (hover:hover),(pointer:fine){
+  .brand{width:calc(428px * var(--hcx-fit,1));max-width:none;align-self:center}
+  .iphone{width:428px;max-width:none;align-self:center;transform:scale(var(--hcx-fit,1));transform-origin:top center;margin-bottom:calc((var(--hcx-fit,1) - 1) * 926px)}
+  .screen{height:926px;max-height:none}
+}
+/* v4.1.2 reset from any screen. New class names only (see the .rdisc selector trap). */
+.fprog-row .fprog-cnt{margin-left:auto}
+.hcx-reset{min-height:var(--touch);margin:-13px -6px -13px 8px;padding:0 6px;border:none;background:transparent;color:var(--rust-fill);font-family:inherit;font-size:var(--f-cap);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
+.hcx-reset:active{opacity:.6}
+.hcx-rclr{display:flex;align-items:center;justify-content:center;gap:6px;width:calc(100% - 28px);min-height:var(--touch);margin:0 14px 12px;padding:10px;background:transparent;color:var(--rust-fill);border:1px solid var(--rust-line);border-radius:var(--r-md);font-size:var(--f-foot);font-weight:500;cursor:pointer;font-family:inherit;transition:var(--tap)}
+.hcx-rclr:active{transform:scale(.98);background:var(--rust-tint)}
+@media print{.hcx-reset,.hcx-rclr{display:none!important}}
+/* v4.1.2 collapsed "Manage data" on Welcome back */
+.hcx-manage{margin-top:10px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper)}
+.hcx-manage-s{list-style:none;display:flex;align-items:center;gap:7px;min-height:var(--touch);padding:0 13px;font-size:var(--f-foot);font-weight:600;color:var(--ink-2);cursor:pointer}
+.hcx-manage-s::-webkit-details-marker{display:none}
+.hcx-manage-c{margin-left:auto;color:var(--ink-3);transition:transform .2s var(--ease-out)}
+.hcx-manage[open] .hcx-manage-c{transform:rotate(90deg)}
+.hcx-manage-b{padding:0 12px 12px}
+.hcx-manage-n{font-size:var(--f-cap);color:var(--ink-3);line-height:1.45;margin-bottom:8px}
+.hcx-manage-b .wbtool.danger{margin-top:8px}
+.hcx-manage-b .wbclr{margin-top:8px}
+@media print{.hcx-manage{display:none!important}}
+/* v4.1.2 use spare height on intake steps. JS (hcxRoom) measures each step on entry, with
+   every conditional reveal forced open so the result can't change mid-step:
+   - if the step has 120px+ spare even then, .hcx-roomy enlarges questions and answer
+     targets — kept only if the enlarged step still fits without scrolling;
+   - the remaining gap is put above the questions (--hcx-pad), placing them just above
+     the middle. It's a top offset, not flex centring, so a "Yes" reveal grows downward into
+     reserved space instead of shifting the question the person just tapped.
+   The review step is a dense summary and stays top-aligned. */
+.fstep.on{padding-top:var(--hcx-pad,0px)}
+.fstep.hcx-roomy .ilbl{font-size:var(--f-title)!important;color:var(--ink-2)!important}
+.fstep.hcx-roomy .bl,.fstep.hcx-roomy .famq{font-size:var(--f-callout)}
+.fstep.hcx-roomy .famopt-t{font-size:var(--f-body)}
+.fstep.hcx-roomy .ib,.fstep.hcx-roomy .gbtn,.fstep.hcx-roomy .yb,.fstep.hcx-roomy .fi{min-height:52px;font-size:var(--f-body)}
+/* 3-option strips get the taller target only: their labels don't wrap and would collide */
+.fstep.hcx-roomy .tb,.fstep.hcx-roomy .s3b,.fstep.hcx-roomy .ab,.fstep.hcx-roomy .ivb{min-height:52px}
+.fstep.hcx-roomy .chip{min-height:var(--touch);font-size:var(--f-callout)}
+.fstep.hcx-roomy .blkf{padding:14px 14px}
+/* v4.1.2 confirmation sheet */
+.hcx-sheet{position:fixed;inset:0;z-index:10000;display:none;align-items:flex-end;justify-content:center;background:rgba(10,18,15,.45);padding:0 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.hcx-sheet.on{display:flex}
+.hcx-sheet-box{width:100%;max-width:420px;animation:viewIn .22s var(--ease-out)}
+.hcx-sheet-card{background:var(--paper);border-radius:14px;overflow:hidden;text-align:center;margin-bottom:8px}
+.hcx-sheet-t{font-size:var(--f-callout);font-weight:600;color:var(--ink);padding:16px 18px 4px}
+.hcx-sheet-m{font-size:var(--f-foot);color:var(--ink-3);line-height:1.45;padding:0 18px 14px}
+.hcx-sheet-ok,.hcx-sheet-no{display:block;width:100%;min-height:56px;border:none;background:var(--paper);font-family:inherit;font-size:var(--f-body);cursor:pointer}
+.hcx-sheet-ok{border-top:0.5px solid var(--line-2);color:#C4271D;font-weight:500}
+.hcx-sheet-no{border-radius:14px;color:var(--teal-ink);font-weight:600}
+.hcx-sheet-ok:active,.hcx-sheet-no:active{background:var(--slate-tint)}
+@media print{.hcx-sheet{display:none!important}}
+/* ═══ v4.1.2 streamlining (design suggestions 2–5) — additive ═══ */
+/* #2 Welcome back: one primary action; items due now are listed and open their card */
+#vw .wbbtns{display:none}
+#view-results-btn{display:none!important}
+.hcx-open{width:100%;min-height:52px;padding:13px;border:none;border-radius:var(--r-md);background:var(--teal);color:#fff;font-family:inherit;font-size:var(--f-body);font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 4px 14px rgba(12,107,84,.28);transition:var(--tap)}
+.hcx-open:active{transform:scale(.98);background:var(--teal-deep)}
+.hcx-edit{width:100%;min-height:var(--touch);margin-top:2px;border:none;background:transparent;color:var(--teal-ink);font-family:inherit;font-size:var(--f-callout);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.hcx-due{margin-bottom:12px}
+.hcx-due:empty{display:none}
+.hcx-due-i{display:flex;align-items:center;gap:8px;width:100%;min-height:var(--touch);padding:6px 0;border:none;border-bottom:1px solid var(--line);background:transparent;font-family:inherit;text-align:left;cursor:pointer}
+.hcx-due-i:last-child{border-bottom:none}
+.hcx-due-i:active{background:var(--mint-3)}
+.hcx-due-i .ti-chevron-right{color:var(--ink-3);flex-shrink:0}
+.hcx-due-none{font-size:var(--f-foot);color:var(--ink-3);padding:2px 0 4px}
+.hcx-flash{box-shadow:0 0 0 3px var(--teal)!important;transition:box-shadow .3s ease}
+/* iOS Share glyph (Tabler share-2, MIT) — was referenced but never inlined, so it drew a square */
+.ti-share{--ti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d=%22M8 9h-1a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-8a2 2 0 0 0 -2 -2h-1%22 /%3E %3Cpath d=%22M12 14v-11%22 /%3E %3Cpath d=%22M9 6l3 -3l3 3%22 /%3E%3C/svg%3E")}
+/* #3 First screen: import is a header link; privacy + install notes move to a one-time sheet */
+.hcx-smartwrap{display:none}
+.hcx-import{margin-left:auto;align-self:center;flex-shrink:0;min-height:var(--touch);padding:0 4px;border:none;background:transparent;color:var(--blue-ink);font-family:inherit;font-size:var(--f-foot);font-weight:600;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+#vf .foutro{display:none!important}
+.hcx-info-row{display:flex;gap:10px;text-align:left;padding:0 18px 12px;font-size:var(--f-foot);color:var(--ink-2);line-height:1.45}
+.hcx-info-row i{flex-shrink:0;margin-top:2px;color:var(--teal-ink)}
+.hcx-info-row strong{color:var(--ink);font-weight:600}
+/* #4 One question style: every prompt the same size, weight and colour (several were
+   hard-coded 12px grey inline); the enlarged mode lifts them all together */
+.fstep .ilbl{font-size:var(--f-callout)!important;font-weight:500!important;color:var(--ink)!important}
+.fstep .bl{font-size:var(--f-callout);font-weight:500;color:var(--ink)}
+.fstep.hcx-roomy .ilbl,.fstep.hcx-roomy .bl{font-size:var(--f-title)!important}
+/* #5 Native feel: steps slide in from the side you're heading to */
+@keyframes hcxInR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes hcxInL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+#vf.hcx-fwd .fstep.on{animation:hcxInR .28s var(--ease-out)}
+#vf.hcx-back .fstep.on{animation:hcxInL .28s var(--ease-out)}
+.screen{overflow-x:hidden}
+/* #5 Dark mode — follows the iPhone's setting. Screen only: printouts stay light. */
+:root{color-scheme:light dark}
+@media print{:root{color-scheme:light}}
+@media screen and (prefers-color-scheme:dark){
+  :root{
+    --ink:#E7EFEB; --ink-2:#C3D0CA; --ink-3:#98A8A1;
+    --teal:#13775E; --teal-deep:#0E5E4A; --teal-ink:#7FD6BC;
+    --mint:#153229; --mint-2:#24503F; --mint-3:#11231D;
+    --canvas:#0E1412; --paper:#1A2320; --line:#2A3632; --line-2:#3C4A45;
+    --amber-ink:#F2C879; --amber-tint:#33270F; --amber-line:#5E4718; --amber-fill:#9A600C;
+    --rust-ink:#F4AC8C; --rust-tint:#3A1D14; --rust-line:#653222; --rust-fill:#B0482A;
+    --blue-ink:#A3C8F4; --blue-tint:#13233A; --blue-line:#284572;
+    --violet-ink:#C9BCF8; --violet-tint:#231D40; --violet-line:#3D3373;
+    --slate-ink:#BBC6CC; --slate-tint:#1E2629;
+    --elev-1:0 1px 2px rgba(0,0,0,.4);
+  }
+  html,body{background:#060A09}
+  .fprog{background:rgba(14,20,18,.94)}
+  .fnav{background:linear-gradient(to bottom,rgba(14,20,18,0) 0,var(--canvas) 12px,var(--canvas) 100%)}
+  .scue{background:rgba(26,35,32,.94)}
+  .hpill{background:rgba(231,239,235,.3)}
+  .rtopdisc{background:var(--rust-tint);color:var(--rust-ink);border-bottom-color:var(--rust-line)}
+  .fhint{background:var(--rust-tint);color:var(--rust-ink);border-color:var(--rust-line)}
+  .hipaa-banner-txt strong{color:var(--amber-ink)}
+  .wbtool.danger{background:var(--rust-tint);border-color:var(--rust-line);color:var(--rust-ink)}
+  .gb-b{background:#173328;color:#9BDCC3;border-color:#28503F}
+  .gb-i{border-color:var(--line-2)}
+  .fhir-rc.miss{background:var(--paper)}
+  .crc-opt.type-stool.sel{background:#0F2E35;color:#8FD3E3}
+  .crc-pick-one{background:#0F2A33;border-color:#1E4A57;color:#8FD3E3}
+  .crc-why{color:#C4B1FA}
+  .smart-file-zone:hover{background:#1A2D47}
+  .hcx-sheet-ok{color:#FF6B5E}
+  .pop-sti{border-color:#5A2A40}
+  .ast.p{color:#F08CB4}
+  input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1)}
+  /* inline colours written into the markup and generated cards */
+  [style*="color:#1e293b"],[style*="color: rgb(30, 41, 59)"]{color:var(--ink)!important}
+  [style*="color:#64748b"],[style*="color:#94a3b8"],[style*="color: rgb(100, 116, 139)"]{color:var(--ink-3)!important}
+  [style*="color:#085041"],[style*="color:#0C6B54"],[style*="color:#0F6E56"]{color:var(--teal-ink)!important}
+  [style*="color:#1e40af"],[style*="color:#185FA5"]{color:var(--blue-ink)!important}
+  [style*="background:#fff"],[style*="background: rgb(255, 255, 255)"],[style*="background:#ffffff"]{background:var(--paper)!important}
+  [style*="border-color: rgb(226, 232, 240)"],[style*="border:1px solid #e2e8f0"]{border-color:var(--line-2)!important}
+  #rintro{background:var(--mint-3)!important;border-bottom-color:var(--mint-2)!important}
+  .catic{background:var(--mint)!important}
+  [style*="background:#f8fafc"],[style*="background:#ffffff"]{background:var(--paper)!important}
+  [style*="background:#F0FBF6"],[style*="background:#E1F5EE"]{background:var(--mint-3)!important}
+  [style*="background:#EFF6FF"]{background:var(--blue-tint)!important}
+  [style*="background:#FFFBF0"],[style*="background:#FFF7ED"]{background:var(--amber-tint)!important}
+  [style*="color:#92400E"],[style*="color:#78350F"]{color:var(--amber-ink)!important}
+  [style*="border:1px solid #FED7AA"]{border-color:var(--amber-line)!important}
+}
+</style>
 
 <!-- PRINT PAGE TEMPLATE (hidden in app, shown when printing) -->
 </head><body><div id="print-page" style="display:none">
@@ -794,6 +961,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
             <div class="wbst"><div class="wbstn" id="wbd">13</div><div class="wbstl">Completed last session</div></div>
             <div class="wbst"><div class="wbstn" id="wbov">1</div><div class="wbstl">Due or overdue now</div></div>
           </div>
+          <div id="hcx-due" class="hcx-due"></div>
           <div class="wbht"><i class="ti ti-history" style="font-size:11px;margin-right:3px"></i>Recent completed items</div>
           <div id="wbl"><div class="wbi"><span class="wbin">Influenza (flu) vaccine</span><span class="wbid">Oct 1, 2026</span><span class="wbadge fut">On track</span></div><div class="wbi"><span class="wbin">Height &amp; weight (BMI)</span><span class="wbid">Jun 18, 2026</span><span class="wbadge fut">On track</span></div><div class="wbi"><span class="wbin">Motor vehicle safety</span><span class="wbid">Jun 18, 2026</span></div><div class="wbi"><span class="wbin">Blood pressure check</span><span class="wbid">Jun 17, 2026</span><span class="wbadge fut">On track</span></div><div class="wbi"><span class="wbin">Cholesterol panel</span><span class="wbid">Aug 5, 2023</span><span class="wbadge fut">On track</span></div><div class="wbi"><span class="wbin">HIV screening</span><span class="wbid">May 29, 1993</span><span class="wbadge ov">Overdue</span></div></div>
         </div>
@@ -801,24 +969,33 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
           <button class="wbbtn p" onclick="resume()"><i class="ti ti-arrow-right" style="font-size:14px"></i> Use saved data</button>
           <button class="wbbtn s" onclick="freshForm()"><i class="ti ti-edit" style="font-size:14px"></i> Update profile</button>
         </div>
-        <button class="wbclr" onclick="clearAll()"><i class="ti ti-trash" style="font-size:12px"></i> Clear all data — start as new patient</button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px">
-          <button class="wbtool" onclick="exportData()"><i class="ti ti-download" style="font-size:13px"></i> Backup (.json)</button>
-          <button class="wbtool" onclick="document.getElementById(&#39;restore-input&#39;).click()"><i class="ti ti-upload" style="font-size:13px"></i> Restore backup</button>
-        </div>
-        <input type="file" id="restore-input" accept=".json,application/json" style="display:none" onchange="importDataFile(this)">
-        <button class="wbtool danger" onclick="deleteProfile(activeId)"><i class="ti ti-user-minus" style="font-size:13px"></i> Remove this person only</button>
+        <button class="hcx-open" type="button" onclick="hcxOpen()"><i class="ti ti-clipboard-check" style="font-size:16px"></i> Open my checklist</button>
+        <button class="hcx-edit" type="button" onclick="hcxEdit()"><i class="ti ti-edit" style="font-size:13px"></i> Edit my answers</button>
         <!-- View saved results if they exist -->
         <button id="view-results-btn" style="display: block; width: 100%; margin-top: 8px; padding: 9px; background: rgb(230, 241, 251); color: rgb(24, 95, 165); border: 1px solid rgb(147, 197, 253); border-radius: 9px; font-size: 11px; font-weight: 500; cursor: pointer; font-family: inherit;" onclick="showResults()"><i class="ti ti-clipboard-list" style="font-size:13px"></i> View my last checklist results</button>
+        <!-- v4.1.2: data tools tucked into a collapsed section; same elements, ids and handlers -->
+        <details class="hcx-manage">
+          <summary class="hcx-manage-s"><i class="ti ti-database-import" style="font-size:13px"></i> Manage data <i class="ti ti-chevron-right hcx-manage-c" style="font-size:13px"></i></summary>
+          <div class="hcx-manage-b">
+            <div class="hcx-manage-n">Everything is stored only on this phone. A backup file is the only copy that can survive deleting the app or moving to a new phone.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px">
+            <button class="wbtool" onclick="exportData()"><i class="ti ti-download" style="font-size:13px"></i> Backup (.json)</button>
+            <button class="wbtool" onclick="document.getElementById(&#39;restore-input&#39;).click()"><i class="ti ti-upload" style="font-size:13px"></i> Restore backup</button>
+          </div>
+          <input type="file" id="restore-input" accept=".json,application/json" style="display:none" onchange="importDataFile(this)">
+          <button class="wbtool danger" onclick="deleteProfile(activeId)"><i class="ti ti-user-minus" style="font-size:13px"></i> Remove this person only</button>
+          <button class="wbclr" onclick="clearAll()"><i class="ti ti-trash" style="font-size:12px"></i> Clear all data — start as new patient</button>
+          </div>
+        </details>
       </div>
       <div class="hp"><div class="hpill"></div></div>
     </div>
 
     <!-- FORM -->
     <div class="view active" id="vf">
-      <div class="hero"><div class="hero-icon"><i class="ti ti-heart-rate-monitor" style="color:#fff;font-size:18px"></i></div><div><div class="ht">HealthyChex</div><div class="hs">Fill in your profile for your checklist</div></div></div>
+      <div class="hero"><div class="hero-icon"><i class="ti ti-heart-rate-monitor" style="color:#fff;font-size:18px"></i></div><div><div class="ht">HealthyChex</div><div class="hs">Fill in your profile for your checklist</div></div><button class="hcx-import" type="button" onclick="openSmartModal()"><i class="ti ti-file-import" style="font-size:14px"></i> Import records</button></div>
       <!-- SMART on FHIR IMPORT BUTTON -->
-      <div style="padding:8px 10px 0">
+      <div class="hcx-smartwrap" style="padding:8px 10px 0">
         <button class="smart-btn" onclick="openSmartModal()">
           <i class="ti ti-heartbeat" style="font-size:18px"></i>
           <span>Connect &amp; Import Health Records</span>
@@ -855,6 +1032,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
           <div class="fprog-row">
             <span class="fprog-lbl" id="fprog-lbl">About you</span>
             <span class="fprog-cnt"><span id="fprog-n">1</span> of 5</span>
+            <button class="hcx-reset" type="button" onclick="hcxReset()" aria-label="Remove this person and their answers"><i class="ti ti-user-minus" style="font-size:12px"></i> Remove</button>
           </div>
           <div class="fprog-track"><div class="fprog-fill" id="fprog-fill"></div></div>
         </div>
@@ -906,8 +1084,13 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
         </div>
         <div class="blkf">
           <div class="irow">
-            <span class="ilbl">Known genetic syndrome <span class="synsub">in you or a blood relative</span></span>
+            <span class="ilbl">Inherited cancer gene <button class="aib" onclick="tp(&#39;pp-syn&#39;)" aria-label="Which inherited cancer genes count"><span class="ast c">*</span></button> <span class="synsub">in you or a blood relative</span></span>
             <div class="iyn"><button class="ib" id="syn" onclick="tsyn(false)">No</button><button class="ib" id="syy" onclick="tsyn(true)">Yes</button></div>
+          </div>
+          <div class="pop pop-fam" id="pp-syn">
+            <div class="ptitle"><span><i class="ti ti-dna" style="font-size:12px;color:#993C1D"></i> Cancer genes that count</span><button class="pcls" onclick="tp(&#39;pp-syn&#39;)" aria-label="Close"><i class="ti ti-x"></i></button></div>
+            <ul class="plist"><li><span class="pdot c"></span><span><span class="pibl">BRCA1/2</span> — inherited mutation that raises the risk of breast, ovarian, prostate and pancreatic cancer</span></li><li><span class="pdot c"></span><span><span class="pibl">Lynch syndrome</span> — inherited mismatch-repair gene mutation (MLH1, MSH2, MSH6, PMS2, EPCAM) that raises the risk of colorectal, endometrial and other cancers</span></li><li><span class="pdot c"></span><span><span class="pibl">Familial adenomatous polyposis (FAP)</span> — APC gene mutation that causes hundreds of colon polyps and, untreated, near-certain colorectal cancer</span></li></ul>
+            <div class="pnote">Answer "Yes" if genetic testing has found one of these in you or a blood relative.</div>
           </div>
           <div class="rev" id="synchips" style="margin-top:6px">
             <div class="bsubc" style="border-radius:7px">
@@ -1045,6 +1228,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
       <button class="icsb" onclick="exportICS()"><i class="ti ti-calendar-plus" style="font-size:15px"></i> Add due dates to my calendar (.ics)</button>
       <button class="backb" onclick="goBack()"><i class="ti ti-arrow-left"></i> Edit my profile</button>
       <button class="newb" onclick="showW()"><i class="ti ti-home" style="font-size:13px"></i> Back to home</button>
+      <button class="hcx-rclr" type="button" onclick="hcxReset()"><i class="ti ti-user-minus" style="font-size:12px"></i> Remove this person only</button>
       <div class="disc">Not a substitute for professional medical care. Informational use only. Data stored locally on this device — never transmitted or shared.</div>
       <div class="hp"><div class="hpill"></div></div>
     </div>
@@ -1596,7 +1780,7 @@ function profileList(){var store=loadStore();return Object.keys(store.profiles).
 function renderProfiles(){var bar=document.getElementById('profile-bar');if(!bar)return;var list=profileList();var html='';list.forEach(function(p){var nm=fullName(p.profile)||'Unnamed';var act=p.id===activeId;html+='<button class="pchip'+(act?' act':'')+'" onclick="switchProfile(\''+p.id+'\')"><i class="ti ti-user" style="font-size:10px"></i> '+nm+'</button>';});html+='<button class="pchip add" onclick="newProfile()"><i class="ti ti-plus" style="font-size:10px"></i> Add person</button>';bar.innerHTML=html;}
 function switchProfile(id){if(id===activeId){var d0=ld();if(d0&&d0.items&&Object.keys(d0.items).length>0){showWS(d0);}return;}sv();var store=loadStore();var p=store.profiles[id];if(!p)return;activeId=id;store.activeId=id;saveStore(store);loadProfileIntoState(p);if(p.items&&Object.keys(p.items).length>0){showWS(ld());}else{resetF();rf();showF();}}
 function newProfile(){if(activeId)sv();activeId=genId();S=blankProfile();IS={};lastResultsHTML='';lastEBRHTML='';lastMeta='';lastProgress={done:0,pct:0,txt:'0 done'};var store=loadStore();store.activeId=activeId;store.profiles[activeId]={id:activeId,name:'',profile:S,items:IS,savedAt:new Date().toISOString(),resultsHTML:'',ebrHTML:'',meta:'',progress:lastProgress};saveStore(store);resetF();rf();showF();}
-function deleteProfile(id){if(!id)return;var store=loadStore();var p=store.profiles[id];if(!p)return;var nm=fullName(p.profile)||'this person';if(!confirm('Remove '+nm+' and their checklist from this device? This cannot be undone.'))return;delete store.profiles[id];var ids=Object.keys(store.profiles);if(id===activeId)activeId=ids[0]||'';store.activeId=activeId;saveStore(store);if(activeId){var np=store.profiles[activeId];loadProfileIntoState(np);if(np.items&&Object.keys(np.items).length>0){showWS(ld());}else{resetF();rf();showF();}}else{S=blankProfile();IS={};lastResultsHTML='';lastEBRHTML='';lastMeta='';lastProgress={done:0,pct:0,txt:'0 done'};resetF();rf();showF();}}
+function deleteProfile(id){if(!id)return;var store=loadStore();var p=store.profiles[id];if(!p)return;var nm=fullName(p.profile)||'this person';hcxConfirm({title:'Remove '+nm+'?',msg:'Their answers and checklist will be deleted from this device. Other saved people are kept. This can\'t be undone.',ok:'Remove '+nm,onOk:function(){delete store.profiles[id];var ids=Object.keys(store.profiles);if(id===activeId)activeId=ids[0]||'';store.activeId=activeId;saveStore(store);if(activeId){var np=store.profiles[activeId];loadProfileIntoState(np);if(np.items&&Object.keys(np.items).length>0){showWS(ld());}else{resetF();rf();showF();}}else{S=blankProfile();IS={};lastResultsHTML='';lastEBRHTML='';lastMeta='';lastProgress={done:0,pct:0,txt:'0 done'};resetF();rf();showF();}hcxAfterRemove();}});}
 function exportData(){var store=loadStore();var blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='healthychex-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},100);}
 function importDataFile(input){var f=input.files&&input.files[0];if(!f){return;}var r=new FileReader();r.onload=function(e){try{var s=JSON.parse(e.target.result);if(!s||!s.profiles||typeof s.profiles!=='object')throw 0;if(!confirm('Restore this backup? It will replace ALL current data on this device.')){input.value='';return;}saveStore(s);activeId=s.activeId||Object.keys(s.profiles)[0]||'';location.reload();}catch(err){alert('That file is not a valid HealthyChex backup (.json).');input.value='';}};r.readAsText(f);}
 function _p2(n){return n<10?'0'+n:''+n;}
@@ -2457,7 +2641,7 @@ var FST_DEFS=[
   {k:'1',  sec:'1', label:'About you'},
   {k:'2',  sec:'2', label:'Medical history'},
   {k:'2b', sec:null,label:'Family cancer history', optional:'famcancer'},
-  {k:'2c', sec:null,label:'Genetic syndrome', optional:'syndrome'},
+  {k:'2c', sec:null,label:'Inherited cancer gene', optional:'syndrome'},
   {k:'3',  sec:'3', label:'Social history'},
   {k:'4',  sec:'4', label:'Sexual history'},
   {k:'5',  sec:'5', label:'Childhood vaccines'},
@@ -2488,7 +2672,7 @@ function buildSteps(){
     FST.push({k:d.k,label:d.label,el:w,optional:d.optional||null});
   });
   // split Medical history: the two detail lists move to their own step
-  [['2b','famchips','ti-dna','Family cancer history'],['2c','synchips','ti-dna','Genetic syndrome']].forEach(function(d){
+  [['2b','famchips','ti-dna','Family cancer history'],['2c','synchips','ti-dna','Inherited cancer gene']].forEach(function(d){
     var det=document.getElementById('fstep-'+d[0]); if(!det)return;
     var dh=document.createElement('div');
     dh.className='slbl'; dh.innerHTML='<i class="ti '+d[2]+'" style="font-size:11px"></i>'+d[3];
@@ -2557,9 +2741,9 @@ function fstMissing(k){
   function need(ok,label){ if(!ok)m.push(label); }
   if(k==='1'){ var ag=parseInt(v('ag'),10);
     need(isFinite(ag)&&ag>0,'Age'); need(!!S.gender,'Biological sex'); }
-  else if(k==='2'){ need(!!S.cvrisk,'CV risk factors'); need(!!S.famcancer,'Family cancer history'); need(!!S.syndrome,'Known genetic syndrome'); }
+  else if(k==='2'){ need(!!S.cvrisk,'CV risk factors'); need(!!S.famcancer,'Family cancer history'); need(!!S.syndrome,'Inherited cancer gene'); }
   else if(k==='2b'){ need((S.famcancerTypes||[]).length>0,'at least one cancer type'); }
-  else if(k==='2c'){ need((S.syndromeTypes||[]).length>0,'which syndrome'); }
+  else if(k==='2c'){ need((S.syndromeTypes||[]).length>0,'which gene'); }
   else if(k==='3'){ need(!!S.tobacco,'Tobacco use'); need(!!S.alcoholyn,'Alcohol use'); need(!!S.drugs,'Recreational drugs');
     if(S.alcoholyn==='yes')need(!!S.alcohol&&S.alcohol!=='none','how much alcohol');
     if(S.drugs==='yes')need(!!S.ivdrug,'Injection drug use'); }
@@ -2647,10 +2831,10 @@ function renderReview(){
     rvPart('Sex', S.gender==='M'?'Male':(S.gender==='F'?'Female':'')) ]);
 
   grp('Medical history','2',[ rvPart('CV risk', rvYN(S.cvrisk)),
-    rvPart('Family cancer', rvYN(S.famcancer)), rvPart('Genetic syndrome', rvYN(S.syndrome)) ]);
+    rvPart('Family cancer', rvYN(S.famcancer)), rvPart('Inherited cancer gene', rvYN(S.syndrome)) ]);
 
   if(S.famcancer==='yes')grp('Family cancer history','2b',[ rvPart('Cancers', rvList(S.famcancerTypes,RV_CANCER)) ]);
-  if(S.syndrome==='yes')grp('Genetic syndrome','2c',[ rvPart('Syndrome', rvList(S.syndromeTypes,RV_SYN)) ]);
+  if(S.syndrome==='yes')grp('Inherited cancer gene','2c',[ rvPart('Found', rvList(S.syndromeTypes,RV_SYN)) ]);
 
   var tob=RV_TOB[S.tobacco]||'';
   if((S.tobacco==='current'||S.tobacco==='former')&&S.smkYears&&S.smkPacks){
@@ -2711,6 +2895,226 @@ function initScue(){
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSteps);
   else buildSteps();
 })();
+
+/* v4.1.2 desktop preview: scale the fixed 428 x 926 iPhone 13 Pro Max frame to fit the window.
+   Device mode ignores --hcx-fit (the CSS that reads it is scoped to mouse/trackpad input). */
+(function(){
+  var mq=window.matchMedia('(hover:hover),(pointer:fine)');
+  function hcxFit(){
+    var r=document.documentElement;
+    if(!mq.matches){ r.style.removeProperty('--hcx-fit'); return; }
+    var br=document.querySelector('.brand'), bh=br?br.offsetHeight+12:0;
+    var s=Math.min(1,(window.innerHeight-50-16-bh)/926,(window.innerWidth-20-16)/428);
+    r.style.setProperty('--hcx-fit',Math.max(.4,s).toFixed(4));
+  }
+  hcxFit();
+  window.addEventListener('resize',hcxFit);
+  if(mq.addEventListener)mq.addEventListener('change',hcxFit);
+})();
+
+/* v4.1.2: remove the current person only, from intake or results. A saved person goes through
+   the existing deleteProfile() (its own confirm; other people are kept). Someone not saved yet
+   has nothing in storage, so their answers are just cleared. The stepper returns to step 1
+   only if the user confirmed (both paths swap S then). */
+function hcxReset(){
+  var store=loadStore();
+  if(activeId&&store.profiles&&store.profiles[activeId]){ deleteProfile(activeId); return; }
+  hcxConfirm({title:'Clear these answers?',msg:'This person hasn\'t been saved yet, so only the answers on screen are cleared. Other saved people are not affected.',ok:'Clear answers',
+    onOk:function(){ S=blankProfile(); resetF(); rf(); showF(); hcxAfterRemove(); }});
+}
+/* After a removal lands on the intake form, start it at step 1 rather than wherever it was left. */
+function hcxAfterRemove(){
+  var vf=document.getElementById('vf');
+  if(typeof FSTEPPED!=='undefined' && FSTEPPED && vf && vf.classList.contains('active')) goStep(0);
+}
+/* v4.1.2 in-app confirmation sheet (iOS action-sheet style). window.confirm() is silently
+   blocked in sandboxed previews and some embedded web views — it returns false, so the Remove
+   buttons did nothing. Cancel has focus by default; the backdrop and Esc also cancel. */
+function hcxConfirm(o){
+  var m=document.getElementById('hcx-sheet');
+  if(!m){ m=document.createElement('div'); m.id='hcx-sheet'; m.className='hcx-sheet';
+    m.innerHTML='<div class="hcx-sheet-box" role="alertdialog" aria-modal="true" aria-labelledby="hcx-sheet-t" aria-describedby="hcx-sheet-m">'+
+      '<div class="hcx-sheet-card"><div class="hcx-sheet-t" id="hcx-sheet-t"></div><div class="hcx-sheet-m" id="hcx-sheet-m"></div>'+
+      '<button type="button" class="hcx-sheet-ok" id="hcx-sheet-ok"></button></div>'+
+      '<button type="button" class="hcx-sheet-no" id="hcx-sheet-no">Cancel</button></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){ if(e.target===m)hcxSheetClose(); });
+    document.getElementById('hcx-sheet-no').onclick=hcxSheetClose;
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m.classList.contains('on'))hcxSheetClose(); });
+  }
+  document.getElementById('hcx-sheet-t').textContent=o.title;
+  document.getElementById('hcx-sheet-m').textContent=o.msg;
+  var ok=document.getElementById('hcx-sheet-ok'); ok.textContent=o.ok;
+  ok.onclick=function(){ hcxSheetClose(); o.onOk(); };
+  m.classList.add('on'); document.getElementById('hcx-sheet-no').focus();
+}
+function hcxSheetClose(){ var m=document.getElementById('hcx-sheet'); if(m)m.classList.remove('on'); }
+
+/* v4.1.2 spare-height pass for intake steps — see the .hcx-roomy CSS note. */
+function hcxRoom(){
+  var vf=document.getElementById('vf'), sc=document.querySelector('.screen');
+  if(!vf||!sc||!vf.classList.contains('active')||typeof FST==='undefined')return;
+  var st=document.querySelector('.fstep.on'), nav=document.querySelector('.fnav'); if(!st||!nav)return;
+  st.classList.remove('hcx-roomy'); st.style.setProperty('--hcx-pad','0px');
+  if(st.getAttribute('data-k')==='rv')return;
+  var forced=[].slice.call(st.querySelectorAll('.rev:not(.on),.vzv-ack:not(.on)'));
+  forced.forEach(function(e){e.classList.add('on');});
+  // entrance animations slide content 12px; measure the settled layout, then put them back
+  var anims=[];
+  if(sc.getAnimations)sc.getAnimations({subtree:true}).forEach(function(a){
+    try{ anims.push([a,a.currentTime]); a.currentTime=a.effect.getComputedTiming().endTime; }catch(e){} });
+  var hint=document.getElementById('fnav-hint');
+  function gap(){ var b=st.getBoundingClientRect().bottom;
+    if(hint&&hint.offsetParent)b=Math.max(b,hint.getBoundingClientRect().bottom);
+    return nav.getBoundingClientRect().top-b-14; }
+  function fits(){ return sc.scrollHeight<=sc.clientHeight+1; }
+  var g=fits()?gap():0;
+  if(g>=120){ st.classList.add('hcx-roomy');
+    if(fits())g=gap(); else st.classList.remove('hcx-roomy'); }
+  anims.forEach(function(x){ try{ x[0].currentTime=x[1]; }catch(e){} });
+  forced.forEach(function(e){e.classList.remove('on');});
+  if(g>0)st.style.setProperty('--hcx-pad',Math.floor(g*0.45)+'px');
+}
+(function(){
+  if(typeof goStep!=='function')return;
+  var t=null, q=function(){clearTimeout(t);t=setTimeout(hcxRoom,60);};
+  var _goStep=goStep;
+  // run now (no flash of the old layout) and once more after the step's layout settles
+  goStep=function(){ var r=_goStep.apply(this,arguments); hcxRoom(); q(); return r; };
+  window.addEventListener('resize',q);
+  window.addEventListener('load',q);
+  // the first step's layout is only final once the disclaimer is dismissed
+  var da=document.querySelector('.disc-accept'); if(da)da.addEventListener('click',q);
+  var vf=document.getElementById('vf');
+  if(vf&&window.MutationObserver)new MutationObserver(function(m){
+    if(m.some(function(x){return x.attributeName==='class';}))q(); }).observe(vf,{attributes:true});
+  q();
+})();
+
+/* ═══ v4.1.2 streamlining (design suggestions 2–5) ═══ */
+
+/* #2 Welcome back */
+function hcxDueItems(){
+  return Object.keys(IS).map(function(k){var v=IS[k];return {k:k,v:v};})
+    .filter(function(x){return x.v&&x.v.status==='done'&&x.v.nextDue&&ns(x.v.nextDue)!=='fut';})
+    .sort(function(a,b){return a.v.nextDue.localeCompare(b.v.nextDue);});
+}
+function hcxRenderDue(){
+  var el=document.getElementById('hcx-due'); if(!el)return;
+  var d=hcxDueItems();
+  var h='<div class="wbht"><i class="ti ti-clock" style="font-size:11px;margin-right:3px"></i>Due now</div>';
+  if(!d.length){ el.innerHTML=h+'<div class="hcx-due-none">Nothing is due in the next 90 days.</div>'; return; }
+  el.innerHTML=h+d.slice(0,5).map(function(x){ var st=ns(x.v.nextDue);
+    return '<button type="button" class="hcx-due-i" onclick="hcxOpen(\''+x.k+'\')"><span class="wbin">'+rvEsc(x.v.title||'')+'</span>'+
+      '<span class="wbid">'+fd(x.v.nextDue)+'</span><span class="wbadge '+st+'">'+(st==='ov'?'Overdue':'Due soon')+'</span>'+
+      '<i class="ti ti-chevron-right" style="font-size:13px"></i></button>'; }).join('')+
+    (d.length>5?'<div class="hcx-due-none">and '+(d.length-5)+' more in your checklist</div>':'');
+}
+/* Open the checklist ready to update: regenerated from the saved answers (so it reflects
+   today's age and guidelines, with saved statuses kept), skipping the view-choice prompt.
+   With a key, scroll to that card and highlight it so it can be marked done there. */
+function hcxOpen(key){
+  resume();
+  var vr=document.getElementById('vr'); if(!vr||!vr.classList.contains('active'))return;
+  setOutputMode('full');
+  if(!key)return;
+  setTimeout(function(){
+    var c=document.getElementById('c-'+key), sc=document.querySelector('.screen'); if(!c||!sc)return;
+    sc.scrollTop+=c.getBoundingClientRect().top-sc.getBoundingClientRect().top-90;
+    c.classList.add('hcx-flash'); setTimeout(function(){c.classList.remove('hcx-flash');},1600);
+  },80);
+}
+/* Edit my answers: land on the review step, where every section has an Edit link. */
+function hcxEdit(){ freshForm(); if(typeof FSTEPPED!=='undefined'&&FSTEPPED)fstGoKey('rv'); }
+(function(){ if(typeof showWS!=='function')return; var _s=showWS;
+  showWS=function(){ var r=_s.apply(this,arguments); hcxRenderDue(); return r; }; })();
+
+/* #3 One-time note after the first checklist: privacy, plus Home Screen install if in a Safari tab */
+var HCX_ONB_KEY='healthychex_onboard_v1';
+function hcxOnboard(){
+  var seen=false; try{seen=localStorage.getItem(HCX_ONB_KEY)==='seen';}catch(e){}
+  if(seen)return;
+  try{localStorage.setItem(HCX_ONB_KEY,'seen');}catch(e){}
+  var inst=!isStandalone();
+  var m=document.createElement('div'); m.className='hcx-sheet on'; m.id='hcx-onb';
+  m.innerHTML='<div class="hcx-sheet-box" role="dialog" aria-modal="true" aria-labelledby="hcx-onb-t"><div class="hcx-sheet-card">'+
+    '<div class="hcx-sheet-t" id="hcx-onb-t" style="padding-bottom:12px">Your checklist is saved</div>'+
+    '<div class="hcx-info-row"><i class="ti ti-lock" style="font-size:16px"></i><span><strong>It stays on this phone.</strong> Nothing you enter is sent to any server. HealthyChex is not a HIPAA-covered entity — for personal use only.</span></div>'+
+    (inst?'<div class="hcx-info-row"><i class="ti ti-share" style="font-size:16px"></i><span><strong>Add it to your Home Screen</strong> so Safari doesn\'t clear it after a week unused: tap <i class="ti ti-share" style="font-size:12px;vertical-align:-1px"></i> Share, then Add to Home Screen.</span></div>':'')+
+    '</div><button type="button" class="hcx-sheet-no" id="hcx-onb-ok">Got it</button></div>';
+  document.body.appendChild(m);
+  var close=function(){ m.remove(); if(inst){try{localStorage.setItem(INST_KEY,'dismissed');}catch(e){}} };
+  document.getElementById('hcx-onb-ok').onclick=close;
+  m.addEventListener('click',function(e){if(e.target===m)close();});
+  document.getElementById('hcx-onb-ok').focus();
+}
+(function(){ if(typeof setOutputMode!=='function')return; var _m=setOutputMode;
+  setOutputMode=function(){ var r=_m.apply(this,arguments);
+    var vr=document.getElementById('vr'); if(vr&&vr.classList.contains('active'))setTimeout(hcxOnboard,350);
+    return r; }; })();
+
+/* #4 Progress counts the six main sections, so it no longer jumps from "2 of 6" to "3 of 8"
+   when a Yes adds a detail step; detail steps sit inside Medical history. */
+var HCX_SEC={'1':1,'2':2,'2b':2,'2c':2,'3':3,'4':4,'5':5,'rv':6}, HCX_SECN=6;
+updFProg=function(){
+  if(!FSTEPPED)return;
+  var vf=document.getElementById('vf'); if(!vf||!vf.classList.contains('active'))return;
+  var act=fstActive(), cur=act[FSTI]; if(!cur)return;
+  var n=HCX_SEC[cur.k]||1, sub=(cur.k==='2b'||cur.k==='2c')?0.4:0;
+  var cnt=document.querySelector('.fprog-cnt'), l=document.getElementById('fprog-lbl'), f=document.getElementById('fprog-fill');
+  if(cnt)cnt.innerHTML='<span id="fprog-n">'+n+'</span> of '+HCX_SECN;
+  if(l)l.textContent=cur.label;
+  if(f)f.style.width=Math.round((n+sub)/HCX_SECN*100)+'%';
+};
+
+/* #5 Native navigation. Each step and screen gets a browser history entry, so Safari's
+   edge-swipe back (and the browser Back button) moves back one step instead of leaving the
+   app. Home Screen apps have no system back gesture, so there a left-edge swipe does it. */
+var HCX_POP=false;
+function hcxView(){ var a=document.querySelector('.screen > .view.active, .screen > .rw.active'); return a?a.id:''; }
+function hcxCurKey(){ try{ var c=fstActive()[FSTI]; return c?c.k:'1'; }catch(e){ return '1'; } }
+function hcxState(){ var v=hcxView(); return v==='vf'?{hcxV:'vf',hcxK:hcxCurKey()}:{hcxV:v}; }
+function hcxPush(){ if(HCX_POP)return; try{history.pushState(hcxState(),'');}catch(e){} }
+function hcxReplace(){ if(HCX_POP)return; try{history.replaceState(hcxState(),'');}catch(e){} }
+(function(){
+  if(typeof goStep!=='function')return;
+  var _g=goStep;
+  goStep=function(i){
+    var vf=document.getElementById('vf'), prevI=FSTI, prevK=hcxCurKey();
+    if(vf){ vf.classList.remove('hcx-fwd','hcx-back');
+      if(typeof i==='number'&&i!==prevI){ void vf.offsetWidth; vf.classList.add(i>prevI?'hcx-fwd':'hcx-back'); } }
+    var r=_g.apply(this,arguments);
+    if(!HCX_POP&&FSTEPPED&&vf&&vf.classList.contains('active')){
+      var st=history.state||{};
+      if(FSTI===prevI+1)hcxPush();
+      else if(FSTI===prevI-1&&st.hcxV==='vf'&&st.hcxK===prevK){ HCX_POP=true; try{history.back();}catch(e){} setTimeout(function(){HCX_POP=false;},400); }
+      else if(FSTI!==prevI)hcxReplace();
+    }
+    return r;
+  };
+  var _sv=sv2;
+  sv2=function(id){ var before=hcxView(); var r=_sv.apply(this,arguments); if(id!==before)hcxPush(); return r; };
+  window.addEventListener('popstate',function(e){
+    var st=e.state; if(!st||!st.hcxV)return;
+    if(HCX_POP){ HCX_POP=false; return; }   // the history.back() issued by the Back button itself
+    HCX_POP=true;
+    try{
+      if(st.hcxV==='vf'){ if(hcxView()!=='vf')showF(); if(hcxCurKey()!==st.hcxK)fstGoKey(st.hcxK); }
+      else if(st.hcxV==='vw'){ var d=ld(); if(d)showWS(d); }
+      else if(st.hcxV==='vr'){ if(typeof lastResultsHTML!=='undefined'&&lastResultsHTML)showResults(); }
+    }finally{ HCX_POP=false; }
+  });
+  var start=function(){ setTimeout(function(){ try{history.replaceState(hcxState(),'');}catch(e){} },0); };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start); else start();
+  // Home Screen app: swipe in from the left edge = back
+  var sx=0,sy=0,st0=0,on=false;
+  document.addEventListener('touchstart',function(e){ if(!isStandalone()||e.touches.length!==1)return;
+    var t=e.touches[0]; on=t.clientX<=24; sx=t.clientX; sy=t.clientY; st0=Date.now(); },{passive:true});
+  document.addEventListener('touchend',function(e){ if(!on)return; on=false;
+    var t=e.changedTouches[0], dx=t.clientX-sx, dy=Math.abs(t.clientY-sy);
+    if(dx>70&&dy<50&&Date.now()-st0<700){ try{history.back();}catch(x){} } },{passive:true});
+})();
+
 </script>
 
 
