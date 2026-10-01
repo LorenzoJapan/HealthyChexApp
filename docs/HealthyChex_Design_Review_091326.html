@@ -192,6 +192,21 @@ pre b{color:var(--teal);font-weight:600}
   .rank{font-size:15px;padding-top:0}
   .finding h3{min-width:0;font-size:18.5px}
 }
+
+/* ── Status tracker (added Oct 2026, v4.1.2) ── */
+.st{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-left:6px;white-space:nowrap}
+.st.done{background:var(--good-bg);color:var(--good)}
+.st.open{background:var(--slate-bg);color:var(--slate)}
+.status{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:3px;padding:22px 24px}
+.status h2{font-family:'IBM Plex Serif',Georgia,serif;font-size:21px;font-weight:600;line-height:1.3;margin:0 0 6px}
+.status>p{margin:0 0 14px;color:var(--ink-2);font-size:15px}
+.status table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.status th{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--line)}
+.status td{padding:9px 10px 9px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.status tr:last-child td{border-bottom:none}
+.status td:first-child{font-family:'IBM Plex Mono',monospace;color:var(--ink-3);width:34px}
+.status td b{color:var(--ink);font-weight:600}
+.status .tw{overflow-x:auto}
 </style>
 
 <div class="wrap">
@@ -200,13 +215,31 @@ pre b{color:var(--teal);font-weight:600}
     <p class="eyebrow">Interface audit · iOS</p>
     <h1>HealthyChex Design Review</h1>
     <p class="standfirst">Ten prioritised changes, ranked by what they cost <em>the person filling in the form</em> — an adult somewhere between 45 and 85, often at a bedside or a kitchen table, answering questions about their own body.</p>
-    <p class="byline"><span>v4.1.1 · Sep 2026</span><span>Measured at 430×932 (Pro Max)</span><span>58 recommendation types</span></p>
+    <p class="byline"><span>v4.1.1 · Sep 2026</span><span>Measured at 430×932 (Pro Max)</span><span>58 recommendation types</span><span>Status updated v4.1.2 · Oct 2026</span></p>
   </header>
 
   <section class="verdict">
     <h2>The engineering is ahead of the interface</h2>
     <p>Contrast, touch targets, focus states and reduced-motion are all handled — that work is genuinely done, and most apps never get there. The recommendation engine is validated at 5,800/5,800. So this review spends no time on fundamentals that already pass.</p>
     <p>The defining problem is <strong>type size</strong>, and it is not a matter of taste. This app begins screening at 45. Presbyopia — the loss of near focus that sends people to reading glasses — also begins around 45 and is effectively universal by 55. <strong>The app's entire user base is the population least able to read 11px text</strong>, and the results screen goes down to 8px. Findings 1 and 2 follow from that single fact and are worth more than the other eight combined.</p>
+  </section>
+
+  <section class="status">
+    <h2>Status as of v4.1.2 · October 2026</h2>
+    <p>The findings below are kept as written on 13 September 2026. This table records what happened to each one. Nine of ten are shipped; where the implementation departed from the recommendation, the note says how and why. None of the work touched the engine: <code>run.js</code> 5,800/5,800 and <code>boundaries.js</code> 196/196 against v4.1.2.</p>
+    <div class="tw"><table>
+      <tr><th>#</th><th>Finding</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>01</td><td><b>Type scale to iOS HIG</b></td><td><span class="st done">Done 4.1.1</span></td><td>Tokens raised to body 17 · callout 16 · foot 13 · cap 12.</td></tr>
+      <tr><td>02</td><td><b>Dynamic Type</b></td><td><span class="st done">Done 4.1.1</span></td><td>Tokens in <code>rem</code>; verified at 125% and 200%. v4.1.2 adds an adaptive pass that enlarges questions only on steps with 120px+ to spare, so larger system text is never fought.</td></tr>
+      <tr><td>03</td><td><b>Dark theme</b></td><td><span class="st done">Done 4.1.2</span></td><td>Token override under <code>prefers-color-scheme</code>, screen only — print stays light. <b>Departure:</b> teal is lifted for text (<code>#7FD6BC</code>, 9.4:1 on cards) but filled buttons use <code>#13775E</code>, not <code>#4FBF9B</code>, so their white labels keep 5.5:1. Inline colours in generated cards are remapped by attribute selector.</td></tr>
+      <tr><td>04</td><td><b>Drop the bezel on a phone</b></td><td><span class="st done">Done 4.1.2</span></td><td>Edge to edge with <code>env(safe-area-inset-*)</code>. <b>Departure:</b> switched on input type (<code>hover:none</code> + <code>pointer:coarse</code>) rather than <code>max-width:500px</code>, so a narrow desktop window still shows the preview. The desktop frame is now locked to iPhone 13 Pro Max (428×926) and scaled to fit the window.</td></tr>
+      <tr><td>05</td><td><b>Form semantics</b></td><td><span class="st done">Done 4.1.1</span></td><td><code>&lt;label for&gt;</code>, <code>autocomplete</code>, <code>inputmode="numeric"</code> on step 1.</td></tr>
+      <tr><td>06</td><td><b>Visible “unanswered” state</b></td><td><span class="st done">Done 4.1.1</span></td><td>Dashed marker on unanswered controls; <code>aria-live</code> hint.</td></tr>
+      <tr><td>07</td><td><b>Progress bar moving backwards</b></td><td><span class="st done">Done 4.1.2</span></td><td>Fixed denominator: always “n of 6”. Family cancer history and Inherited cancer gene count inside Medical history, so a Yes never changes the total or pulls the fill back.</td></tr>
+      <tr><td>08</td><td><b>Results card leads with the action</b></td><td><span class="st open">Open</span></td><td>Proposed next: triage the list into Due now / Coming up / Up to date, one-line card bodies, grade and citation behind a disclosure. The results screen is still about 5,700px long.</td></tr>
+      <tr><td>09</td><td><b>Directional transitions</b></td><td><span class="st done">Done 4.1.2</span></td><td>Next slides in from the right, Back from the left (280ms); off under Reduce Motion. Edit jumps from Review use the Back direction. <b>Not yet:</b> the return trip — after an edit, Next walks forward step by step rather than jumping back to Review. Steps are also browser-history entries, so Safari's edge swipe goes back one step.</td></tr>
+      <tr><td>10</td><td><b>Stray chrome</b></td><td><span class="st done">Done 4.1.1</span></td><td>Preview label replaced by the profile name; persistent disclaimer on the results view. In v4.1.2 the brand strip is dropped on device (finding 04), so the name now shows there only in the desktop preview. <b>Separate issue found:</b> the first-launch disclaimer modal ships hidden (<code>style="display: none;"</code>, never switched on) — needs a decision.</td></tr>
+    </table></div>
   </section>
 
   <section class="strip">
@@ -235,7 +268,7 @@ pre b{color:var(--teal);font-weight:600}
     <article class="finding">
       <div class="rank">01</div>
       <div class="fbody">
-        <div class="fhead"><h3>Raise the type scale to iOS HIG</h3><span class="sev crit">Critical</span></div>
+        <div class="fhead"><h3>Raise the type scale to iOS HIG</h3><span class="sev crit">Critical</span><span class="st done">Done 4.1.1</span></div>
         <p>Every token sits roughly two steps below Apple's scale. What the app calls <em>body</em> is Apple's <em>subhead</em>; what it calls <em>callout</em> is Apple's <em>footnote</em>. The result is a clinical form whose questions are set smaller than the caption under a photo.</p>
         <div class="measured"><span class="lbl">HealthyChex</span> display <b>22</b> · title <b>17</b> · body <b>15</b> · callout <b>13</b> · foot <b>12</b> · cap <b>11</b><br><span class="lbl">iOS HIG   </span> title2 <b>22</b> · headline <b>17</b> · body <b>17</b> · callout <b>16</b> · foot <b>13</b> · cap <b>12</b><br><span class="lbl">Results view</span> contains <b>8px</b> and <b>9px</b> text — below the 11pt floor</div>
         <p class="fix">Shift the whole ramp up: body <strong>17</strong>, callout <strong>16</strong>, foot <strong>13</strong>, caption <strong>12</strong>, and set an absolute floor of 11 — nothing in the results view below it. Because every size already comes from <code>--f-*</code> tokens, this is a six-line change, then a re-run of your fit measurements. Expect a step or two to overflow again; that is the real cost of this finding, and it is worth paying.</p>
@@ -245,7 +278,7 @@ pre b{color:var(--teal);font-weight:600}
     <article class="finding">
       <div class="rank">02</div>
       <div class="fbody">
-        <div class="fhead"><h3>Support Dynamic Type</h3><span class="sev crit">Critical</span></div>
+        <div class="fhead"><h3>Support Dynamic Type</h3><span class="sev crit">Critical</span><span class="st done">Done 4.1.1</span></div>
         <p>A patient who has already turned up system text size in Settings — the single most-used accessibility feature on iOS, and near-ubiquitous past 60 — sees no change whatsoever in your app. Every size is a hard pixel.</p>
         <div class="measured"><span class="lbl">Font declarations</span> <b>207</b> in <code>px</code> · <b>40</b> in <code>rem</code></div>
         <p class="fix">Redefine the <code>--f-*</code> tokens in <code>rem</code> so they inherit the user's root size, and let the frame breathe rather than clamping it:</p>
@@ -263,7 +296,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">03</div>
       <div class="fbody">
-        <div class="fhead"><h3>Ship a dark theme</h3><span class="sev high">High</span></div>
+        <div class="fhead"><h3>Ship a dark theme</h3><span class="sev high">High</span><span class="st done">Done 4.1.2</span></div>
         <p>There is no <code>prefers-color-scheme</code> block anywhere in the file. A hospitalist checking something at 3am, or any patient whose phone is in dark mode all day, gets a full-brightness white sheet. The groundwork is already laid — the design tokens exist and the page ground is already a deep green-black.</p>
         <p class="fix">Add a token-only dark block. Do not invert: keep the teal accent readable by lifting it (<code>#0C6B54</code> → roughly <code>#4FBF9B</code>) and let the card surfaces sit just above the ground rather than pure black. Roughly 20 token overrides, no component changes.</p>
       </div>
@@ -272,7 +305,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">04</div>
       <div class="fbody">
-        <div class="fhead"><h3>Drop the phone bezel on a phone</h3><span class="sev high">High</span></div>
+        <div class="fhead"><h3>Drop the phone bezel on a phone</h3><span class="sev high">High</span><span class="st done">Done 4.1.2</span></div>
         <p>The simulated iPhone frame is lovely on a desktop preview and slightly absurd on an actual iPhone — a phone drawn inside a phone. It costs a rounded mask that clips content near the corners, plus vertical space you have spent this whole session fighting to reclaim.</p>
         <p class="fix">Keep the bezel as a desktop affordance only, and go edge-to-edge on device:</p>
         <pre>@media (max-width:500px){
@@ -287,7 +320,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">05</div>
       <div class="fbody">
-        <div class="fhead"><h3>Fix the form semantics</h3><span class="sev high">High</span></div>
+        <div class="fhead"><h3>Fix the form semantics</h3><span class="sev high">High</span><span class="st done">Done 4.1.1</span></div>
         <p>Three separate problems in the first step. Age is <code>type="number"</code> with no <code>inputmode</code>, so iOS offers the full keyboard instead of a number pad. The name fields have no <code>autocomplete</code>, so nothing autofills. And none of the three has a real <code>&lt;label for&gt;</code> — the visible text is a <code>&lt;span&gt;</code>, so VoiceOver announces only the placeholder, which disappears the moment typing starts.</p>
         <div class="measured"><span class="lbl">#ag</span> type=number · inputmode <b>none</b> · label <b>none</b><br><span class="lbl">#fn/#ln</span> autocomplete <b>none</b> · label <b>none</b></div>
         <p class="fix">Use real labels tied by <code>for</code>, add <code>autocomplete="given-name"</code> / <code>"family-name"</code>, and give age <code>inputmode="numeric"</code>. Worth noting your smoking fields already do this correctly — <code>inputmode="numeric"</code> and a proper label — so the pattern exists in the file; it just needs applying to step 1.</p>
@@ -297,7 +330,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">06</div>
       <div class="fbody">
-        <div class="fhead"><h3>Give "unanswered" a visible state</h3><span class="sev high">High</span></div>
+        <div class="fhead"><h3>Give "unanswered" a visible state</h3><span class="sev high">High</span><span class="st done">Done 4.1.1</span></div>
         <p>Now that nothing is pre-selected — the right call — an unanswered question and a question the person deliberately skipped past look identical. The only signal is the footer hint, which names what is missing but doesn't point at it. On a step with three questions, the person has to map a list of names back onto rows.</p>
         <p class="fix">Mark the row itself. A 2px dashed left rail in your rust tint on any <code>.irow</code> whose value is still empty, cleared the moment it's answered, turns the hint into a confirmation rather than a lookup. Pair it with <code>aria-live="polite"</code> on the hint so VoiceOver announces what remains as it changes.</p>
       </div>
@@ -306,7 +339,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">07</div>
       <div class="fbody">
-        <div class="fhead"><h3>Stop the progress bar moving backwards</h3><span class="sev med">Medium</span></div>
+        <div class="fhead"><h3>Stop the progress bar moving backwards</h3><span class="sev med">Medium</span><span class="st done">Done 4.1.2</span></div>
         <p>The denominator changes mid-flow. Answering "Yes" to family cancer history takes the count from 6 steps to 7, and Yes to genetic syndrome takes it to 8 — so the bar can visibly retreat as a reward for giving more information. The count is honest, but the <em>fill</em> reads as lost ground.</p>
         <p class="fix">Two clean options. Either keep the proportional fill and compute the denominator from the maximum possible path so it only ever shrinks the remaining distance, or drop the proportional fill on this screen and show discrete pips — one per step — which handles a changing count without implying regression.</p>
       </div>
@@ -315,7 +348,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">08</div>
       <div class="fbody">
-        <div class="fhead"><h3>Let the results card lead with the action</h3><span class="sev med">Medium</span></div>
+        <div class="fhead"><h3>Let the results card lead with the action</h3><span class="sev med">Medium</span><span class="st open">Open</span></div>
         <p>Each recommendation currently carries the guideline body, a grade badge, a frequency pill, a status control and a reference superscript at near-equal weight, much of it at 8–9px. The one thing the person came for — <em>what do I do, and when</em> — competes with its own provenance.</p>
         <p class="fix">Set a clear primary line per card (the action and the interval, at body size), keep the status control prominent because it's the interactive part, and demote the grade badge and citation into a tap-to-expand row. You already have the disclosure pattern working in the grade popovers — reuse it. The evidence stays one tap away, which is the right distance for a patient and no real cost to a clinician.</p>
       </div>
@@ -324,7 +357,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">09</div>
       <div class="fbody">
-        <div class="fhead"><h3>Make step transitions directional</h3><span class="sev med">Medium</span></div>
+        <div class="fhead"><h3>Make step transitions directional</h3><span class="sev med">Medium</span><span class="st done">Done 4.1.2</span></div>
         <p>Forward and back currently use the same fade, so the interface gives no spatial feedback about which way the person moved. Across eight steps plus edit-jumps from the review screen, that's the difference between a flow someone holds a mental model of and one they merely endure.</p>
         <p class="fix">Slide the incoming step in from the right on Next and from the left on Back, ~200ms, with the existing <code>prefers-reduced-motion</code> guard already in the file collapsing it to a plain swap. An edit jump from the review screen should use the Back direction, then return forward — that's what makes "go fix that one answer" feel like a round trip rather than a detour.</p>
       </div>
@@ -333,7 +366,7 @@ html{ -webkit-text-size-adjust:100%; }</pre>
     <article class="finding">
       <div class="rank">10</div>
       <div class="fbody">
-        <div class="fhead"><h3>Clean up two pieces of stray chrome</h3><span class="sev med">Medium</span></div>
+        <div class="fhead"><h3>Clean up two pieces of stray chrome</h3><span class="sev med">Medium</span><span class="st done">Done 4.1.1</span></div>
         <p>The brand bar reads <strong>"iPhone 17 preview"</strong> — developer scaffolding sitting in the most prominent horizontal strip on the screen, telling the person nothing about their own health. And the medical disclaimer now appears only on the review step, which I moved there to buy vertical space; for a tool that generates clinical recommendations, that trade deserves your explicit sign-off rather than mine.</p>
         <p class="fix">Replace the preview label with the active profile name — it's the one piece of context that earns that position in a multi-profile app — or drop the strip entirely on device. For the disclaimer, consider a persistent one-line footnote in the results view, where recommendations are actually read, rather than only on the screen before they're generated.</p>
       </div>
