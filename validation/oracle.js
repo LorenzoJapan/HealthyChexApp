@@ -30,7 +30,11 @@ function oracleEngine(S){
   if(a<=64) E.push('anx');                        // USPSTF 19-64 (I at >=65)
   if(a>=20) E.push('eye');                        // AAO PPP periodic
   if(a>=50) E.push('hear');
-  if(a>=20) E.push('skin');
+  // USPSTF 2023 (Grade I) covers only adults WITHOUT a personal or family history of skin cancer.
+  // A family history of melanoma (either tier) takes the person out of that population, so the
+  // family-history surveillance card replaces the average-risk card rather than adding to it.
+  const melFam = fam('mel1') || fam('mel2');
+  if(a>=20) E.push(melFam ? 'skinfh' : 'skin');
 
   // LIFESTYLE
   if(everSmoke) E.push('tob');
@@ -54,6 +58,10 @@ function oracleEngine(S){
   // (USPSTF Grade B is scoped to women; men are covered by NCCN. Grading differs, presence does not.)
   if(fam('breast')||fam('ovarian')) E.push('brca');
   if(fam('ovarian')&&g==='F') E.push('ovarian');
+  // Hereditary melanoma (Leachman et al., JAAD 2009 — U.S. / moderate-high incidence criteria):
+  // >=1 invasive melanoma plus >=2 further melanomas and/or pancreatic cancers among first- or
+  // second-degree relatives on the same side -> genetic assessment. Not age- or sex-gated.
+  if(fam('mel2')) E.push('melgen');
   // Known syndromes (NCCN). Lynch/FAP override average-risk AND family-hx colorectal pathways.
   const sy=(t)=>S.syndrome==='yes'&&(S.syndromeTypes||[]).indexOf(t)!==-1;
   if(sy('brca')) E.push('brcaknown');

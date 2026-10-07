@@ -1,4 +1,4 @@
-// Boundary unit tests for the colorectal age thresholds.
+// Boundary unit tests for the colorectal age thresholds and (v4.2) skin / hereditary melanoma.
 //
 // The synthetic-patient harness (run.js) proves the app and the oracle AGREE. It cannot prove
 // they agree on the RIGHT answer at an exact cut point, because a shared off-by-one would be
@@ -69,6 +69,33 @@ check('Lynch at 80 — no selective card',    {age:80, syndrome:'yes', syndromeT
 check('FDR dx >=60, age 44 — early start', {age:44, famcancer:'yes', famcancerTypes:['crc1']}, ['crcfh1']);
 check('FDR dx <60, age 44 — colonoscopy',  {age:44, famcancer:'yes', famcancerTypes:['crc2']}, ['crcfh2']);
 check('family hx at 86 — discourage',      {age:86, famcancer:'yes', famcancerTypes:['crc1']}, ['crcstop']);
+
+// --- Skin / hereditary melanoma (v4.2) ---
+// Sources: USPSTF 2023 skin cancer screening (Grade I) — applies only to adults WITHOUT a personal
+// or family history of skin cancer; Leachman et al., JAAD 2009 — genetic assessment when >=3
+// melanoma/pancreatic cancers on one side of the family (U.S. criteria).
+const SKIN=['skin','skinfh','melgen'];
+function checkSkin(label, over, expect){
+  [['app',appEngine],['oracle',oracleEngine]].forEach(([who,engine])=>{
+    const codes=new Set(engine(patient(over)).codes);
+    SKIN.forEach(c=>{
+      const want=expect.indexOf(c)!==-1, got=codes.has(c);
+      if(want===got){pass++;}
+      else{fail++;console.log(`  FAIL [${who}] ${label}: ${c} expected ${want?'present':'absent'}, got ${got?'present':'absent'}`);}
+    });
+  });
+}
+console.log('\n=== Skin / hereditary melanoma boundary tests (USPSTF 2023, Leachman 2009) ===\n');
+const mel=(types,extra)=>Object.assign({famcancer:'yes',famcancerTypes:types},extra||{});
+checkSkin('age 19, no family hx — below start',          {age:19}, []);
+checkSkin('age 20, no family hx — average-risk card',    {age:20}, ['skin']);
+checkSkin('age 19, FDR melanoma — below start',          mel(['mel1'],{age:19}), []);
+checkSkin('age 20, FDR melanoma — family-hx card only',  mel(['mel1'],{age:20}), ['skinfh']);
+checkSkin('age 70 man, FDR melanoma — not sex-gated',    mel(['mel1'],{age:70,gender:'M'}), ['skinfh']);
+checkSkin('3+ relatives — family-hx card + genetics',    mel(['mel2'],{age:45}), ['skinfh','melgen']);
+checkSkin('both tiers — one skin card, one referral',    mel(['mel1','mel2'],{age:45}), ['skinfh','melgen']);
+checkSkin('3+ relatives at 19 — referral is not age-gated', mel(['mel2'],{age:19}), ['melgen']);
+checkSkin('other family cancer only — average-risk card', mel(['breast'],{age:45}), ['skin']);
 
 console.log(`\n${pass} assertions passed, ${fail} failed.`);
 if(fail){ console.log('BOUNDARY TESTS FAILED'); process.exitCode=1; }

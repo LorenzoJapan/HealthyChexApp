@@ -28,13 +28,13 @@ Two constraints on `RULES`:
 
 ## The one rule that matters
 
-**Clinical logic is sacrosanct.** The recommendation engine is validated at **5,800/5,800 decisions across 58 recommendation types** (100 synthetic patients x 58 decisions), plus **196 boundary assertions**. Both are the acceptance gate.
+**Clinical logic is sacrosanct.** The recommendation engine is validated at **6,000/6,000 decisions across 60 recommendation types** (100 synthetic patients x 60 decisions), plus **250 boundary assertions**. Both are the acceptance gate.
 
 - **UI / styling changes** → must be CSS-only or JS-additive. Preserve every existing selector, class name, and element ID. The harness must still pass unchanged.
 - **Engine changes** → validate first, ship second:
   1. Verify the clinical threshold against the actual guideline source (don't trust memory — guidelines move).
   2. Update `validation/appcore.js` (mirror) **and** `validation/oracle.js` (independent derivation) **and** `validation/run.js` (so synthetic patients exercise the new boundaries) in lockstep.
-  3. Re-run `node validation/run.js` — must be 5,800/5,800 — and `node validation/boundaries.js` — must be 196/196.
+  3. Re-run `node validation/run.js` — must be 6,000/6,000 — and `node validation/boundaries.js` — must be 250/250.
   4. Add boundary unit tests to `validation/boundaries.js` for any new threshold.
 
 > **Known fragility:** `validation/appcore.js` is a *hand-maintained* mirror of the engine in the HTML. It can silently drift. After any engine edit, diff the logic in both and confirm they match.
@@ -45,7 +45,7 @@ Two constraints on `RULES`:
 - **Flag deliberate exceptions** rather than leaving them implicit.
 - **Validation before wiring:** for changes that assert new clinical thresholds, produce a review table (question → threshold → resulting recommendation → source) for physician sign-off *before* touching the engine.
 
-## Current state (v4.1.1, September 2026)
+## Current state (v4.2, October 2026)
 
 - "Clinical Calm" design system: CSS design tokens, iOS HIG 44pt touch targets, WCAG AA contrast, white grouped-inset cards, 4px status rail on recommendation cards.
 - Results view-mode toggle: Summary ↔ Update checklist (non-destructive).
@@ -71,6 +71,20 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
 
+### v4.2 — family history of melanoma + USPSTF reference audit (October 2026)
+
+Engine change, validated in lockstep. Full record: `docs/HealthyChex_Melanoma_FH_Audit_100726.md`.
+
+- **Two new Family cancer history options:** `mel1` "Melanoma — parent, sibling or child, at any age (not basal or squamous cell)" and `mel2` "Melanoma or pancreatic — three or more relatives on one side, at least one melanoma". Not mutually exclusive.
+- **`skinfh`** (59th type): age ≥ `RULES.skin.start` (20) with either option → replaces the average-risk `skin` card. USPSTF 2023 Grade I explicitly excludes people with a family history of skin cancer. Badge: Expert consensus.
+- **`melgen`** (60th type): `mel2` → genetic counseling referral (CDKN2A), any age, either sex. Criteria: Leachman et al., JAAD 2009, U.S. thresholds ("rule of three"), not the two-relative threshold used in low-incidence countries.
+- **Average-risk `skin` card** reworded from "Yearly clinical skin check" to Optional / discuss with clinician (USPSTF 2023 Grade I); schedule label likewise. Deliberately unchanged: `REC.skin` stays 12 months for done-item reminders, matching the other Grade I item (hearing).
+- **References:** `aad-skin` (which cited USPSTF 2016) renamed `uspstf-skin` → USPSTF 2023. Also corrected: depression 2016 → 2023, osteoporosis 2018 → 2025, obesity label 2012 → 2018. The app's recommendations for those three are unchanged; the updated statements still support them. New: `aad-selfexam`, `leachman-mel`.
+- `RULES._version` → `2026-10-07` (no threshold value changed). `run.js` draws the melanoma answers from a separate seeded stream, so the original 100 patients are unchanged and only the melanoma rows are new. Additionally verified the shipped `index.html` against `appcore.js` in a browser on all 100 patients: 2,432 recommendations, 0 differences.
+- Spec workbook re-versioned to `HealthyChex_App_v4_2_Oct2026.xlsx`.
+
+> **USPSTF citations not changed — verify:** cervical (2018, retained for 21–29; a newer statement may exist), prostate (2018; update in progress at last check), and motor-vehicle counseling (2007, labeled USPSTF but keyed `cdc-mvs`; the topic is inactive). Osteoporosis 2025 also gives Grade B to postmenopausal women <65 at increased risk, which the app does not yet offer.
+
 ### v4.1.2 — screen fit and streamlining (October 2026)
 
 UI layer only: the engine, `RULES` (still `_version 2026-09-13`) and the 58 recommendation types are untouched; no changed line falls inside `gen()` or `RULES`. Every addition uses new `hcx-` class names, and the existing functions it touches (`goStep`, `sv2`, `showWS`, `setOutputMode`, `updFProg`) are wrapped or reassigned at the end of the script rather than edited. Spec workbook held at v4.1.1 (no clinical content changed).
@@ -86,22 +100,4 @@ UI layer only: the engine, `RULES` (still `_version 2026-09-13`) and the 58 reco
 
 > **Known issues, not changed:** the first-launch disclaimer modal ships with `style="display: none;"` and no code ever shows it (present in v4.1.1). The FHIR "reviewed imported data?" check in `gen()` still uses `confirm()`. "Clear all data" also still uses `confirm()`.
 
-### v4.1.3 — design pass, iPhone fit, icons, About (October 2026)
-
-UI layer only: `gen()`, `RULES` (still `_version 2026-09-13`), `mkc()`, `cat()` and `GRADE` are byte-identical to v4.1.2, and the 58 recommendation types are untouched. Every addition uses new `hcx-` class names and wraps or reassigns existing functions at the end of the script. Spec workbook held at v4.1.1 (no clinical content changed). **Run `node validation/run.js` (5,800/5,800) and `node validation/boundaries.js` (196/196) before release; they were not run in this pass.**
-
-- **App version.** One constant, `HCX_APP` (version, release month, developer), near the end of the script. Bump it on every release; the About footer reads it. The "Guidelines updated" date is read from `RULES._version` (never written).
-- **Results (design item 8, closed).** Cards are triaged into Due now / Coming up / Discuss with your clinician / Up to date / Declined by `hcxTriage()` on render (not on status change, so a card doesn't jump while a date is entered). "Discuss" = the engine's own Optional (Grade I) and "Discuss w/ provider" labels. Rail colour = urgency. Category headers stay in the DOM, hidden. Large left-aligned "Your checklist" title with a compact sticky bar on scroll; `#rintro` hidden.
-- **Cards.** Descriptions clamp to 3 lines with More/Less; reference superscripts show only when expanded. Two-state cards get one "Mark done" control (Undo when done); vaccines keep their 4 states.
-- **Intake.** "Still needed" and unanswered markers appear only after a Next attempt; Next stays enabled and nudges to the first gap. Steps are top-anchored; duplicate section eyebrows removed; Back hidden on step 1; Remove hidden on a blank profile. Ages outside 18–110 are caught on step 1 (previously reached `gen()`'s `alert()`).
-- **Controls and copy.** One control family (label left, separate rounded answers right; 3+ options full width; teal selection for every answer). Asterisks replaced by ⓘ buttons. "CV risk factors" → "Heart disease risk factors" with an example line (intake, review, FHIR chip); "click here to check" → "See the list"; "Preventative" → "Preventive".
-- **Flow.** The view-choice modal is skipped (`askOutputMode` → full view); the first-run privacy/Home Screen note is an inline card; the FHIR "reviewed imported data?" `confirm()` in `gen()` is replaced by an in-app sheet via a `gen` wrapper.
-- **iPhone fit.** Verified at 428×926, 430×932 and 440×956 pt in Safari-tab and Home Screen modes with model safe-area insets: every step fits one screen, no horizontal scroll, 44 pt targets, nothing fixed under the status bar or home indicator. Fixes: results date field 13 → 17 px (stopped Safari zoom-on-focus); status-bar scrim while scrolled; `.fprog` pinned below the inset; scroll cue hidden on results; profile chips wrap. Tested in Chromium (WebKit unavailable) — do one pass on a physical phone.
-- **Icons.** Tinted category tiles (same language as `.catic`): Health blue, Lifestyle amber, Cancer rust, Vaccine green. Results cards by recommendation code (`HCX_CIC`, category fallback `HCX_CDEF`); top-level intake questions use matching icons. 18 Tabler 3.49 icons (MIT) added to `#ti-inline` as data-URI masks — single-file architecture preserved.
-- **About.** Section at the bottom of step 1 (above Next) and the Welcome screen: About, Medical disclaimer, Privacy, HIPAA notice, plus version / developer (MDGadgetz LLC) / guideline-date footer. Disclaimer and HIPAA text reuse the hidden first-launch modal's wording; Privacy now states that Import records downloads from the user's own health system.
-
-> **Pending sign-off:** the "Discuss with your clinician" grouping rule; shared icons (one virus icon for HIV/HCV/STI/syphilis; one ribbon for colorectal, cervical, breast, prostate); About/Privacy/HIPAA wording (counsel). `LICENSE` still names "HealthyChex" as copyright holder — change to MDGadgetz LLC if that is the legal owner.
-
-> **Known issues, not changed:** first-launch disclaimer modal still hidden (and its old privacy wording is now superseded by About). "Clear all data" and backup restore still use `confirm()`. Cholesterol card copy in `gen()` still says "CV risk"; the HCV/HIV "Lifestyle checks" category label is still in `gen()` (hidden in the triage view) — both need an engine-validated pass.
-
-Open design-review items: none from the September review. See `docs/HealthyChex_Design_Review_091326.html`.
+Open design-review items: 8 (results card density — triage into Due now / Coming up / Up to date). See `docs/HealthyChex_Design_Review_091326.html`.

@@ -1,6 +1,6 @@
 // AUTO-EXTRACTED verbatim from index.html engine decision block. Not retyped.
 var RULES={
-  _version:'2026-09-13',
+  _version:'2026-10-07',
   _note:'Every clinical threshold the engine reads, in one place. These are DATA, read by fixed logic \u2014 never expressions the app evaluates. Update a guideline here, not in gen(). The oracle in validation/oracle.js deliberately does NOT read this object: it hardcodes the thresholds independently from the guideline text, so a typo here is caught by the harness rather than silently agreed with.',
   chol:{start:20},
   dm:{start:35},
@@ -62,7 +62,11 @@ function appEngine(s){
   if(a<=RULES.anx.stop)H.push({c:'anx',t:'Anxiety screening',d:'Recommended for adults ≤64.',f:'a',refs:['uspstf-anx']});
   if(a>=20){var ef=a<40?'Once in your 20s, twice in your 30s':a<55?'Every 2–4 yrs':a<65?'Every 1–3 yrs':'Every 1–2 yrs';H.push({c:'eye',t:'Eye exam',d:ef+'. More frequent with diabetes or hypertension.',f:'r',refs:['aao-eye']});}
   if(a>=RULES.hear.start)H.push({c:'hear',t:'Hearing evaluation',d:'Yearly audiology screen from age 50.',f:'a',refs:['uspstf-hear']});
-  if(a>=RULES.skin.start)H.push({c:'skin',t:'Full-body skin exam',d:'Yearly clinical skin check for suspicious lesions.',f:'a',refs:['aad-skin']});
+  var fM=hc('mel1')||hc('mel2');
+  if(a>=RULES.skin.start){
+    if(fM)H.push({c:'skinfh',t:'Full-body skin exam (family hx)',d:'',f:'s',refs:['uspstf-skin','aad-selfexam']});
+    else H.push({c:'skin',t:'Full-body skin exam',d:'',f:'s',refs:['uspstf-skin','aad-selfexam']});
+  }
   if(S.tobacco!=='none')L.push({c:'tob',t:'Tobacco cessation counseling',d:'Behavioral interventions + pharmacotherapy (varenicline, NRT, bupropion).',f:'a',refs:['uspstf-tob']});
   if(heavy)L.push({c:'alc',t:'Alcohol use counseling',d:'Brief counseling for hazardous drinking. AUDIT screening.',f:'a',refs:['uspstf-alc']});
   else if(anyAlc&&S.alcohol==='moderate')L.push({c:'alcmon',t:'Alcohol use — monitoring',d:'Moderate use noted. AUDIT-C screening recommended.',f:'r',refs:['uspstf-alc']});
@@ -78,6 +82,7 @@ function appEngine(s){
   if(g==='F'&&a>=RULES.cerv2.start&&a<=RULES.cerv2.stop)C.push({c:'cerv2',t:'Cervical cancer — HPV primary screening',d:'<strong>Preferred (ACS 2025):</strong> primary hrHPV testing every 5 years. Acceptable alternatives: cytology alone every 3 years, or hrHPV + cytology co-test every 5 years. Self-collected hrHPV is an acceptable option — repeat every 3 years if HPV-negative. May exit screening after age 65 with adequate prior screening.',f:'r',refs:['acs-cervical-2025']});
   if(g==='F'&&a>=RULES.breast.start&&a<=RULES.breast.stop){var bd=fB?'Family hx: discuss starting mammography at age 40 (or earlier) and yearly screening. Discuss BRCA testing.':'USPSTF 2024 (Grade B): biennial (every 2 years) screening mammography for all women 40–74.';C.push({c:(fB?'breastfh':'breast'),t:'Breast cancer — mammogram'+(fB?' (family hx)':''),d:bd,f:'r',refs:fB?['uspstf-breast','nccn-breast']:['uspstf-breast']});}
   if(g==='F'&&a>=RULES.breast75.start)C.push({c:'breast75',t:'Breast cancer — mammogram (age ≥75)',d:'USPSTF 2024: evidence insufficient to assess benefit vs. harm of screening at age ≥75 (Grade I). Decide individually based on health status, life expectancy, and preferences.',f:'s',refs:['uspstf-breast']});
+  if(hc('mel2'))C.push({c:'melgen',t:'Hereditary melanoma — genetic counseling',d:'',f:'s',refs:['leachman-mel']});
   if(fB||fO)C.push({c:'brca',t:'BRCA genetic risk assessment',d:'Family hx of breast or ovarian cancer. Discuss genetic counseling.',f:'s',refs:['uspstf-brca','nccn-breast']});
   if(fO&&g==='F')C.push({c:'ovarian',t:'Ovarian cancer — genetic counseling',d:'No routine screen. Family hx warrants BRCA testing + oncology referral.',f:'s',refs:['uspstf-ovarian','nccn-breast']});
   if(syB)C.push({c:'brcaknown',t:'BRCA1/2 — genetics-managed surveillance',d:'',f:'s',refs:['nccn-brca']});
