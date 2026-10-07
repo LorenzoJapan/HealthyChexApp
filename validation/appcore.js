@@ -83,6 +83,9 @@ function appEngine(s){
   if(g==='F'&&a>=RULES.breast.start&&a<=RULES.breast.stop){var bd=fB?'Family hx: discuss starting mammography at age 40 (or earlier) and yearly screening. Discuss BRCA testing.':'USPSTF 2024 (Grade B): biennial (every 2 years) screening mammography for all women 40–74.';C.push({c:(fB?'breastfh':'breast'),t:'Breast cancer — mammogram'+(fB?' (family hx)':''),d:bd,f:'r',refs:fB?['uspstf-breast','nccn-breast']:['uspstf-breast']});}
   if(g==='F'&&a>=RULES.breast75.start)C.push({c:'breast75',t:'Breast cancer — mammogram (age ≥75)',d:'USPSTF 2024: evidence insufficient to assess benefit vs. harm of screening at age ≥75 (Grade I). Decide individually based on health status, life expectancy, and preferences.',f:'s',refs:['uspstf-breast']});
   if(hc('mel2'))C.push({c:'melgen',t:'Hereditary melanoma — genetic counseling',d:'',f:'s',refs:['leachman-mel']});
+  var fPa1=hc('panc1'),fPa2=hc('panc2');
+  if(fPa1||fPa2)C.push({c:'pancgen',t:'Pancreatic cancer in the family — genetic testing',d:'',f:'s',refs:['nccn-panc']});
+  if(fPa2)C.push({c:'pancsurv',t:'Pancreatic cancer surveillance — specialist discussion',d:'',f:'s',refs:['nccn-panc','caps-2020']});
   if(fB||fO)C.push({c:'brca',t:'BRCA genetic risk assessment',d:'Family hx of breast or ovarian cancer. Discuss genetic counseling.',f:'s',refs:['uspstf-brca','nccn-breast']});
   if(fO&&g==='F')C.push({c:'ovarian',t:'Ovarian cancer — genetic counseling',d:'No routine screen. Family hx warrants BRCA testing + oncology referral.',f:'s',refs:['uspstf-ovarian','nccn-breast']});
   if(syB)C.push({c:'brcaknown',t:'BRCA1/2 — genetics-managed surveillance',d:'',f:'s',refs:['nccn-brca']});

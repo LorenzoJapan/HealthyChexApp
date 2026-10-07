@@ -1,4 +1,4 @@
-// Boundary unit tests for the colorectal age thresholds and (v4.2) skin / hereditary melanoma.
+// Boundary unit tests for the colorectal age thresholds, (v4.2) skin / hereditary melanoma and (v4.3) pancreatic family history.
 //
 // The synthetic-patient harness (run.js) proves the app and the oracle AGREE. It cannot prove
 // they agree on the RIGHT answer at an exact cut point, because a shared off-by-one would be
@@ -96,6 +96,33 @@ checkSkin('3+ relatives — family-hx card + genetics',    mel(['mel2'],{age:45}
 checkSkin('both tiers — one skin card, one referral',    mel(['mel1','mel2'],{age:45}), ['skinfh','melgen']);
 checkSkin('3+ relatives at 19 — referral is not age-gated', mel(['mel2'],{age:19}), ['melgen']);
 checkSkin('other family cancer only — average-risk card', mel(['breast'],{age:45}), ['skin']);
+
+// --- Pancreatic family history (v4.3) ---
+// Source: NCCN Genetic/Familial High-Risk Assessment: Breast, Ovarian, Pancreatic, and Prostate v1.2027.
+//   Testing: unaffected person with a first-degree relative with exocrine pancreatic cancer.
+//   Surveillance: familial pancreatic cancer only — NOT one affected first-degree relative alone.
+const PANC=['pancgen','pancsurv'];
+function checkPanc(label, over, expect){
+  [['app',appEngine],['oracle',oracleEngine]].forEach(([who,engine])=>{
+    const codes=new Set(engine(patient(over)).codes);
+    PANC.forEach(c=>{
+      const want=expect.indexOf(c)!==-1, got=codes.has(c);
+      if(want===got){pass++;}
+      else{fail++;console.log(`  FAIL [${who}] ${label}: ${c} expected ${want?'present':'absent'}, got ${got?'present':'absent'}`);}
+    });
+  });
+}
+console.log('\n=== Pancreatic family history tests (NCCN v1.2027, CAPS 2020) ===\n');
+const pan=(types,extra)=>Object.assign({famcancer:'yes',famcancerTypes:types},extra||{});
+checkPanc('no pancreatic family hx',                       {age:50}, []);
+checkPanc('one FDR — testing only, NO surveillance',       pan(['panc1'],{age:50}), ['pancgen']);
+checkPanc('familial — testing + surveillance',             pan(['panc2'],{age:50}), ['pancgen','pancsurv']);
+checkPanc('familial at 18 — not age-gated',                pan(['panc2'],{age:18}), ['pancgen','pancsurv']);
+checkPanc('one FDR at 85 — not age-gated',                 pan(['panc1'],{age:85}), ['pancgen']);
+checkPanc('familial, man — not sex-gated',                 pan(['panc2'],{age:60,gender:'M'}), ['pancgen','pancsurv']);
+checkPanc('melanoma-plus-pancreatic row alone — no pancreatic cards', pan(['mel2'],{age:50}), []);
+// the melanoma referral is unaffected by the separate pancreatic rows
+checkSkin('pancreatic family hx only — average-risk skin card', pan(['panc2'],{age:50}), ['skin']);
 
 console.log(`\n${pass} assertions passed, ${fail} failed.`);
 if(fail){ console.log('BOUNDARY TESTS FAILED'); process.exitCode=1; }

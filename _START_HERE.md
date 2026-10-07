@@ -28,13 +28,13 @@ Two constraints on `RULES`:
 
 ## The one rule that matters
 
-**Clinical logic is sacrosanct.** The recommendation engine is validated at **6,000/6,000 decisions across 60 recommendation types** (100 synthetic patients x 60 decisions), plus **250 boundary assertions**. Both are the acceptance gate.
+**Clinical logic is sacrosanct.** The recommendation engine is validated at **6,200/6,200 decisions across 62 recommendation types** (100 synthetic patients x 62 decisions), plus **284 boundary assertions**. Both are the acceptance gate.
 
 - **UI / styling changes** → must be CSS-only or JS-additive. Preserve every existing selector, class name, and element ID. The harness must still pass unchanged.
 - **Engine changes** → validate first, ship second:
   1. Verify the clinical threshold against the actual guideline source (don't trust memory — guidelines move).
   2. Update `validation/appcore.js` (mirror) **and** `validation/oracle.js` (independent derivation) **and** `validation/run.js` (so synthetic patients exercise the new boundaries) in lockstep.
-  3. Re-run `node validation/run.js` — must be 6,000/6,000 — and `node validation/boundaries.js` — must be 250/250.
+  3. Re-run `node validation/run.js` — must be 6,200/6,200 — and `node validation/boundaries.js` — must be 284/284.
   4. Add boundary unit tests to `validation/boundaries.js` for any new threshold.
 
 > **Known fragility:** `validation/appcore.js` is a *hand-maintained* mirror of the engine in the HTML. It can silently drift. After any engine edit, diff the logic in both and confirm they match.
@@ -45,7 +45,7 @@ Two constraints on `RULES`:
 - **Flag deliberate exceptions** rather than leaving them implicit.
 - **Validation before wiring:** for changes that assert new clinical thresholds, produce a review table (question → threshold → resulting recommendation → source) for physician sign-off *before* touching the engine.
 
-## Current state (v4.2, October 2026)
+## Current state (v4.3, October 2026)
 
 - "Clinical Calm" design system: CSS design tokens, iOS HIG 44pt touch targets, WCAG AA contrast, white grouped-inset cards, 4px status rail on recommendation cards.
 - Results view-mode toggle: Summary ↔ Update checklist (non-destructive).
@@ -71,6 +71,18 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
 
+### v4.3 — family history of pancreatic cancer (October 2026)
+
+Engine change, validated in lockstep. Full record: `docs/HealthyChex_Pancreatic_FH_Audit_100726.md`.
+
+- **Two new Family cancer history options, mutually exclusive:** `panc1` "Pancreatic — parent, sibling or child (not neuroendocrine, if known)" and `panc2` "Pancreatic — two or more on one side, at least one a parent, sibling or child" (footnote: if only two, the other must also be first- or second-degree).
+- **`pancgen`** (61st type): `panc1` or `panc2` → genetic counseling and germline testing (NCCN BOPP v1.2027, CRIT-5).
+- **`pancsurv`** (62nd type): `panc2` only → specialist surveillance discussion (MRI/EUS), start ~50 or 10 yrs before youngest affected relative (NCCN PANC-A; CAPS 2020). **One affected first-degree relative alone does not trigger surveillance**: NCCN is explicit, and a boundary test pins it.
+- Not age- or sex-gated (relatives' ages are not collected). No `RULES` change.
+- Melanoma tier-2 row relabelled "Melanoma plus pancreatic"; `melgen` logic unchanged.
+- `run.js` draws pancreatic answers from a third seeded stream, so the v4.2 cohort is unchanged. Spec workbook re-versioned to `HealthyChex_App_v4_3_Oct2026.xlsx`.
+- NCCN text came from a licensed platform with a no-redistribution notice: paraphrase it, don't paste it into the app or docs.
+
 ### v4.2 — family history of melanoma + USPSTF reference audit (October 2026)
 
 Engine change, validated in lockstep. Full record: `docs/HealthyChex_Melanoma_FH_Audit_100726.md`.
@@ -81,7 +93,7 @@ Engine change, validated in lockstep. Full record: `docs/HealthyChex_Melanoma_FH
 - **Average-risk `skin` card** reworded from "Yearly clinical skin check" to Optional / discuss with clinician (USPSTF 2023 Grade I); schedule label likewise. Deliberately unchanged: `REC.skin` stays 12 months for done-item reminders, matching the other Grade I item (hearing).
 - **References:** `aad-skin` (which cited USPSTF 2016) renamed `uspstf-skin` → USPSTF 2023. Also corrected: depression 2016 → 2023, osteoporosis 2018 → 2025, obesity label 2012 → 2018. The app's recommendations for those three are unchanged; the updated statements still support them. New: `aad-selfexam`, `leachman-mel`.
 - `RULES._version` → `2026-10-07` (no threshold value changed). `run.js` draws the melanoma answers from a separate seeded stream, so the original 100 patients are unchanged and only the melanoma rows are new. Additionally verified the shipped `index.html` against `appcore.js` in a browser on all 100 patients: 2,432 recommendations, 0 differences.
-- Spec workbook re-versioned to `HealthyChex_App_v4_2_Oct2026.xlsx`.
+- Spec workbook re-versioned to `HealthyChex_App_v4_2_Oct2026.xlsx` (since superseded by v4.3).
 
 > **USPSTF citations not changed — verify:** cervical (2018, retained for 21–29; a newer statement may exist), prostate (2018; update in progress at last check), and motor-vehicle counseling (2007, labeled USPSTF but keyed `cdc-mvs`; the topic is inactive). Osteoporosis 2025 also gives Grade B to postmenopausal women <65 at increased risk, which the app does not yet offer.
 

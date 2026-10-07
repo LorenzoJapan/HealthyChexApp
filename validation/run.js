@@ -9,6 +9,8 @@ const chance=p=>rnd()<p;
 // Melanoma family history (v4.2) draws from its OWN seeded stream, so adding it leaves the
 // original cohort's answers exactly as they were; only the melanoma rows are new.
 const rndMel=mulberry32(parseInt(process.env.SEED||"20260622")+1);
+// Pancreatic family history (v4.3): a third stream, so the v4.2 cohort (melanoma included) is unchanged.
+const rndPanc=mulberry32(parseInt(process.env.SEED||"20260622")+2);
 
 // Spread ages across all guideline boundaries + random fill
 const boundaryAges=[18,19,20,21,25,26,27,29,30,34,35,39,40,44,45,49,50,54,55,60,64,65,66,69,70,74,75,76,79,80,84,85,86,87,90,95];
@@ -64,6 +66,8 @@ function genPatient(i){
   if(famcancer==='yes'){
     if(rndMel()<0.3) famcancerTypes.push('mel1');   // first-degree relative with melanoma
     if(rndMel()<0.2) famcancerTypes.push('mel2');   // 3+ relatives, melanoma and/or pancreatic
+    // pancreatic tiers are mutually exclusive in the UI, like the colorectal tiers
+    if(rndPanc()<0.3) famcancerTypes.push(rndPanc()<0.5?'panc1':'panc2');
   }
   return {gender,tobacco,smkYears,smkPacks,smkQuitYears,syndrome,syndromeTypes,alcoholyn,alcohol,drugs,ivdrug,sexactive,partnerSex,unprotected,multipartner,msm,prevsti,cvrisk,famcancer,famcancerTypes,childvax,hadPox,age,name:'',lastname:'',showRefs:false};
 }
@@ -117,7 +121,7 @@ rows.forEach(r=>{
 });
 
 // ---- report ----
-console.log('=== HealthyChex v4.2 — Synthetic-Patient Validation ===');
+console.log('=== HealthyChex v4.3 — Synthetic-Patient Validation ===');
 console.log('Patients: '+N+'  (seeded, reproducible) | Recommendation types: '+codes.length);
 console.log('Total patient-by-recommendation decisions: '+total);
 console.log('Concordance (presence): '+match+'/'+total+' = '+(100*match/total).toFixed(2)+'%');
@@ -144,8 +148,9 @@ const old75=patients.filter(p=>p.age>=75).length;
 const old85=patients.filter(p=>p.age>85).length;
 const melFH=patients.filter(p=>p.famcancerTypes.some(t=>t==='mel1'||t==='mel2')).length;
 const melG=patients.filter(p=>p.famcancerTypes.indexOf('mel2')!==-1).length;
+const pa1=patients.filter(p=>p.famcancerTypes.indexOf('panc1')!==-1).length, pa2=patients.filter(p=>p.famcancerTypes.indexOf('panc2')!==-1).length;
 console.log('\n--- Cohort sanity ---');
-console.log(`  Female ${fem} | Male ${100-fem} | Ever-smokers ${smk} | Incomplete/unknown childhood vax ${inc} | Age>=75 ${old75} | Age>85 ${old85} | Melanoma family hx ${melFH} (3+ relatives ${melG})`);
+console.log(`  Female ${fem} | Male ${100-fem} | Ever-smokers ${smk} | Incomplete/unknown childhood vax ${inc} | Age>=75 ${old75} | Age>85 ${old85} | Melanoma family hx ${melFH} (3+ relatives ${melG}) | Pancreatic family hx: 1 FDR ${pa1}, familial ${pa2}`);
 
 // ---- RULES drift check: the app HTML and appcore.js must carry identical thresholds ----
 // appcore.js is a hand-maintained mirror of the engine in the HTML, so it can silently drift.

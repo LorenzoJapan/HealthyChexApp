@@ -62,6 +62,15 @@ function oracleEngine(S){
   // >=1 invasive melanoma plus >=2 further melanomas and/or pancreatic cancers among first- or
   // second-degree relatives on the same side -> genetic assessment. Not age- or sex-gated.
   if(fam('mel2')) E.push('melgen');
+  // Pancreatic family history (NCCN Genetic/Familial High-Risk Assessment: BOPP v1.2027).
+  // Testing criterion: unaffected person with a first-degree relative with exocrine pancreatic
+  // cancer -> germline testing. 'panc2' (familial: >=2 FDRs, or 1 FDR + >=1 SDR, or >=3 relatives
+  // with >=1 FDR, same side) always contains an affected FDR, so it meets the testing criterion too.
+  // Surveillance is NOT recommended for one affected FDR alone; only the familial pattern qualifies
+  // (NCCN; CAPS 2020). No age gate: the start age depends on relatives' ages, which the app doesn't ask.
+  const pancFDR = fam('panc1') || fam('panc2');
+  if(pancFDR) E.push('pancgen');
+  if(fam('panc2')) E.push('pancsurv');
   // Known syndromes (NCCN). Lynch/FAP override average-risk AND family-hx colorectal pathways.
   const sy=(t)=>S.syndrome==='yes'&&(S.syndromeTypes||[]).indexOf(t)!==-1;
   if(sy('brca')) E.push('brcaknown');

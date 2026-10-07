@@ -10,7 +10,7 @@ A single-file preventive-health checklist web app for iPhone. It surfaces publis
 |---|---|
 | `index.html` | The entire app — HTML, CSS, and JavaScript in one self-contained file, including an inline PWA manifest and icon. This is the whole product. |
 | `validation/` | The validation harness (`appcore.js`, `oracle.js`, `run.js`) plus `boundaries.js`, a unit suite asserting the exact guideline cut points. Proves the recommendation engine matches the guidelines. Not shipped to users. |
-| `docs/` | Clinical spec workbook (`HealthyChex_App_v4_2_Oct2026.xlsx`), the ACS 2026 colorectal audit, the family-history-of-melanoma audit, the v4.2 validation report, and the interface design review. |
+| `docs/` | Clinical spec workbook (`HealthyChex_App_v4_3_Oct2026.xlsx`), the ACS 2026 colorectal audit, the melanoma and pancreatic family-history audits, the v4.2 validation report, and the interface design review. |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is. |
 
 ## Run it locally
@@ -32,12 +32,12 @@ Because `index.html` is at the repo root, Pages serves it directly with no confi
 
 ## Validation
 
-The recommendation engine is validated by running the app's actual logic against an independently written guideline oracle across 100 synthetic patients: **6,000 / 6,000 decisions concordant (100%), across 60 recommendation types.**
+The recommendation engine is validated by running the app's actual logic against an independently written guideline oracle across 100 synthetic patients: **6,200 / 6,200 decisions concordant (100%), across 62 recommendation types.**
 
 ```
 cd validation
-node run.js         # 100 synthetic patients x 60 decisions
-node boundaries.js  # 250 assertions pinning the exact guideline cut points
+node run.js         # 100 synthetic patients x 62 decisions
+node boundaries.js  # 284 assertions pinning the exact guideline cut points
 ```
 
 `run.js` proves the two engines AGREE; `boundaries.js` proves they agree on the RIGHT answer at each cut point, since a shared off-by-one would be concordant and silent. Both are the acceptance gate for any change touching the engine. It also runs a **RULES drift check** — every clinical threshold lives in a `RULES` object at the top of `index.html`, mirrored in `appcore.js`; `run.js` compares them and fails if they diverge, so the harness can't silently validate stale thresholds.
