@@ -71,6 +71,16 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
 
+### v4.3.1 — icons (October 2026)
+
+UI only: the engine, `RULES` and the 62 recommendation types are untouched (harness 6,200/6,200 and 284/284 unchanged; browser cross-check 0 differences). Spec workbook held at v4.3 — no clinical content changed.
+
+- **Recommendation cards:** every card title gets a small teal icon by code (`HCX_RCI` map: heartbeat for blood pressure, scale for BMI, vaccine for all vaccines, DNA for genetics referrals, and so on), added by wrapping `mkc()`. Faded on Done cards.
+- **Intake:** an icon at the start of each main question label, and on each Family cancer history option. Added after page load by matching label text, so no markup was rewritten.
+- 25 Tabler icons (v3.49, MIT) inlined as data-URI masks in the existing `.ti-*` format, so they take the text colour and work in dark mode. All are `aria-hidden` (decorative) and hidden in print.
+- **Inherited cancer gene label:** with the icon added, this one label now flows as text (sub-text on its own line), and its last word and asterisk sit in a no-wrap span so the asterisk never strands on its own line. Verified at 100%, 125% and 150% text size with no collision with the Yes/No buttons.
+- Fit unchanged: every step still fits at Pro Max; the Family history step still scrolls 48 pt in a Safari tab.
+
 ### v4.3 — family history of pancreatic cancer (October 2026)
 
 Engine change, validated in lockstep. Full record: `docs/HealthyChex_Pancreatic_FH_Audit_100726.md`.
