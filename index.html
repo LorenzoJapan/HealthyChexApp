@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- HealthyChex v4.3.1 — Oct 2026 · Icons on intake questions, family-history options and recommendation cards (Tabler 3.49, MIT; UI only) · v4.3 — Oct 2026 · Family history of pancreatic cancer (panc1 → pancgen; panc2 familial → pancgen + pancsurv; 62 recommendation types; NCCN v1.2027, CAPS 2020) · v4.2 — Oct 2026 · Family history of melanoma (mel1/mel2 → skinfh + melgen, 60 recommendation types, RULES 2026-10-07); skin card reworded to USPSTF 2023 Grade I; USPSTF references updated (skin 2023, depression 2023, osteoporosis 2025, obesity 2018) · v4.1.2 screen-fit/streamlining · v4.1.1 — Sep 2026 · CRC aligned to ACS 2026 update (Wolf et al., CA Cancer J Clin 2026;e70083) + new >85 'discourage' card (crcstop); engine logic v4.0, RULES 2026-09-13, 58 recommendation types · Pro Max frame (440x956 cap, fluid below); intake split into one-screen steps with a review-and-edit step · Design review items 1,2,5,6,10: type scale raised to iOS HIG and expressed in rem (Dynamic Type), real labels + autocomplete + numeric keyboard, visible unanswered state with aria-live hint, profile name in brand strip, persistent disclaimer on the results view -->
+<!-- HealthyChex v4.3.2 — Oct 2026 · About this tool & sources (link at the bottom of step 1 and Welcome back; full-screen About with disclaimer, guideline bodies, divergences, privacy, validation and references built from RF) · v4.3.1 — Oct 2026 · Icons on intake questions, family-history options and recommendation cards (Tabler 3.49, MIT; UI only) · v4.3 — Oct 2026 · Family history of pancreatic cancer (panc1 → pancgen; panc2 familial → pancgen + pancsurv; 62 recommendation types; NCCN v1.2027, CAPS 2020) · v4.2 — Oct 2026 · Family history of melanoma (mel1/mel2 → skinfh + melgen, 60 recommendation types, RULES 2026-10-07); skin card reworded to USPSTF 2023 Grade I; USPSTF references updated (skin 2023, depression 2023, osteoporosis 2025, obesity 2018) · v4.1.2 screen-fit/streamlining · v4.1.1 — Sep 2026 · CRC aligned to ACS 2026 update (Wolf et al., CA Cancer J Clin 2026;e70083) + new >85 'discourage' card (crcstop); engine logic v4.0, RULES 2026-09-13, 58 recommendation types · Pro Max frame (440x956 cap, fluid below); intake split into one-screen steps with a review-and-edit step · Design review items 1,2,5,6,10: type scale raised to iOS HIG and expressed in rem (Dynamic Type), real labels + autocomplete + numeric keyboard, visible unanswered state with aria-live hint, profile name in brand strip, persistent disclaimer on the results view -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -829,6 +829,34 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 .ilbl:has(.hcx-qi) .synsub{display:block;margin-top:2px;padding-left:calc(1.05em + 6px)}
 .hcx-nw{white-space:nowrap}
 @media print{.hcx-rci,.hcx-qi,.hcx-fi{display:none!important}}
+/* ═══ v4.3.2 About this tool & sources — additive; overlays the app, no existing screen changed ═══ */
+.hcx-aft{display:flex;flex-direction:column;align-items:center;gap:1px;padding:2px 0 4px;text-align:center}
+#vf.fdeep .hcx-aft{display:none}
+.hcx-aft-b{min-height:var(--touch);padding:0 10px;border:none;background:transparent;color:var(--teal-ink);font-family:inherit;font-size:var(--f-foot);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.hcx-aft-b:active{opacity:.6}
+.hcx-aft-m{font-size:var(--f-cap);color:var(--ink-3);line-height:1.3}
+#vw .hcx-aft{margin-top:6px}
+.hcx-ab{position:absolute;inset:0;z-index:150;background:var(--canvas);display:none;flex-direction:column}
+.hcx-ab.on{display:flex;animation:hcxInR .26s var(--ease-out)}
+.hcx-ab-h{display:flex;align-items:center;gap:4px;padding:10px 8px 8px;padding-top:calc(env(safe-area-inset-top,0px) + 10px);border-bottom:0.5px solid var(--line);background:var(--canvas)}
+@media (hover:hover),(pointer:fine){.hcx-ab-h{padding-top:52px}}
+.hcx-ab-back{min-height:var(--touch);padding:0 8px;border:none;background:transparent;color:var(--teal-ink);font-family:inherit;font-size:var(--f-body);font-weight:500;display:inline-flex;align-items:center;gap:2px;cursor:pointer}
+.hcx-ab-t{flex:1;text-align:center;font-size:var(--f-body);font-weight:600;color:var(--ink);margin-right:64px}
+.hcx-ab-s{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.hcx-ab-disc{background:var(--amber-tint);border:1px solid var(--amber-line);border-radius:var(--r-md);padding:12px 14px;margin-bottom:18px}
+.hcx-ab-disc h4{font-size:var(--f-callout);font-weight:700;color:var(--amber-ink);margin-bottom:5px}
+.hcx-ab-disc p{font-size:var(--f-foot);color:var(--ink-2);line-height:1.55}
+.hcx-ab-blk{margin-bottom:16px}
+.hcx-ab-blk h4{font-size:var(--f-callout);font-weight:700;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.hcx-ab-blk h4 .ti{color:var(--teal-ink);font-size:1rem}
+.hcx-ab-blk p,.hcx-ab-blk li{font-size:var(--f-foot);color:var(--ink-2);line-height:1.55}
+.hcx-ab-blk ul{padding-left:18px;margin-top:3px}
+.hcx-ab-blk li{margin-bottom:2px}
+.hcx-ab-refs{padding-left:22px;margin-top:4px}
+.hcx-ab-refs li{font-size:var(--f-cap);color:var(--ink-2);line-height:1.5;margin-bottom:5px;word-break:break-word}
+.hcx-ab-refs a{color:var(--blue-ink);text-decoration:none}
+.hcx-ab-ft{margin-top:20px;text-align:center;font-size:var(--f-cap);color:var(--ink-3);line-height:1.5}
+@media print{.hcx-aft,.hcx-ab{display:none!important}}
 </style>
 
 <!-- PRINT PAGE TEMPLATE (hidden in app, shown when printing) -->
@@ -3191,6 +3219,70 @@ var HCX_RCI={"bp":"activity-heartbeat","bmi":"scale","chol":"droplet","dm":"test
       if(tt&&!tt.querySelector('.hcx-fi'))tt.insertBefore(ico(F[id],'hcx-fi'),tt.firstChild); });
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run); else run();
+})();
+
+/* ═══ v4.3.2 About this tool & sources ═══
+   Update HCX_ABOUT.version and .validated with each release (lockstep, like the summary .md).
+   The guideline-rules date is read from RULES._version and the reference list from RF, so
+   neither can drift out of sync with the engine. */
+var HCX_ABOUT={version:'4.3.2', types:62, validated:'6,200 / 6,200 decisions across 100 synthetic patients, plus 284 boundary checks', developer:'MDGadgetz LLC'};
+function hcxAboutFooter(){
+  var d=document.createElement('div'); d.className='hcx-aft';
+  d.innerHTML='<button type="button" class="hcx-aft-b" onclick="hcxAboutOpen()"><i class="ti ti-info-circle" style="font-size:14px" aria-hidden="true"></i> About this tool &amp; sources</button>'+
+    '<div class="hcx-aft-m">Guideline-based · v'+HCX_ABOUT.version+' · Developed by '+HCX_ABOUT.developer+'.</div>';
+  return d;
+}
+function hcxAboutBuild(){
+  var esc=function(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  var seen={}, refs=[];
+  Object.keys(RF).forEach(function(k){ var r=RF[k]; if(!r||!r.l)return; var key=r.l+'|'+r.u; if(seen[key])return; seen[key]=1; refs.push(r); });
+  refs.sort(function(a,b){return a.l.localeCompare(b.l);});
+  var rules=(typeof RULES!=='undefined'&&RULES._version)?RULES._version:'';
+  var blk=function(icon,title,body){return '<div class="hcx-ab-blk"><h4><i class="ti ti-'+icon+'" aria-hidden="true"></i>'+title+'</h4>'+body+'</div>';};
+  var m=document.createElement('div'); m.className='hcx-ab'; m.id='hcx-ab';
+  m.setAttribute('role','dialog'); m.setAttribute('aria-modal','true'); m.setAttribute('aria-labelledby','hcx-ab-t');
+  m.innerHTML='<div class="hcx-ab-h"><button type="button" class="hcx-ab-back" onclick="hcxAboutClose()" aria-label="Back"><i class="ti ti-arrow-left" style="font-size:17px" aria-hidden="true"></i> Back</button><div class="hcx-ab-t" id="hcx-ab-t">About</div></div>'+
+  '<div class="hcx-ab-s">'+
+   '<div class="hcx-ab-disc"><h4>Medical disclaimer</h4><p>HealthyChex is an informational wellness tool only. It is not a medical device, not a diagnostic tool, and not a substitute for the advice, diagnosis or treatment of a licensed physician or other qualified healthcare provider. It is intended for adults 18 and over. Recommendations are for people without symptoms; a new or changing symptom is a reason to see your clinician, not to wait for a screening date. Always consult your doctor before making healthcare decisions.</p></div>'+
+   blk('clipboard-check','What HealthyChex does','<p>You answer a short set of questions about your age, sex, medical and family history, habits and childhood vaccines. HealthyChex turns those answers into a personal checklist of recommended screenings, counseling and vaccines, drawn from '+HCX_ABOUT.types+' recommendation types. You can mark items done with a date, get the next due date, add reminders to your calendar, and print a report to take to your doctor.</p>')+
+   blk('book-2','Whose guidelines it follows','<ul><li><b>USPSTF</b> (U.S. Preventive Services Task Force) for most screenings, shown with its letter grade</li><li><b>CDC ACIP</b> adult immunization schedule for vaccines</li><li><b>American Cancer Society</b> for colorectal (2026) and cervical (2025) screening</li><li><b>NCCN</b> for inherited cancer genes and family history of breast, ovarian, pancreatic and prostate cancer</li><li>AHA/ACC (cholesterol), ADA (diabetes), ACG (colorectal family history), CAPS (pancreatic surveillance), AAD and dermatology criteria (skin and melanoma), AAO (eye exams)</li></ul>')+
+   blk('adjustments-horizontal','Where it deliberately differs','<p>A few recommendations follow a different expert body than the USPSTF, on purpose: cholesterol checks start at 20 (AHA/ACC), colorectal screening starts at 45 (ACS), and a hearing check is offered from 50 although the USPSTF rates it insufficient evidence. Items the USPSTF rates as insufficient evidence (Grade I) are labeled <b>Optional</b> — worth discussing, not required.</p>')+
+   blk('dna','Family history and inherited genes','<p>A strong family history or a known gene change (such as BRCA1/2, Lynch syndrome or FAP) moves you out of average-risk screening. HealthyChex then points you to earlier or different screening, or to genetic counseling, rather than the routine schedule. Those plans are set with your clinician or a genetics team.</p>')+
+   blk('lock','Your data and privacy','<p>Everything you enter stays on this device, in your browser’s storage. Nothing is sent to a server or shared with anyone. HealthyChex is not a HIPAA-covered entity. A backup file you save is a plain, unencrypted copy of your answers: keep it somewhere private.</p>')+
+   blk('circle-check','How it is checked','<p>The recommendation logic is tested against an independently written set of guideline rules: '+esc(HCX_ABOUT.validated)+' agree exactly. '+(rules?'Guideline rules last reviewed '+esc(rules)+'.':'')+' Guidelines change; if anything here differs from what your clinician advises, follow your clinician.</p>')+
+   '<div class="hcx-ab-blk" style="margin-top:20px"><h4><i class="ti ti-file-text" aria-hidden="true"></i>References</h4><ol class="hcx-ab-refs">'+
+     refs.map(function(r){return '<li>'+(r.u?'<a href="'+esc(r.u)+'" target="_blank" rel="noopener">'+esc(r.l)+'</a>':esc(r.l))+'</li>';}).join('')+
+   '</ol></div>'+
+   '<p class="hcx-ab-ft">HealthyChex v'+HCX_ABOUT.version+(rules?' · rules '+esc(rules):'')+'<br>Developed by '+HCX_ABOUT.developer+'.</p>'+
+  '</div>';
+  (document.querySelector('.iphone')||document.body).appendChild(m);
+  return m;
+}
+var HCX_ABOUT_HIST=false;
+function hcxAboutOpen(){
+  var m=document.getElementById('hcx-ab')||hcxAboutBuild();
+  m.classList.add('on'); var sc=m.querySelector('.hcx-ab-s'); if(sc)sc.scrollTop=0;
+  try{ history.pushState(Object.assign({},history.state||{},{hcxAbout:1}),''); HCX_ABOUT_HIST=true; }catch(e){ HCX_ABOUT_HIST=false; }
+  var b=m.querySelector('.hcx-ab-back'); if(b)b.focus();
+}
+function hcxAboutHide(){ var m=document.getElementById('hcx-ab'); if(m)m.classList.remove('on'); }
+function hcxAboutClose(){
+  // let the browser history step back too, so Back / edge-swipe and this button stay in step
+  if(HCX_ABOUT_HIST&&history.state&&history.state.hcxAbout){ try{history.back();return;}catch(e){} }
+  hcxAboutHide();
+}
+window.addEventListener('popstate',function(){ HCX_ABOUT_HIST=false; hcxAboutHide(); });
+document.addEventListener('keydown',function(e){ var m=document.getElementById('hcx-ab'); if(e.key==='Escape'&&m&&m.classList.contains('on'))hcxAboutClose(); });
+(function(){
+  function place(){
+    var nav=document.querySelector('#vf .fnav');
+    if(nav&&!document.querySelector('#vf .hcx-aft'))nav.parentNode.insertBefore(hcxAboutFooter(),nav.nextSibling);
+    var wbb=document.querySelector('#vw .wbb');
+    if(wbb&&!wbb.querySelector('.hcx-aft'))wbb.appendChild(hcxAboutFooter());
+    if(typeof hcxRoom==='function')setTimeout(hcxRoom,60);
+  }
+  // the step-1 nav bar is created by buildSteps() at load, so place after it
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(place,0);}); else setTimeout(place,0);
 })();
 
 </script>

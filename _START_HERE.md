@@ -71,6 +71,14 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
 
+### v4.3.2 — About this tool & sources (October 2026)
+
+UI only: engine, `RULES` and the 62 recommendation types untouched (harness 6,200/6,200 and 284/284 unchanged). Spec workbook held at v4.3. Modeled on the Acute PE Predictor's About screen.
+
+- **Link:** "About this tool & sources" plus "Guideline-based · v4.3.2 · Developed by MDGadgetz LLC." at the bottom of the two first screens: step 1 (below the Back/Next bar; hidden on later steps via `#vf.fdeep`) and Welcome back (below Manage data). Uses spare height only: no screen gained scrolling at 926, 845 or 760 pt, or at 125% text.
+- **About page:** full-screen overlay inside `.iphone` (so it fills the phone frame in the desktop preview), with a Back button; it is a history entry, so browser Back, Safari's edge-swipe and the Home Screen edge-swipe close it. Sections: medical disclaimer (reuses the first-launch modal's wording), what it does, whose guidelines, deliberate divergences, family history and genes, privacy, how it is checked, references, version.
+- **No drift by design:** the reference list is built at open time from the app's own `RF` citation table (44 unique references), and the rules date from `RULES._version`. **Lockstep item:** update `HCX_ABOUT.version`, `.types` and `.validated` in `index.html` with every release.
+
 ### v4.3.1 — icons (October 2026)
 
 UI only: the engine, `RULES` and the 62 recommendation types are untouched (harness 6,200/6,200 and 284/284 unchanged; browser cross-check 0 differences). Spec workbook held at v4.3 — no clinical content changed.
