@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- HealthyChex v4.3.2 — Oct 2026 · About this tool & sources (link at the bottom of step 1 and Welcome back; full-screen About with disclaimer, guideline bodies, divergences, privacy, validation and references built from RF) · v4.3.1 — Oct 2026 · Icons on intake questions, family-history options and recommendation cards (Tabler 3.49, MIT; UI only) · v4.3 — Oct 2026 · Family history of pancreatic cancer (panc1 → pancgen; panc2 familial → pancgen + pancsurv; 62 recommendation types; NCCN v1.2027, CAPS 2020) · v4.2 — Oct 2026 · Family history of melanoma (mel1/mel2 → skinfh + melgen, 60 recommendation types, RULES 2026-10-07); skin card reworded to USPSTF 2023 Grade I; USPSTF references updated (skin 2023, depression 2023, osteoporosis 2025, obesity 2018) · v4.1.2 screen-fit/streamlining · v4.1.1 — Sep 2026 · CRC aligned to ACS 2026 update (Wolf et al., CA Cancer J Clin 2026;e70083) + new >85 'discourage' card (crcstop); engine logic v4.0, RULES 2026-09-13, 58 recommendation types · Pro Max frame (440x956 cap, fluid below); intake split into one-screen steps with a review-and-edit step · Design review items 1,2,5,6,10: type scale raised to iOS HIG and expressed in rem (Dynamic Type), real labels + autocomplete + numeric keyboard, visible unanswered state with aria-live hint, profile name in brand strip, persistent disclaimer on the results view -->
+<!-- HealthyChex v4.3.3 — Oct 2026 · Small-screen + Android fixes (Android Home-screen install wording; 360pt Social-history layout; 48pt hit areas on * info buttons and evidence badges) · v4.3.2 — Oct 2026 · About this tool & sources (link at the bottom of step 1 and Welcome back; full-screen About with disclaimer, guideline bodies, divergences, privacy, validation and references built from RF) · v4.3.1 — Oct 2026 · Icons on intake questions, family-history options and recommendation cards (Tabler 3.49, MIT; UI only) · v4.3 — Oct 2026 · Family history of pancreatic cancer (panc1 → pancgen; panc2 familial → pancgen + pancsurv; 62 recommendation types; NCCN v1.2027, CAPS 2020) · v4.2 — Oct 2026 · Family history of melanoma (mel1/mel2 → skinfh + melgen, 60 recommendation types, RULES 2026-10-07); skin card reworded to USPSTF 2023 Grade I; USPSTF references updated (skin 2023, depression 2023, osteoporosis 2025, obesity 2018) · v4.1.2 screen-fit/streamlining · v4.1.1 — Sep 2026 · CRC aligned to ACS 2026 update (Wolf et al., CA Cancer J Clin 2026;e70083) + new >85 'discourage' card (crcstop); engine logic v4.0, RULES 2026-09-13, 58 recommendation types · Pro Max frame (440x956 cap, fluid below); intake split into one-screen steps with a review-and-edit step · Design review items 1,2,5,6,10: type scale raised to iOS HIG and expressed in rem (Dynamic Type), real labels + autocomplete + numeric keyboard, visible unanswered state with aria-live hint, profile name in brand strip, persistent disclaimer on the results view -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -857,6 +857,24 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 .hcx-ab-refs a{color:var(--blue-ink);text-decoration:none}
 .hcx-ab-ft{margin-top:20px;text-align:center;font-size:var(--f-cap);color:var(--ink-3);line-height:1.5}
 @media print{.hcx-aft,.hcx-ab{display:none!important}}
+/* ═══ v4.3.3 small-screen + Android fixes — additive; no existing rule edited ═══ */
+/* Smoking-history label: was a flex row, so its trailing note split into a second column at 360pt. */
+#smkr>.fl{display:block;line-height:1.35}
+#smkr>.fl .ti{margin-right:3px}
+/* Light / Moderate / Heavy: the half-width strip leaves 50–65pt per button on phones, so "Moderate"
+   ran edge to edge (0pt clearance from 412pt up, 2pt below). Tighter padding and caption size
+   at phone widths; tablets and the 600pt-capped frame keep the original size. */
+@media (max-width:480px){
+  .astrip .ab,.ivstrip .ivb{padding-left:4px;padding-right:4px;font-size:var(--f-cap);letter-spacing:-.1px}
+  .astrip .ab{flex:1 1 auto}
+}
+/* Tap targets: the asterisk info buttons (28pt) and evidence badges (24pt) keep their look, but
+   an invisible hit area extends them to 48pt (Android 48dp; also clears iOS 44pt). The status
+   toggle is raised above the badge's hit area so a wrapped Pending/Done row is never covered. */
+.aib,.gbadge{position:relative}
+.aib::after{content:'';position:absolute;inset:-10px -4px}
+.gbadge::after{content:'';position:absolute;inset:-12px -2px}
+.rcf .stm{position:relative;z-index:1}
 </style>
 
 <!-- PRINT PAGE TEMPLATE (hidden in app, shown when printing) -->
@@ -3225,7 +3243,7 @@ var HCX_RCI={"bp":"activity-heartbeat","bmi":"scale","chol":"droplet","dm":"test
    Update HCX_ABOUT.version and .validated with each release (lockstep, like the summary .md).
    The guideline-rules date is read from RULES._version and the reference list from RF, so
    neither can drift out of sync with the engine. */
-var HCX_ABOUT={version:'4.3.2', types:62, validated:'6,200 / 6,200 decisions across 100 synthetic patients, plus 284 boundary checks', developer:'MDGadgetz LLC'};
+var HCX_ABOUT={version:'4.3.3', types:62, validated:'6,200 / 6,200 decisions across 100 synthetic patients, plus 284 boundary checks', developer:'MDGadgetz LLC'};
 function hcxAboutFooter(){
   var d=document.createElement('div'); d.className='hcx-aft';
   d.innerHTML='<button type="button" class="hcx-aft-b" onclick="hcxAboutOpen()"><i class="ti ti-info-circle" style="font-size:14px" aria-hidden="true"></i> About this tool &amp; sources</button>'+
@@ -3283,6 +3301,26 @@ document.addEventListener('keydown',function(e){ var m=document.getElementById('
   }
   // the step-1 nav bar is created by buildSteps() at load, so place after it
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(place,0);}); else setTimeout(place,0);
+})();
+
+/* ═══ v4.3.3 Android install instructions ═══
+   The Home Screen tips (first-screen banner and one-time sheet) only described iPhone Safari
+   (Share -> Add to Home Screen, Safari's 7-day storage clearing). On Android, Chrome and similar
+   browsers install from the three-dot menu and do not clear storage on a 7-day timer, so they
+   get their own wording. iPhone wording and all ids/classes are unchanged. */
+function hcxIsAndroid(){ return /Android/i.test(navigator.userAgent||''); }
+var HCX_AND_BAR='<strong>Add HealthyChex to your Home screen.</strong> It opens like an app and your browser is less likely to clear your saved profile. Tap the <b>\u22ee</b> menu &rarr; <b>Add to Home screen</b> (or <b>Install app</b>).';
+var HCX_AND_ROW='<i class="ti ti-download" style="font-size:16px"></i><span><strong>Add it to your Home screen</strong> so it opens like an app and your browser is less likely to clear it: tap the <b>\u22ee</b> menu, then <b>Add to Home screen</b> (or <b>Install app</b>).</span>';
+(function(){
+  if(!hcxIsAndroid())return;
+  function bar(){ var t=document.querySelector('#instbar .instbar-t'); if(t)t.innerHTML=HCX_AND_BAR; }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bar); else bar();
+  if(typeof hcxOnboard!=='function')return;
+  var _o=hcxOnboard;
+  hcxOnboard=function(){ var r=_o.apply(this,arguments);
+    var m=document.getElementById('hcx-onb');
+    if(m)m.querySelectorAll('.hcx-info-row').forEach(function(row){ if(row.querySelector('.ti-share'))row.innerHTML=HCX_AND_ROW; });
+    return r; };
 })();
 
 </script>

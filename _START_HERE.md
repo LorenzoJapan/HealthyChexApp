@@ -45,7 +45,7 @@ Two constraints on `RULES`:
 - **Flag deliberate exceptions** rather than leaving them implicit.
 - **Validation before wiring:** for changes that assert new clinical thresholds, produce a review table (question → threshold → resulting recommendation → source) for physician sign-off *before* touching the engine.
 
-## Current state (v4.3, October 2026)
+## Current state (v4.3.3, October 2026)
 
 - "Clinical Calm" design system: CSS design tokens, iOS HIG 44pt touch targets, WCAG AA contrast, white grouped-inset cards, 4px status rail on recommendation cards.
 - Results view-mode toggle: Summary ↔ Update checklist (non-destructive).
@@ -70,6 +70,15 @@ All UI-layer; the engine, `RULES`, and the 58 recommendation types are untouched
 - **Design review items 1, 2, 5, 6, 10 applied.** Type scale raised to iOS HIG and expressed in `rem` (Dynamic Type verified at 125% and 200%); real `<label for>` + `autocomplete` + `inputmode` on step 1; dashed marker on unanswered controls; profile name in the brand strip; persistent disclaimer on the results view.
 
 > **Two selector traps hit during this work, both invisible to the harness.** `#vf{display:flex}` (id) silently beat `.view{display:none}` (class) and left the form painted over the results. And a new element reusing the existing `.rdisc` class was overridden by the app's own later rule. When adding UI, use a new class name and never raise specificity above the view-switching rules.
+
+### v4.3.3 — small-screen and Android fixes (October 2026)
+
+UI only: engine, `RULES` (`_version 2026-10-07`) and the 62 recommendation types untouched (harness 6,200/6,200 and 284/284 unchanged). Spec workbook held at v4.3. All CSS appended to the last `<style>` block and all JS appended to the end of the script; no existing rule, id or class edited.
+
+- **Android install wording.** The first-screen banner and the one-time "checklist is saved" sheet only gave iPhone Safari steps (Share → Add to Home Screen, Safari's 7-day clearing). On Android (`hcxIsAndroid()`, user-agent test) they now say ⋮ menu → Add to Home screen / Install app. iPhone wording unchanged. The sheet is patched by wrapping `hcxOnboard()`.
+- **Social history at narrow widths.** The smoking-history label (`#smkr>.fl`) was a flex row and split into two columns at 360 pt; it now flows as text. Light / Moderate / Heavy and the IV-drug strip use tighter padding and caption size at ≤480 pt, and alcohol buttons size to their words (`flex:1 1 auto`), so "Moderate" has 4–9 pt clearance instead of 0–2 pt.
+- **Tap targets.** The `*` info buttons (28 pt) and evidence-grade badges (24 pt) keep their look; an invisible `::after` hit area extends them to 48 pt tall (Android 48 dp, iOS 44 pt). `.rcf .stm` is raised (`z-index:1`) so when Pending/Done wraps under a badge, the buttons keep priority; badges get ~43 pt there.
+- Verified in Chromium mobile emulation at 10 sizes (iPhone SE to 16 Pro Max, Galaxy 360×640 and S23, Pixel 8, both Folds, landscape): no horizontal overflow, no script errors, Back/Next always visible. Not yet checked in real Safari/WebKit or on a physical Android phone.
 
 ### v4.3.2 — About this tool & sources (October 2026)
 
