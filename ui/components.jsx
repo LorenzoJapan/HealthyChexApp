@@ -28,6 +28,31 @@ export function Review({sections, onEdit}) {
     </SectionCard>
   )}</div>;
 }
+// Opens the tester's email app; details are gathered at tap time so they match the current screen.
+const FEEDBACK_EMAIL = 'odoogh@gmail.com';
+export function feedbackHref(context) {
+  const body = [
+    'What happened, and what did you expect?', '', '',
+    '---', `Screen: ${context.screen}`, `Device: ${context.device}`,
+    `Screen size: ${context.size}`, `Page: ${context.url}`
+  ].join('\n');
+  return `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent('HealthyChex feedback')}&body=${encodeURIComponent(body)}`;
+}
+function currentScreen() {
+  const step = document.querySelector('#vf.active .fstep.on');
+  if (step) return step.dataset.k === 'rv' ? 'Review answers' : `Question: ${step.getAttribute('aria-label') || step.dataset.k}`;
+  const view = document.querySelector('.view.active, .rw.active');
+  return {vw: 'Welcome back', vf: 'Questions', vr: 'Checklist results'}[view?.id] || 'Unknown';
+}
+export function FeedbackLink() {
+  const update = event => {
+    event.currentTarget.href = feedbackHref({
+      screen: currentScreen(), device: navigator.userAgent,
+      size: `${window.innerWidth}×${window.innerHeight}`, url: location.href
+    });
+  };
+  return <a className="hcx-feedback" href={`mailto:${FEEDBACK_EMAIL}`} onClick={update}>Send feedback</a>;
+}
 let root;
 window.HCXUI = {
   renderReview(container, sections, onEdit) {
@@ -35,3 +60,9 @@ window.HCXUI = {
     flushSync(() => root.render(<Review sections={sections} onEdit={onEdit}/>));
   }
 };
+function mountFeedback() {
+  const host = document.getElementById('hcx-feedback');
+  if (host) createRoot(host).render(<FeedbackLink/>);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountFeedback);
+else mountFeedback();

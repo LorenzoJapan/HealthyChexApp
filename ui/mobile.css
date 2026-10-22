@@ -75,3 +75,6 @@ body{position:fixed;top:var(--hcx-viewport-top,0px);left:0;width:100%;height:var
 }
 /* Native age picker: phones show their own wheel or list; the chevron marks it as a dropdown. */
 select.fi,.hcx-question select.fi,.hcx-question select.fi.v{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+/* Header: save status and feedback link share the right side. */
+.hcx-brand-r{display:flex;align-items:center;gap:12px;min-width:0}.hcx-feedback{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 4px;color:var(--teal-ink);font-size:.8125rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.hcx-feedback:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:4px}
+@media(max-width:380px){.hcx-brand-r small{display:none}}

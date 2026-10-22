@@ -73,9 +73,9 @@ function appEngine(s){
   if(S.drugs==='yes')L.push({c:'drug',t:'Drug use counseling',d:'Brief counseling; referral if indicated.',f:'a',refs:['uspstf-drug']});
   L.push({c:'mvs',t:'Motor vehicle safety',d:'100% seatbelt use; no alcohol while driving.',f:'r',refs:['cdc-mvs']});
   if(S.sexactive==='yes')L.push({c:'sex',t:'Sexual health counseling',d:'Safer sex practices, contraception, and sexually transmitted infection (STI) prevention.',f:'r',refs:['uspstf-sex']});
-  if(prep)L.push({c:'prep',t:'PrEP (HIV pre-exposure prophylaxis)',d:'Indicated for MSM, IV drug users, or multiple unprotected partners.',f:'a',refs:['cdc-prep']});
-  if(chlam)L.push({c:'sti',t:'Sexually Transmitted Infection (STI) screen — chlamydia & gonorrhea',d:(g==='F'&&a<25&&!hivHi)?'Yearly NAAT — all sexually active women under 25.':'Yearly NAAT. Every 3–6 months if MSM.',f:'a',refs:['uspstf-chlamydia','cdc-sti']});
-  if(syph)L.push({c:'syph',t:'Syphilis screening',d:msm?'Yearly RPR/VDRL. Every 3–6 months if MSM.':'Yearly RPR/VDRL.',f:'a',refs:['uspstf-syph']});
+  if(prep)L.push({c:'prep',t:'PrEP (HIV pre-exposure prophylaxis)',d:'Indicated for men who have sex with men, people who inject drugs, or people with multiple unprotected partners.',f:'a',refs:['cdc-prep']});
+  if(chlam)L.push({c:'sti',t:'Sexually Transmitted Infection (STI) screen — chlamydia & gonorrhea',d:(g==='F'&&a<25&&!hivHi)?'Yearly NAAT — all sexually active women under 25.':'Yearly NAAT. Every 3–6 months for men who have sex with men.',f:'a',refs:['uspstf-chlamydia','cdc-sti']});
+  if(syph)L.push({c:'syph',t:'Syphilis screening',d:msm?'Yearly RPR/VDRL. Every 3–6 months for men who have sex with men.':'Yearly RPR/VDRL.',f:'a',refs:['uspstf-syph']});
   if(a>=RULES.hcv.start&&a<=RULES.hcv.stop)L.push({c:'hcv',t:'Hepatitis C (HCV) screening',d:hcvHi?'Yearly HCV antibody test.':'At least one HCV test for all adults 18–79. No repeat needed unless new risk factors arise.',f:hcvHi?'a':'o',rec:hcvHi?12:null,sched:hcvHi?'Yearly (high HCV risk)':'One-time for all adults 18–79 (repeat only if new risk factors)',refs:['uspstf-hcv']});
   if(a>=RULES.hiv.start&&a<=RULES.hiv.stop)L.push({c:'hiv',t:'HIV screening',d:hivHi?'Yearly HIV test — elevated risk.':'At least one HIV test for all adults 15–65. No repeat needed unless new risk factors arise.',f:hivHi?'a':'o',rec:hivHi?12:null,sched:hivHi?'Yearly (elevated HIV risk)':'One-time for all adults 15–65 (repeat only if new risk factors)',refs:['uspstf-hiv']});
   if(g==='F'&&a>=RULES.cerv1.start&&a<=RULES.cerv1.stop)C.push({c:'cerv1',t:'Cervical cancer — Pap smear',d:'Cervical cytology every 3 yrs (ages 21–29).',f:'r',refs:['uspstf-cerv']});
@@ -147,7 +147,7 @@ function appEngine(s){
   if(inc&&birthYr>=1957){V.push({c:'vmmr',t:'MMR — verify / catch-up',d:'Your childhood vaccines are incomplete or unknown — confirm 2 documented MMR doses. Adults born in 1957 or later without evidence of immunity need 1–2 doses (U.S.-born before 1957 = presumptive immunity; healthcare workers still need documented doses).',f:'o',refs:['acip-2025']});}
   // Suppressed if childhood vaccines complete (documented 2-dose MMR = presumptive immunity) OR U.S.-born before 1957.
   if(inc)V.push({c:'vpolio',t:'Polio (IPV) — verify',d:'Confirm 4-dose childhood IPV series.',f:'s',refs:['acip-2025']});
-  if(menB)V.push({c:'vmenb',t:'MenB vaccine',d:'2–3 dose series for MSM and high-risk adults.',f:'o',refs:['acip-2025']});
+  if(menB)V.push({c:'vmenb',t:'MenB vaccine',d:'2–3 dose series for men who have sex with men and other high-risk adults.',f:'o',refs:['acip-2025']});
   if(inc)V.push({c:'vmenacwy',t:'MenACWY vaccine',d:'1–2 doses + boosters. Dorm residents and travelers to endemic regions.',f:'o',refs:['acip-2025']});
   var all=[].concat(H,L,C,V);
   var flags={}; all.forEach(function(x){flags[x.c]=x.f;});

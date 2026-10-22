@@ -112,3 +112,13 @@ test('input steps autofocus and the app header stays visible in a short viewport
   await page.screenshot({path:'/tmp/hcx-keyboard-layout.png',animations:'disabled'});
   await page.close();
 });
+test('feedback link stays in the header and describes the current question',async({browser})=>{
+  const page=await browser.newPage({viewport:{width:320,height:700},isMobile:true,hasTouch:true});
+  await page.goto(url);await advance(page);
+  const link=page.locator('.hcx-feedback');
+  await expect(link).toBeInViewport({ratio:1});
+  await link.evaluate(el=>{el.addEventListener('click',e=>e.preventDefault(),{once:true});el.click();});
+  const href=decodeURIComponent(await link.getAttribute('href'));
+  expect(href).toContain('mailto:');expect(href).toContain('Screen: Question: Age');
+  await page.close();
+});
