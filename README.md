@@ -1,5 +1,7 @@
 # HealthyChex
 
+**[Open HealthyChex on GitHub Pages](https://drmedrme.github.io/HealthyChexApp/)** — open this link on your phone to try the app.
+
 A single-file, responsive preventive-health checklist web app for phones, tablets, and computers. It surfaces published screening and immunization guidelines (USPSTF, CDC/ACIP, ACS, NCCN) for average-risk adults, tailored to the age, sex, and history a person enters. All data stays on the device; nothing is transmitted.
 
 **HealthyChex is informational only — not a diagnosis, not a medical device, and not a substitute for professional care.**
@@ -22,6 +24,10 @@ HealthyChex is also registered in App Hub under `healthychex` on frontend port 3
 > **On iPhone:** you cannot open a local file in mobile Safari (iOS only loads `http(s)://` URLs, not `file://`). Host it (below), open the URL in **Safari**, then **Share → Add to Home Screen**. The installed version keeps its data; a plain browser tab may lose it after ~7 days (WebKit storage eviction). Note: Add to Home Screen is a **Safari-only** capability — it isn't available in Chrome or Edge on iOS.
 
 ## Host it free with GitHub Pages
+
+This fork is live at **https://drmedrme.github.io/HealthyChexApp/**. GitHub Pages deploys from the `responsive-layout` branch, using the repository root. Push updates to that branch to update the live app.
+
+To set up GitHub Pages for another copy of this repository:
 
 1. Push this repo to GitHub.
 2. Repo **Settings → Pages**.
