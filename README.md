@@ -69,7 +69,7 @@ The interface uses the full browser width with a readable content maximum, a sin
 
 ## UI development
 
-The review screen uses React `SectionCard`, `AnswerList`, and `Button` components in `ui/components.jsx`. `ui/guided.js` defines the single-question intake and its conditional routes while reusing the existing input handlers. Shared spacing, card, navigation, and mobile type rules live in `ui/mobile.css`. The existing intake and recommendation engine still own clinical state and saved profiles; the React screen receives plain display data and an edit callback. Other screens can move to these components gradually.
+The review screen uses React `SectionCard`, `AnswerList`, and `Button` components in `ui/components.jsx`. `ui/guided.js` defines the single-question intake and its conditional routes while reusing the existing input handlers. Shared spacing, card, navigation, and mobile type rules live in `ui/mobile.css`. The existing intake and recommendation engine still own clinical state and saved profiles; the React screen receives plain display data and an edit callback. Other screens can move to these components gradually. The last question warns that the review comes next. The review screen opens with a short explanation and keeps **See my checklist** pinned to the bottom of the screen.
 
 After editing UI sources, run `npm ci` once, then `npm run build`. Commit the updated `index.html` together with its sources. The build embeds React and CSS locally, so the deployed app remains one self-contained page with no CDN dependency or production build service. Direct HTML edits outside the generated UI block remain supported. Run `npm test` for clinical validation.
 
