@@ -68,10 +68,16 @@ The interface uses the full browser width with a readable content maximum, a sin
 
 ## UI development
 
-The review screen uses React `SectionCard`, `AnswerList`, and `Button` components in `ui/components.jsx`. Shared spacing, card, navigation, and mobile type rules live in `ui/mobile.css`. The existing intake and recommendation engine still own clinical state and saved profiles; the React screen receives plain display data and an edit callback. Other screens can move to these components gradually.
+The review screen uses React `SectionCard`, `AnswerList`, and `Button` components in `ui/components.jsx`. `ui/guided.js` defines the single-question intake and its conditional routes while reusing the existing input handlers. Shared spacing, card, navigation, and mobile type rules live in `ui/mobile.css`. The existing intake and recommendation engine still own clinical state and saved profiles; the React screen receives plain display data and an edit callback. Other screens can move to these components gradually.
 
 After editing UI sources, run `npm ci` once, then `npm run build`. Commit the updated `index.html` together with its sources. The build embeds React and CSS locally, so the deployed app remains one self-contained page with no CDN dependency or production build service. Direct HTML edits outside the generated UI block remain supported. Run `npm test` for clinical validation.
 
 For browser checks, start `./start.sh` and run `npm run test:ui`. Set `CHROME_PATH` if Chrome is installed elsewhere. Tests use synthetic profiles at 320, 390, 768, and 1280 pixels, including editing answers and generating results.
 
 GitHub Pages can continue serving this app and a future React SPA. Next.js static export also works on static hosting, but server-dependent Next.js features would require a server host. React adoption does not require changing the host or the saved-data format.
+
+## Guided mobile intake
+
+Intake shows one question at a time. Pale green marks the current question card; every selected answer uses the same dark green and checkmark, with `aria-pressed` indicating selection. Answering never advances automatically: choose **Next** to continue or **Back** to change an answer. Required answers enable Next; names and smoking-history numbers remain optional. Follow-up questions appear only when their parent answers apply. On phones, short questions sit centrally with pill-shaped answer controls and navigation near the bottom; long multiple-choice lists can scroll. The review screen still allows editing each section before generating a checklist.
+
+Browser checks cover Yes/No routes, conditional follow-ups, editing, optional fields, stable button positions, matching selection colors, and results at four widths.

@@ -29,3 +29,31 @@
 @media screen{.hcx-answer dd ul{padding-left:20px;margin:0}.hcx-answer dd li+li{margin-top:8px}}
 @media screen{.omodal-box,.disc-box,.smart-box{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Guided intake: pale green identifies the current question, never an answer. */
+@media screen {
+.hcx-guided-step .hcx-question{padding:24px;background:var(--mint-3);border:1px solid var(--mint-2);border-radius:20px}
+.hcx-question h2{font-size:1.375rem;line-height:1.4;margin:0 0 20px;color:var(--ink)}
+.hcx-question .blk,.hcx-question .blkf,.hcx-question .bsubc{background:transparent;border:0;box-shadow:none;padding:0!important;margin:0}
+.hcx-question .blk+.blk{margin-top:16px}.hcx-question .irow{display:block}.hcx-question .iyn{margin:16px 0 0;display:flex;gap:12px}.hcx-question .ilbl,.hcx-question .bl{font-size:1.25rem!important;color:var(--ink)!important;line-height:1.5}.hcx-question .ds2col{width:100%}.hcx-question .dvdr{display:none}.hcx-question .s3,.hcx-question .yp,.hcx-question .astrip,.hcx-question .ivstrip,.hcx-question .tri{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}.hcx-question .rev{display:none!important}.hcx-question>#famchips,.hcx-question>#synchips{display:block!important}.hcx-question .fi{background:#fff}.hcx-question .fi.v{background:#fff}
+.hcx-question button[aria-pressed]{min-height:52px;background:#fff;color:var(--ink-2);border:1.5px solid var(--line-2);border-radius:12px;flex:1;padding:12px;font-size:1.0625rem}
+.hcx-question button[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:650}.hcx-question button[aria-pressed="true"]::after{content:'✓';margin-left:8px;font-weight:700}.hcx-question button[aria-pressed="true"] .famopt-t,.hcx-question button[aria-pressed="true"] .famopt-d{color:#fff;opacity:1}.hcx-question button .yi,.hcx-question button .famopt-i{display:none!important}.hcx-question button.famopt{display:flex;width:100%;flex:auto;text-align:left}.hcx-question .chips{display:flex;gap:12px;flex-direction:column}.hcx-question .chip{text-align:left;white-space:normal}
+.hcx-guided-step .slbl{display:none}.hcx-guided .fhint{outline:0;border:0;background:transparent;color:var(--ink-3);font-size:.9375rem;padding:12px 0 0}.hcx-guided .unans{outline:0}
+.hcx-guided .fnav{margin-top:20px}.hcx-guided-step .pop{font-size:1rem}.hcx-guided-step .pnote{font-size:.9375rem;line-height:1.5}
+@media(max-width:600px){.hcx-guided-step .hcx-question{padding:20px}.hcx-question .s3,.hcx-question .astrip,.hcx-question .tri{flex-direction:column}.hcx-question .tri .tb{flex:auto}.hcx-question .famopt{padding:12px!important}}
+}
+@media screen{
+#vf:has(.hcx-guided) .hero{padding:12px 0;justify-content:flex-end}#vf:has(.hcx-guided) .hero>div{display:none}#vf:has(.hcx-guided) .hero .hcx-import{flex-basis:auto;margin:0}
+.hcx-guided #fnav-back:disabled{display:none}
+}
+/* Short questions share a stable card and thumb-friendly answer position. */
+@media screen and (max-width:600px){
+#vf:has(.hcx-guided){padding-bottom:0;min-height:100%}#vf:has(.hcx-guided).active{display:flex;flex-direction:column}
+.hcx-guided{flex:1 0 auto;min-height:0}.hcx-guided>.fstep.on:not([data-k="rv"]){display:flex;flex:1;align-items:center;padding:12px 0!important}
+.hcx-guided-step .hcx-question{width:100%;min-height:240px;display:flex;flex-direction:column;justify-content:center;gap:0}
+.hcx-question>.irow{display:flex;flex:1;flex-direction:column;align-items:stretch;justify-content:space-between;gap:20px}.hcx-question .iyn{margin-top:auto}
+.hcx-question button[aria-pressed]:not(.famopt):not(.chip){border-radius:999px;min-height:56px}
+.hcx-guided .fnav{margin-top:16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}.hcx-guided .fnavb{border-radius:999px}.hcx-guided .fnavb#fnav-back{min-height:44px;padding:8px}
+#vf:has(.hcx-guided) .hcx-aft{margin:0;padding:0}#vf:has(.hcx-guided) .hcx-aft-m{display:none}
+.hcx-question .s3,.hcx-question .astrip,.hcx-question .tri{margin-top:20px}
+}
+@media screen{.hcx-guided>.fhint.on{min-height:48px;line-height:1.5}.hcx-guided-step:focus{outline:none}}
