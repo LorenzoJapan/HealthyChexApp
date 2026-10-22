@@ -132,7 +132,6 @@
 .rvws b{font-weight:600}
 .rvws .miss{color:var(--rust-fill);font-weight:600}
 </style>
-</style>
 <style>
 /* ═══════════════════════════════════════════════════════════
    HealthyChex v4.1 design system — "Clinical Calm"
@@ -859,6 +858,31 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
 @media print{.hcx-aft,.hcx-ab{display:none!important}}
 </style>
 
+<style id="hcx-responsive-redesign">
+/* Reading-first responsive shell; preserves existing controls and clinical logic. */
+@media screen {
+:root{--f-display:clamp(1.75rem,4vw,2.5rem);--f-title:1.375rem;--f-body:1.125rem;--f-callout:1rem;--f-foot:1rem;--f-cap:.875rem;--r-lg:24px;--r-md:16px;--r-sm:10px;--canvas:#f3f7f8;--ink:#172e32;--ink-2:#304d52;--ink-3:#50666b;--line:#dce6e8;--line-2:#bfced2}
+html,body{display:block;height:100%;min-height:0;padding:0;background:var(--canvas)}body{font-size:1.0625rem;line-height:1.5}
+.brand{display:flex;width:100%;max-width:none;min-height:72px;margin:0;padding:16px clamp(18px,4vw,64px);background:#fff;border-bottom:1px solid var(--line);gap:16px}.brand h1{color:var(--teal-ink);font-size:1.375rem;letter-spacing:-.5px}.brand h1 i{color:var(--teal);font-size:1.75rem}.brand small{color:var(--ink-3);font-size:.875rem;text-align:right}
+.iphone{width:100%;max-width:none;align-self:auto;transform:none;margin:0;border-radius:0;box-shadow:none;overflow:visible;background:var(--canvas)}.island,.hp,.scue{display:none!important}.screen{height:calc(100vh - 77px);height:calc(100dvh - 77px);max-height:none;overflow-y:auto;overflow-x:hidden;scroll-padding-top:24px}
+.view,.rw{width:100%;max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px) 40px}#vf{max-width:850px}#vw{max-width:1000px}.hero,.rhero{padding:32px 0 24px;gap:16px}.hero-icon{width:56px;height:56px;border-radius:18px}.hs{margin-top:6px;line-height:1.5}
+#vf.fdeep{padding-top:20px}.fb{padding:0}.fstep.on{padding-top:0!important;animation:none}.fprog{margin:0 0 24px;padding:16px 0;background:var(--canvas);border-bottom:1px solid var(--line)}.fprog-lbl{font-size:1.125rem}.fprog-track,.fprog-fill{height:6px}.fprog-row{gap:12px;flex-wrap:wrap}.hcx-reset{margin:0;padding:6px 10px}.slbl{font-size:1.125rem;margin:24px 0 12px}.row{gap:16px;margin-bottom:16px}.blk,.blkf{padding:20px;box-shadow:none}.blkf{margin-bottom:16px}.bl{display:block;margin-bottom:10px}.ilbl,.fstep.hcx-roomy .ilbl,.fstep.hcx-roomy .bl{font-size:1.125rem!important;color:var(--ink)!important;line-height:1.5}.irow{gap:20px;flex-wrap:wrap}.iyn{margin-left:auto}.fi,.ib,.gbtn,.yb,.tb,.s3b,.ab,.ivb{font-size:1rem;min-height:48px}.fi{font-size:1.125rem}.s3b,.ab,.ivb{white-space:normal;padding:12px 8px}.grow{gap:8px}.gbtn{flex-wrap:wrap}.famopt,.chip{min-height:48px}.famopt-t,.famq{font-size:1.0625rem}
+.fnav{margin:24px 0 0;padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));gap:12px;background:var(--canvas);border-top:1px solid var(--line)}.fnavb{min-height:52px;max-width:360px}.fnavb.pri,.fnavb.go{margin-left:auto}.rvwh{font-size:1rem}.rvws{font-size:1.0625rem;line-height:1.6}.rvw{padding:18px;margin-bottom:12px}
+.rtopdisc{padding:16px 20px;margin-top:24px;border:1px solid var(--amber-line);border-radius:12px;font-size:.9375rem;line-height:1.6;background:var(--amber-tint);color:var(--amber-ink)}.rtopdisc+.rhero{padding:28px 0 24px}.rht{text-align:left;max-width:800px;line-height:1.15;letter-spacing:-1px}.rhs{text-align:left;margin-top:12px;font-size:1.0625rem}.rmode{max-width:480px;margin-top:24px;padding:4px;border-radius:12px}.rmode-b{border-radius:9px;min-height:48px;font-size:1rem}.pbw{max-width:480px;height:8px;margin-top:20px}.plbl{max-width:480px}.plbl span{font-size:.9375rem}
+#rintro{padding:24px!important;background:#e5f1ed!important;border:1px solid #c7dfd4!important;border-radius:16px;margin-bottom:12px}#rintro>div:first-child{font-size:1.25rem!important;line-height:1.4;align-items:flex-start!important}#rintro>div+div{font-size:1.0625rem!important;line-height:1.6;margin-top:8px}
+.rbdy{padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}.cath{grid-column:1/-1;margin:24px 0 0;padding-bottom:12px;border-bottom:1px solid var(--line);gap:12px}.catic{width:36px;height:36px}.catl{font-size:1.375rem}.catc{font-size:.9375rem}.rc{padding:24px 24px 22px 28px;margin:0;box-shadow:0 3px 16px rgba(23,46,50,.035);overflow:visible;min-width:0;align-self:start}.rc::before{border-radius:16px 0 0 16px}.rct{font-size:1.375rem;line-height:1.35;margin-bottom:14px;letter-spacing:-.3px}.rcd{font-size:1.125rem;line-height:1.65;color:var(--ink-2);margin-bottom:24px;overflow-wrap:anywhere}.rcd strong{color:var(--ink);font-weight:650}.rcf{gap:10px;margin:0}.rpill,.gbadge{font-size:.9375rem;padding:6px 10px}.gbadge{min-height:44px}.gbadge .gb-sys{font-size:.8125rem}.stm{flex-basis:100%;margin-top:10px;border-radius:10px;display:flex;flex-wrap:wrap}.stmb{font-size:1rem;min-height:48px;flex:1;justify-content:center;padding:10px;white-space:normal}.rs{font-size:.75rem;margin-left:3px}.gpop-body,.gpop-note{font-size:1rem}.gpop-x{min-height:44px;min-width:44px}.gpop{margin:0 0 18px}.rbase{font-size:.9375rem;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:12px}.ds{margin-top:18px;padding:16px}.dr{flex-wrap:wrap}.dl{font-size:1rem}input[type=date]{min-width:0;font-size:1rem;min-height:48px}.ndb{font-size:.9375rem;white-space:normal}.crc-opt{font-size:1rem;line-height:1.5;white-space:normal}
+.rdisc{margin:28px 0 16px;padding:20px}.rdisc-t{font-size:1rem;line-height:1.65}.ebr-toggle{margin:16px 0;padding:20px}.ebr-toggle-main{font-size:1rem}.ebr-toggle-sub{font-size:.9375rem}.ebr{margin:20px 0}.ebrt,.ebri{font-size:1rem;line-height:1.6}.icsb{width:100%;margin:16px 0}.backb,.newb{min-height:48px;font-size:1rem}.rw>div:has(>button[onclick^="doPrint"]){padding:16px 0!important;gap:12px!important}.rw button[onclick^="doPrint"]{font-size:1rem!important;min-height:52px;padding:14px!important;border-radius:12px!important}
+.wbb{padding:0}.wbc{padding:28px;margin-bottom:20px}.wbname{font-size:1.75rem}.wbsub{font-size:1rem}.wbstats{gap:16px}.wbst{padding:20px}.wbstn{font-size:2rem}.wbstl{font-size:1rem}.wbht{font-size:.9375rem}.wbi{padding:16px 0;flex-wrap:wrap}.wbin{white-space:normal;text-overflow:clip;font-size:1.125rem}.wbid,.wbadge{font-size:.9375rem}.wbbtns{gap:16px}.wbbtn{min-height:56px}.hcx-manage-s{font-size:1rem;min-height:56px}
+.hipaa-banner,.instbar{margin:16px 0;padding:16px;line-height:1.6}#vf .ilbl[style],#pox-note,.fhir-review-chips,.hipaa-banner-txt,.instbar-t,.disc{font-size:1rem!important;line-height:1.6}.hcx-aft{margin:24px 0}.hcx-aft-b{font-size:1rem;min-height:48px}.disc-box,.smart-box{max-width:640px;border-radius:24px}.disc-body,.disc-body p,.disc-body li,.disc-body label,.smart-box p{font-size:1rem;line-height:1.65}.disc-hdr{padding:24px}.disc-hdr h2{font-size:1.5rem}.omodal-box{max-width:480px;padding:28px}.omodal-sub,.omodal-opt .od{font-size:1rem}.omodal-opt{padding:20px}.omodal-opt .ot{font-size:1.125rem}
+.hcx-ab{position:fixed;inset:0}.hcx-ab-h{padding:16px max(16px,calc((100vw - 900px)/2));padding-top:calc(16px + env(safe-area-inset-top,0px))}.hcx-ab-s{width:100%;max-width:900px;margin:auto;padding:32px 24px;flex:1}.hcx-ab-t{font-size:1.25rem}.hcx-ab-blk{margin-bottom:28px}.hcx-ab-blk h4{font-size:1.375rem;margin-bottom:12px}.hcx-ab-blk p,.hcx-ab-blk li,.hcx-ab-disc p,.hcx-ab-refs li{font-size:1.0625rem;line-height:1.7}
+body{display:flex;flex-direction:column;height:100vh;height:100dvh}.brand{flex-shrink:0;padding-top:calc(12px + env(safe-area-inset-top,0px))}.iphone{flex:1;min-height:0}.screen{height:100%;max-height:100%}
+a{text-underline-offset:3px}button,input,select{font-family:inherit}button{line-height:1.4}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #1769b0;outline-offset:3px}
+@media(min-width:1000px){.rbdy{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media(max-width:600px){.brand{min-height:64px;padding:12px 16px}.brand h1{font-size:1.1875rem}.brand small{max-width:45%;font-size:.8125rem}.screen{height:calc(100vh - 69px);height:calc(100dvh - 69px)}.view,.rw{padding:0 16px 32px}.hero{padding:24px 0}.row{grid-template-columns:1fr}.blk,.blkf{padding:18px}.rc{padding:22px 18px 20px 22px}.rct{font-size:1.25rem}.rcd{font-size:1.0625rem;line-height:1.65}.cath{margin-top:20px}.rht{font-size:1.875rem}.wbc{padding:20px}.wbbtns{grid-template-columns:1fr}.rmode-b{padding:10px 8px}.hcx-ab-t{margin-right:8px;font-size:1rem}.hcx-ab-s{padding:24px 18px}.fprog{top:0}.hcx-reset{font-size:.875rem}.rtopdisc{font-size:.875rem}.iyn{margin-left:0}.irow{gap:12px}.irow>.ilbl{flex-basis:100%}.s3{flex-wrap:wrap}.s3b{min-width:80px}.famopt{max-width:100%}.rw>div:has(>button[onclick^="doPrint"]){grid-template-columns:1fr!important}}
+.screen{height:100%;max-height:100%}
+}
+</style>
+
 <!-- PRINT PAGE TEMPLATE (hidden in app, shown when printing) -->
 </head><body><div id="print-page" style="display:none">
 </div>
@@ -1259,7 +1283,7 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
     <div class="rw" id="vr">
       <div class="rtopdisc">Informational only — <strong>not a diagnosis and not a substitute for professional medical advice.</strong> Discuss these with your clinician.</div>
       <div class="rhero">
-        <div class="rht"><i class="ti ti-clipboard-check" style="margin-right:4px"></i>Yearly Preventative Health Checklist</div>
+        <div class="rht"><i class="ti ti-clipboard-check" style="margin-right:4px"></i>Your preventive health checklist</div>
         <div id="rmeta" class="rhs"></div>
         <div class="rmode" id="rmode" role="group" aria-label="How your checklist is shown">
           <button type="button" class="rmode-b" id="rmode-simple" aria-pressed="false" onclick="setOutputMode('simple')"><i class="ti ti-printer" style="font-size:14px"></i> Summary</button>
@@ -1270,8 +1294,8 @@ input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;f
       </div>
       <!-- INTRO MESSAGE STRIP -->
       <div id="rintro" style="background:#E1F5EE;border-bottom:1px solid #1D9E75;padding:9px 12px">
-        <div style="font-size:13px;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Review and update your suggested annual health checklist</div>
-        <div style="font-size:12px;color:#0C6B54">You can print a report for your physician or save as PDF at the end</div>
+        <div style="font-size:13px;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Read your recommendations</div>
+        <div style="font-size:12px;color:#0C6B54">Read each card below and discuss it with your clinician. Use Update checklist to record completed care. You can also print or save a report.</div>
       </div>
       <div class="rbdy" id="rbdy"></div>
       <!-- PERSISTENT INFORMATIONAL DISCLAIMER — always visible on results, not dismissible -->
@@ -1979,8 +2003,8 @@ function setOutputMode(mode){
   var intro=document.getElementById('rintro');
   if(intro){
     intro.innerHTML=(mode==='simple')
-      ?'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Your recommended preventive care</div><div style="font-size:0.75rem;color:#0C6B54">A summary you can print or save as PDF for your physician — you can switch views above at any time</div>'
-      :'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Review and update your suggested annual health checklist</div><div style="font-size:0.75rem;color:#0C6B54">You can print a report for your physician or save as PDF at the end</div>';
+      ?'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Your recommended preventive care</div><div style="font-size:0.75rem;color:#0C6B54">Read each card below and discuss it with your clinician. Print or save a report, or switch to Update checklist to record completed care.</div>'
+      :'<div style="font-size:0.8125rem;font-weight:600;color:#085041;margin-bottom:2px;display:flex;align-items:center;gap:5px"><i class="ti ti-clipboard-heart" style="font-size:14px"></i> Read your recommendations</div><div style="font-size:0.75rem;color:#0C6B54">Read each card below and discuss it with your clinician. Use Update checklist to record completed care. You can also print or save a report.</div>';
   }
   var m=document.getElementById('omodal');if(m)m.classList.remove('on');
   var sc=document.querySelector('.screen');if(sc)sc.scrollTop=0;
@@ -2974,21 +2998,7 @@ function initScue(){
   else buildSteps();
 })();
 
-/* v4.1.2 desktop preview: scale the fixed 428 x 926 iPhone 13 Pro Max frame to fit the window.
-   Device mode ignores --hcx-fit (the CSS that reads it is scoped to mouse/trackpad input). */
-(function(){
-  var mq=window.matchMedia('(hover:hover),(pointer:fine)');
-  function hcxFit(){
-    var r=document.documentElement;
-    if(!mq.matches){ r.style.removeProperty('--hcx-fit'); return; }
-    var br=document.querySelector('.brand'), bh=br?br.offsetHeight+12:0;
-    var s=Math.min(1,(window.innerHeight-50-16-bh)/926,(window.innerWidth-20-16)/428);
-    r.style.setProperty('--hcx-fit',Math.max(.4,s).toFixed(4));
-  }
-  hcxFit();
-  window.addEventListener('resize',hcxFit);
-  if(mq.addEventListener)mq.addEventListener('change',hcxFit);
-})();
+/* Responsive layout replaces the former fixed-phone preview scaling. */
 
 /* v4.1.2: remove the current person only, from intake or results. A saved person goes through
    the existing deleteProfile() (its own confirm; other people are kept). Someone not saved yet
@@ -3030,6 +3040,8 @@ function hcxSheetClose(){ var m=document.getElementById('hcx-sheet'); if(m)m.cla
 
 /* v4.1.2 spare-height pass for intake steps — see the .hcx-roomy CSS note. */
 function hcxRoom(){
+  // Responsive layout uses natural document flow, without vertical centering.
+  return;
   var vf=document.getElementById('vf'), sc=document.querySelector('.screen');
   if(!vf||!sc||!vf.classList.contains('active')||typeof FST==='undefined')return;
   var st=document.querySelector('.fstep.on'), nav=document.querySelector('.fnav'); if(!st||!nav)return;

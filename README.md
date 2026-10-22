@@ -1,6 +1,6 @@
 # HealthyChex
 
-A single-file preventive-health checklist web app for iPhone. It surfaces published screening and immunization guidelines (USPSTF, CDC/ACIP, ACS, NCCN) for average-risk adults, tailored to the age, sex, and history a person enters. All data stays on the device; nothing is transmitted.
+A single-file, responsive preventive-health checklist web app for phones, tablets, and computers. It surfaces published screening and immunization guidelines (USPSTF, CDC/ACIP, ACS, NCCN) for average-risk adults, tailored to the age, sex, and history a person enters. All data stays on the device; nothing is transmitted.
 
 **HealthyChex is informational only — not a diagnosis, not a medical device, and not a substitute for professional care.**
 
@@ -15,7 +15,9 @@ A single-file preventive-health checklist web app for iPhone. It surfaces publis
 
 ## Run it locally
 
-It's a single file — just open `index.html` in a desktop browser. There is no build step.
+Run `./start.sh`, then open http://localhost:3108/. This serves the current `index.html` unchanged, without a build step, like GitHub Pages. Refresh after edits; local preview caching is disabled. From a phone on the same network, use this computer's LAN address with port 3108. Stop with Ctrl+C. Use `./start.sh --port 8080` for a different port.
+
+HealthyChex is also registered in App Hub under `healthychex` on frontend port 3108. The local `app_healthychex` alias points to this repository. Optional `DEV_SSL_CERT_PATH` and `DEV_SSL_KEY_PATH` environment variables enable HTTPS using your development certificates.
 
 > **On iPhone:** you cannot open a local file in mobile Safari (iOS only loads `http(s)://` URLs, not `file://`). Host it (below), open the URL in **Safari**, then **Share → Add to Home Screen**. The installed version keeps its data; a plain browser tab may lose it after ~7 days (WebKit storage eviction). Note: Add to Home Screen is a **Safari-only** capability — it isn't available in Chrome or Edge on iOS.
 
@@ -51,3 +53,7 @@ Edit the `RULES` object near the top of the `<script>` in `index.html` — not t
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Responsive interface (October 2026)
+
+The interface uses the full browser width with a readable content maximum, a single column on phones, and two recommendation columns on wide screens. Recommendation explanations use 17px text on phones and 18px on larger screens, with generous line spacing. The simulated iPhone bezel and preview scaling are removed. Intake, results, dialogs, and About use larger type and controls; clinical rules, saved-data formats, and print templates are unchanged. All styling is inline, so GitHub Pages still serves `index.html` without a build step.
