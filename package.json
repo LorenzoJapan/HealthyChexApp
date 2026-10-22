@@ -1,0 +1,25 @@
+{
+  "name": "healthychexapp",
+  "version": "1.0.0",
+  "description": "HealthyChex single-page preventive health checklist",
+  "scripts": {
+    "build": "node scripts/build-ui.mjs",
+    "test": "node validation/run.js && node validation/boundaries.js && node --test \"tests/unit/*.test.mjs\"",
+    "test:ui": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LorenzoJapan/HealthyChexApp.git"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "esbuild": "^0.28.2"
+  },
+  "private": true
+}
