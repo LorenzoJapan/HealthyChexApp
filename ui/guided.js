@@ -55,7 +55,18 @@ window.HCXGuided = {
     const review=oldSteps.find(step=>step.k==='rv');review.section=6;steps.push(review);
     // Empty reveal shells remain for existing state-reset/import handlers.
     host.classList.add('hcx-guided');
-    host.addEventListener('click',()=>this.sync(steps));
+    let pendingAdvance;
+    host.addEventListener('click',event=>{
+      this.sync(steps);
+      clearTimeout(pendingAdvance);
+      const answer=event.target.closest('button.ib,button.yb,button.ivb');
+      const current=steps.find(step=>step.el.classList.contains('on'));
+      if(!answer || !current || !current.el.contains(answer) || !current.complete())return;
+      // Brief selection feedback; a second tap cannot skip the following question.
+      pendingAdvance=setTimeout(()=>{
+        if(current.el.classList.contains('on') && document.getElementById('vf').classList.contains('active'))window.fstNext();
+      },160);
+    });
     host.addEventListener('input',()=>this.sync(steps));
     this.sync(steps);
     return steps;
