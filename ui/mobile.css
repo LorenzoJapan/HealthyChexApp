@@ -73,3 +73,5 @@ body{position:fixed;top:var(--hcx-viewport-top,0px);left:0;width:100%;height:var
 #vf.hcx-input-step .hcx-guided .fnav{margin-top:auto}
 #vf.hcx-input-step .hcx-guided>.fhint.on{min-height:36px;padding-top:8px}
 }
+/* Native age picker: phones show their own wheel or list; the chevron marks it as a dropdown. */
+select.fi,.hcx-question select.fi,.hcx-question select.fi.v{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}

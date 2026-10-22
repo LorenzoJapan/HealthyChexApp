@@ -18,8 +18,9 @@ function keepInputVisible() {
   else if(box.top<top)screen.scrollTop-=top-box.top;
 }
 window.HCXFocusQuestion = step => {
-  const input=step.el.querySelector('input:not([type="hidden"]):not([disabled])');
-  document.getElementById('vf').classList.toggle('hcx-input-step',!!input);
+  const input=step.el.querySelector('input:not([type="hidden"]):not([disabled]),select:not([disabled])');
+  // Selects open the native picker rather than the keyboard.
+  document.getElementById('vf').classList.toggle('hcx-input-step',!!input && input.tagName==='INPUT');
   // Run in the navigation tap's call stack, so mobile browsers can open the keyboard.
   (input || step.el).focus({preventScroll:true});
   keepInputVisible();

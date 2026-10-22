@@ -59,7 +59,7 @@ window.HCXGuided = {
     host.addEventListener('click',event=>{
       this.sync(steps);
       clearTimeout(pendingAdvance);
-      const answer=event.target.closest('button.ib,button.yb,button.ivb');
+      const answer=event.target.closest('button.ib,button.yb,button.ivb,button.gbtn,button.s3b,button.tb,button.ab');
       const current=steps.find(step=>step.el.classList.contains('on'));
       if(!answer || !current || !current.el.contains(answer) || !current.complete())return;
       // Brief selection feedback; a second tap cannot skip the following question.

@@ -3,7 +3,7 @@ const url = process.env.HCX_TEST_URL || 'http://localhost:3108/';
 async function advance(page) {await page.locator('#fnav-next').click();}
 async function choose(page, selector) {
   const question=await page.locator('.fstep.on').getAttribute('id');
-  const auto=await page.locator(selector).evaluate(el=>el.matches('.ib,.yb,.ivb'));
+  const auto=await page.locator(selector).evaluate(el=>el.matches('.ib,.yb,.ivb,.gbtn,.s3b,.tb,.ab'));
   await page.locator(selector).click();
   await expect(page.locator(selector)).toHaveAttribute('aria-pressed','true');
   if(auto)await expect(page.locator('.fstep.on')).not.toHaveAttribute('id',question);
@@ -13,7 +13,7 @@ async function toReview(page, details) {
   await page.goto(url);
   await page.locator('#fn').fill('Test'); await page.locator('#ln').fill('Profile'); await advance(page);
   await expect(page.locator('#fnav-next')).toBeDisabled();
-  await page.locator('#ag').fill('60'); await advance(page); await choose(page,'#bm');
+  await page.locator('#ag').selectOption('60'); await advance(page); await choose(page,'#bm');
   await choose(page, details?'#cvy':'#cvn');
   await choose(page, details?'#fay':'#fan');
   if(details){for(const id of ['cb','ccr2','cpa1','cm2'])await page.locator('#'+id).click();await advance(page);}
@@ -42,7 +42,7 @@ for (const width of [320,390,768,1280]) {
     await expect(page.locator('.hcx-section-card')).toHaveCount(7);
     await expect(page.locator('section[aria-labelledby="review-2b"]')).toContainText('Melanoma plus pancreatic');
     await page.getByRole('button',{name:'Edit about you',exact:true}).click();await advance(page);
-    await expect(page.locator('#ag')).toHaveValue('60');await page.locator('#ag').fill('61');await advance(page);
+    await expect(page.locator('#ag')).toHaveValue('60');await page.locator('#ag').selectOption('61');await advance(page);
     // Back retains the answer; Next deliberately advances.
     await page.locator('#fnav-back').click();await expect(page.locator('#ag')).toHaveValue('61');await advance(page);
     for(let n=0;n<30 && !(await page.locator('#fstep-rv').isVisible());n++)await advance(page);
@@ -77,7 +77,7 @@ test('optional smoking history can be skipped; Back preserves binary answers',as
 
 test('phone binary answers advance once and keep controls within thumb reach',async({browser})=>{
   const page=await browser.newPage({viewport:{width:390,height:780},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
-  await page.goto(url);await advance(page);await page.locator('#ag').fill('60');await advance(page);await choose(page,'#bm');
+  await page.goto(url);await advance(page);await page.locator('#ag').selectOption('60');await advance(page);await choose(page,'#bm');
   const before=await page.locator('#cvn').boundingBox();
   expect(before.y).toBeGreaterThan(350);expect(before.y+before.height).toBeLessThan(650);
   await page.locator('#cvn').dblclick();
@@ -96,7 +96,7 @@ test('input steps autofocus and the app header stays visible in a short viewport
   await page.goto(url);
   await expect(page.locator('#fn')).toBeFocused();
   await advance(page);await expect(page.locator('#ag')).toBeFocused();
-  await page.locator('#ag').fill('60');
+  await page.locator('#ag').selectOption('60');
   // Simulates the reduced available height; real keyboard opening needs a phone check.
   await page.setViewportSize({width:390,height:430});
   await expect(page.locator('.brand')).toBeInViewport({ratio:1});
