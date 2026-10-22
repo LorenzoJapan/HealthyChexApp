@@ -78,3 +78,9 @@ select.fi,.hcx-question select.fi,.hcx-question select.fi.v{appearance:none;-web
 /* Header: save status and feedback link share the right side. */
 .hcx-brand-r{display:flex;align-items:center;gap:12px;min-width:0}.hcx-feedback{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 4px;color:var(--teal-ink);font-size:.8125rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.hcx-feedback:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:4px}
 @media(max-width:380px){.hcx-brand-r small{display:none}}
+/* Intake components (ui/intake): answer buttons share one class; selection is aria-pressed. */
+.hcx-choice{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.hcx-choice:focus-visible,.famopt:focus-visible,.chip:focus-visible,.aib:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+@media(max-width:600px){.hcx-question .hcx-choices.many{flex-direction:column}}
+.hcx-help-t{font-size:.6875rem;color:var(--teal-ink);text-decoration:underline;font-weight:500;margin-right:1px}
+.hcx-pox-note{margin-top:12px;background:#F0FBF6;border:1px solid #1D9E75;border-radius:6px;padding:8px 10px;font-size:.9375rem;color:#085041;line-height:1.5}.hcx-pox-note .ti{margin-right:4px}

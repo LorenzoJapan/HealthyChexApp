@@ -4,7 +4,7 @@
   "description": "HealthyChex single-page preventive health checklist",
   "scripts": {
     "build": "node scripts/build-ui.mjs",
-    "test": "node validation/run.js && node validation/boundaries.js",
+    "test": "node validation/run.js && node validation/boundaries.js && node --test \"tests/unit/*.test.mjs\"",
     "test:ui": "playwright test"
   },
   "repository": {

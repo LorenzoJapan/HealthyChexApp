@@ -14,7 +14,7 @@ A responsive preventive-health checklist web app for phones, tablets, and comput
 | `manifest.webmanifest`, `icons/` | Home-screen app details and icons. `icons/icon.svg` is the source (white clipboard and tick on HealthyChex green); the PNGs are rendered from it for Chrome/Android (192, 512 and maskable 512), iPhone (180) and the browser tab (32). |
 | `validation/` | The validation harness (`appcore.js`, `oracle.js`, `run.js`) plus `boundaries.js`, a unit suite asserting the exact guideline cut points. Proves the recommendation engine matches the guidelines. Not shipped to users. |
 | `docs/` | Clinical spec workbook (`HealthyChex_App_v4_3_Oct2026.xlsx`), the ACS 2026 colorectal audit, the melanoma and pancreatic family-history audits, the v4.2 validation report, and the interface design review. |
-| `ui/` | Reusable React presentation components and shared mobile styles. |
+| `ui/` | React UI and shared mobile styles. `ui/intake/` holds the intake: `schema.js` defines every question as data (wording, options, when it shows, when it counts as answered), `answers.js` holds the rules that clear follow-up answers, and `Intake.jsx` renders each question from the saved answers. The clinical engine in `index.html` only reads the answers. |
 | `scripts/build-ui.mjs` | Bundles the UI into `index.html`; generated blocks should not be edited by hand. |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is. |
 
@@ -83,6 +83,6 @@ Intake shows one question at a time. Pale green marks the current question card;
 
 **Send feedback** in the header opens an email to the project owner with the current screen, device and screen size filled in, so testers only describe what happened. The colleague testing brief explains what to try.
 
-Browser checks cover Yes/No routes, conditional follow-ups, editing, optional fields, thumb-friendly button positions, automatic Yes/No advancement, double-tap protection, and results at four widths.
+Unit tests (`tests/unit/`, run by `npm test`) cover the answer rules. Browser checks cover Yes/No routes, conditional follow-ups, editing, optional fields, thumb-friendly button positions, automatic Yes/No advancement, double-tap protection, and results at four widths.
 
 Input questions automatically focus the first field on entry (including Age and smoking-history numbers). Navigation focuses synchronously during the tap so mobile browsers can request their keyboard. The brand header and section progress remain visible, and `ui/viewport.js` fits the mobile shell to the keyboard-adjusted visual viewport while keeping the active field clear of the headers. Pinch zoom remains available. Automated checks verify focus and a reduced-height viewport; native keyboard behavior still depends on the phone/browser.

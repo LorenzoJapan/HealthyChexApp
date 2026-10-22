@@ -3,7 +3,7 @@ const url = process.env.HCX_TEST_URL || 'http://localhost:3108/';
 async function advance(page) {await page.locator('#fnav-next').click();}
 async function choose(page, selector) {
   const question=await page.locator('.fstep.on').getAttribute('id');
-  const auto=await page.locator(selector).evaluate(el=>el.matches('.ib,.yb,.ivb,.gbtn,.s3b,.tb,.ab'));
+  const auto=await page.locator(selector).evaluate(el=>!!el.closest('[data-auto-advance]'));
   await page.locator(selector).click();
   await expect(page.locator(selector)).toHaveAttribute('aria-pressed','true');
   if(auto)await expect(page.locator('.fstep.on')).not.toHaveAttribute('id',question);
@@ -26,7 +26,7 @@ async function toReview(page, details) {
     await page.locator('#smkQuitYears').fill('5');await advance(page);
   }
   await choose(page,`[data-g="alcoholyn"][data-v="${details?'yes':'no'}"]`);
-  if(details)await choose(page,'.ab[data-v="moderate"]');
+  if(details)await choose(page,'[data-g="alcohol"][data-v="moderate"]');
   await choose(page,`[data-g="drugs"][data-v="${details?'yes':'no'}"]`);
   if(details)await choose(page,'#ivn');
   await choose(page,details?'#sa-yes':'#sa-no');
@@ -121,4 +121,37 @@ test('feedback link stays in the header and describes the current question',asyn
   const href=decodeURIComponent(await link.getAttribute('href'));
   expect(href).toContain('mailto:');expect(href).toContain('Screen: Question: Age');
   await page.close();
+});
+test('saved answers come back after a reload and render on their questions',async({page})=>{
+  await toReview(page,false);
+  await advance(page);await page.locator('.omodal-opt').first().click();
+  await expect(page.locator('#vr')).toHaveClass(/active/);
+  await page.reload();
+  await page.locator('.hcx-edit').click();
+  await expect(page.locator('#fstep-rv')).toHaveClass(/on/);
+  await expect(page.locator('section[aria-labelledby="review-1"]')).toContainText('Test Profile');
+  await page.getByRole('button',{name:'Edit medical history',exact:true}).click();
+  await expect(page.locator('#cvn')).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('#cvy')).toHaveAttribute('aria-pressed','false');
+});
+test('clearing unsaved answers resets every question',async({page})=>{
+  await page.goto(url);
+  await page.locator('#fn').fill('Temp');await advance(page);
+  await page.locator('#ag').selectOption('45');await advance(page);await choose(page,'#bf');await choose(page,'#cvy');
+  await page.locator('.hcx-reset').click();await page.locator('#hcx-sheet-ok').click();
+  await expect(page.locator('#question-1')).toHaveClass(/on/);
+  await expect(page.locator('#fn')).toHaveValue('');
+  await page.evaluate(()=>window.fstGoKey('sex'));
+  await expect(page.locator('#bf')).toHaveAttribute('aria-pressed','false');
+  expect(await page.evaluate(()=>[window.S.age,window.S.gender,window.S.cvrisk,window.S.hadPox])).toEqual([0,'','','']);
+});
+test('health-record import fills the matching questions',async({page})=>{
+  await page.goto(url);
+  await page.evaluate(()=>{window._parsedFHIR={firstname:'Ana',lastname:'Lee',age:52,gender:'F',cvrisk:'yes',tobacco:'former',alcoholyn:'yes',alcohol:'moderate',childVaxComplete:'partial'};window.applyFHIRData();});
+  await expect(page.locator('#fn')).toHaveValue('Ana');
+  await advance(page);await expect(page.locator('#ag')).toHaveValue('52');
+  for(const [key,selector] of [['sex','#bf'],['2','#cvy'],['3','[data-g="tobacco"][data-v="former"]'],['alcohol-amount','[data-g="alcohol"][data-v="moderate"]'],['5','[data-g="childvax"][data-v="partial"]']]){
+    await page.evaluate(k=>window.fstGoKey(k),key);
+    await expect(page.locator(selector)).toHaveAttribute('aria-pressed','true');
+  }
 });
