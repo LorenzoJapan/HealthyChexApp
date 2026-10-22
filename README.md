@@ -2,7 +2,7 @@
 
 **[Open HealthyChex on GitHub Pages](https://drmedrme.github.io/HealthyChexApp/)** — open this link on your phone to try the app.
 
-A single-file, responsive preventive-health checklist web app for phones, tablets, and computers. It surfaces published screening and immunization guidelines (USPSTF, CDC/ACIP, ACS, NCCN) for average-risk adults, tailored to the age, sex, and history a person enters. All data stays on the device; nothing is transmitted.
+A responsive preventive-health checklist web app for phones, tablets, and computers. It surfaces published screening and immunization guidelines (USPSTF, CDC/ACIP, ACS, NCCN) for average-risk adults, tailored to the age, sex, and history a person enters. All data stays on the device; nothing is transmitted.
 
 **HealthyChex is informational only — not a diagnosis, not a medical device, and not a substitute for professional care.**
 
@@ -10,7 +10,8 @@ A single-file, responsive preventive-health checklist web app for phones, tablet
 
 | Path | What it is |
 |---|---|
-| `index.html` | The deployable app — HTML, CSS, JavaScript, bundled React UI, and an inline PWA manifest and icon in one self-contained file. |
+| `index.html` | The deployable app — HTML, CSS, JavaScript, bundled React UI in one file. |
+| `manifest.webmanifest`, `icons/` | Home-screen app details and icons. `icons/icon.svg` is the source (white clipboard and tick on HealthyChex green); the PNGs are rendered from it for Chrome/Android (192, 512 and maskable 512), iPhone (180) and the browser tab (32). |
 | `validation/` | The validation harness (`appcore.js`, `oracle.js`, `run.js`) plus `boundaries.js`, a unit suite asserting the exact guideline cut points. Proves the recommendation engine matches the guidelines. Not shipped to users. |
 | `docs/` | Clinical spec workbook (`HealthyChex_App_v4_3_Oct2026.xlsx`), the ACS 2026 colorectal audit, the melanoma and pancreatic family-history audits, the v4.2 validation report, and the interface design review. |
 | `ui/` | Reusable React presentation components and shared mobile styles. |

@@ -1,21 +1,37 @@
-"""Serve the single-page app directly, without a build or browser caching."""
+"""Serve the app and its icons directly, without a build or browser caching."""
 import argparse
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import ssl
 
-APP = Path(__file__).resolve().parents[1] / "index.html"
+ROOT = Path(__file__).resolve().parents[1]
+# Only the files GitHub Pages users load; the rest of the repo stays private to this server.
+TYPES = {".html": "text/html; charset=utf-8", ".webmanifest": "application/manifest+json",
+         ".png": "image/png", ".svg": "image/svg+xml"}
+
+
+def resolve(path):
+    if path in ("/", "/index.html"):
+        return ROOT / "index.html"
+    if path == "/manifest.webmanifest":
+        return ROOT / "manifest.webmanifest"
+    if path.startswith("/icons/"):
+        file = (ROOT / path.lstrip("/")).resolve()
+        if file.parent == ROOT / "icons" and file.suffix in TYPES and file.is_file():
+            return file
+    return None
 
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path.split("?", 1)[0] not in ("/", "/index.html"):
+        file = resolve(self.path.split("?", 1)[0])
+        if file is None:
             self.send_error(404)
             return
-        content = APP.read_bytes()
+        content = file.read_bytes()
         self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Type", TYPES[file.suffix])
         self.send_header("Content-Length", str(len(content)))
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
