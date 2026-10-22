@@ -86,3 +86,7 @@ Intake shows one question at a time. Pale green marks the current question card;
 Unit tests (`tests/unit/`, run by `npm test`) cover the answer rules. Browser checks cover Yes/No routes, conditional follow-ups, editing, optional fields, thumb-friendly button positions, automatic Yes/No advancement, double-tap protection, and results at four widths.
 
 Input questions automatically focus the first field on entry (including Age and smoking-history numbers). Navigation focuses synchronously during the tap so mobile browsers can request their keyboard. The brand header and section progress remain visible, and `ui/viewport.js` fits the mobile shell to the keyboard-adjusted visual viewport while keeping the active field clear of the headers. Pinch zoom remains available. Automated checks verify focus and a reduced-height viewport; native keyboard behavior still depends on the phone/browser.
+
+## Ideas (not built yet)
+
+**Email or share the report as a PDF.** Today a patient can print the physician report or save it as a PDF from the print dialog, then attach it to an email themselves. The idea is a **Share report** button that does this in one step. The app has no server, so it can't send email itself. On phones, it would build the PDF in the browser and open the phone's share sheet (`navigator.share` with a file), so the patient can pick Mail, Messages, or another app. Most desktop browsers can't share files that way, so desktop would keep print / save as PDF. The report must stay on the device until the patient chooses where to send it.
