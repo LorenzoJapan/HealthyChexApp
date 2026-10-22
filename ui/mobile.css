@@ -57,3 +57,19 @@
 .hcx-question .s3,.hcx-question .astrip,.hcx-question .tri{margin-top:20px}
 }
 @media screen{.hcx-guided>.fhint.on{min-height:48px;line-height:1.5}.hcx-guided-step:focus{outline:none}}
+/* The brand stays outside the question scroller; section progress sticks below it. */
+@media screen{
+.brand{position:sticky;top:0;z-index:50;background:var(--paper)}
+.hcx-guided>.fprog{position:sticky;top:0;z-index:30;background:var(--canvas);scroll-margin-top:0}
+.hcx-guided-step input{scroll-margin-block:140px 24px}
+}
+@media screen and (max-width:600px){
+body{position:fixed;top:var(--hcx-viewport-top,0px);left:0;width:100%;height:var(--hcx-viewport-height,100dvh);overflow:hidden}
+.brand{padding-top:calc(12px + env(safe-area-inset-top,0px));min-height:64px}
+.iphone{overflow:hidden}.screen{overscroll-behavior-y:contain;scroll-padding-top:120px}
+#vf.hcx-input-step .hcx-guided>.fstep.on{align-items:flex-start;flex:0 0 auto}
+#vf.hcx-input-step .hcx-question{min-height:0}
+#vf.hcx-input-step .hcx-guided>.fprog{margin-bottom:0}
+#vf.hcx-input-step .hcx-guided .fnav{margin-top:auto}
+#vf.hcx-input-step .hcx-guided>.fhint.on{min-height:36px;padding-top:8px}
+}

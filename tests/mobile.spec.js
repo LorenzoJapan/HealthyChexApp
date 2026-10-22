@@ -90,3 +90,25 @@ test('phone binary answers advance once and keep controls within thumb reach',as
   await choose(page,'#cvy');await expect(page.locator('#question-family')).toBeVisible();
   await page.close();
 });
+
+test('input steps autofocus and the app header stays visible in a short viewport',async({browser})=>{
+  const page=await browser.newPage({viewport:{width:390,height:780},isMobile:true,hasTouch:true});
+  await page.goto(url);
+  await expect(page.locator('#fn')).toBeFocused();
+  await advance(page);await expect(page.locator('#ag')).toBeFocused();
+  await page.locator('#ag').fill('60');
+  // Simulates the reduced available height; real keyboard opening needs a phone check.
+  await page.setViewportSize({width:390,height:430});
+  await expect(page.locator('.brand')).toBeInViewport({ratio:1});
+  await expect(page.locator('#fprog')).toBeInViewport({ratio:1});
+  await expect(page.locator('#ag')).toBeInViewport({ratio:1});
+  const brand=await page.locator('.brand').boundingBox(),input=await page.locator('#ag').boundingBox();
+  expect(input.y).toBeGreaterThanOrEqual(brand.y+brand.height);
+  await page.locator('#fnav-back').click();await expect(page.locator('#fn')).toBeFocused();
+  await page.locator('#ln').focus();
+  await expect(page.locator('#ln')).toBeInViewport({ratio:1});
+  await expect(page.locator('.brand')).toBeInViewport({ratio:1});
+  await expect(page.locator('#fprog')).toBeInViewport({ratio:1});
+  await page.screenshot({path:'/tmp/hcx-keyboard-layout.png',animations:'disabled'});
+  await page.close();
+});
