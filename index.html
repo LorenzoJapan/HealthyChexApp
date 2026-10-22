@@ -903,11 +903,11 @@ a{text-underline-offset:3px}button,input,select{font-family:inherit}button{line-
 @media(max-width:600px){
 .brand{gap:10px;align-items:center}.brand small{font-size:.75rem;line-height:1.4;overflow-wrap:anywhere}
 #vf.fdeep{padding-top:12px}.fprog{margin-bottom:20px;padding:8px 0 16px}.fprog-row{gap:6px}.fprog-lbl{font-size:1.1875rem}.hcx-reset{padding:6px;min-height:44px}
-.hcx-section-card{padding:16px}.hcx-card-heading{gap:8px}.hcx-card-heading h2{font-size:1.125rem}.hcx-answer{grid-template-columns:1fr;gap:3px;padding:12px 0}.hcx-answer dt{font-size:.9375rem}.hcx-answer dd{font-size:1.0625rem}
+.hcx-section-card{padding:16px}.hcx-card-heading{gap:8px}.hcx-card-heading h2{font-size:1.125rem}.hcx-answer{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px;padding:10px 0}.hcx-answer dt{font-size:.9375rem}.hcx-answer dd{font-size:1.0625rem}
 .fnav{display:grid;grid-template-columns:1fr;gap:8px;margin-top:24px}.fnavb{width:100%;max-width:none;min-height:52px;padding:12px 16px}.fnavb.pri,.fnavb.go{margin:0;grid-row:1;font-size:1.0625rem}.fnavb#fnav-back{border-color:transparent;background:transparent;box-shadow:none;grid-row:2}
 .blk,.blkf{padding:16px}.ilbl,.bl{line-height:1.5}.famopt{padding:12px!important;margin-bottom:8px!important}.famopt-t{line-height:1.5}.famopt-s{line-height:1.5}.rcd{line-height:1.6}
 }
-@media(min-width:700px){.hcx-review-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hcx-section-card{align-self:start}.hcx-answer{grid-template-columns:1fr;gap:3px}}
+@media(min-width:700px){.hcx-review-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hcx-section-card{align-self:start}}
 }
 @media screen and (max-width:600px){
 .hero{flex-wrap:wrap;align-items:flex-start}.hero>div:nth-child(2){flex:1;min-width:0}.hero .ht{font-size:1.75rem;line-height:1.2}.hero .hs{font-size:1rem}.hero .hcx-import{flex-basis:100%;margin:0;padding:8px 0;justify-content:flex-start}
@@ -972,6 +972,16 @@ select.fi,.hcx-question select.fi,.hcx-question select.fi.v{appearance:none;-web
 @media(max-width:600px){.hcx-question .hcx-choices.many{flex-direction:column}}
 .hcx-help-t{font-size:.6875rem;color:var(--teal-ink);text-decoration:underline;font-weight:500;margin-right:1px}
 .hcx-pox-note{margin-top:12px;background:#F0FBF6;border:1px solid #1D9E75;border-radius:6px;padding:8px 10px;font-size:.9375rem;color:#085041;line-height:1.5}.hcx-pox-note .ti{margin-right:4px}
+/* Review step: say what it is for, keep the finish button in view, and keep Remove out of the way
+   (people are removed from the home screen or results). */
+@media screen{
+.rvw-intro{margin:0 0 20px}.rvw-intro .rvwh{margin:0}
+.rvw-done{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:4px 12px;border-radius:999px;background:var(--mint-3);color:var(--teal-ink);font-size:.9375rem;font-weight:650}
+.rvw-t{margin:0 0 8px;font-size:1.5rem;line-height:1.3;color:var(--ink);font-weight:700;letter-spacing:0}
+#vf.frv .fprog-cnt,#vf.frv .hcx-reset{display:none}
+#vf.frv .fnav{position:sticky;bottom:0;z-index:20;box-shadow:0 -10px 16px -14px rgba(23,46,50,.4)}
+}
+@media screen and (max-width:600px){.rvw-t{font-size:1.375rem}#vf.frv .fnavb#fnav-back{display:none}}
 </style>
 <script>(()=>{var q1=Object.create;var l0=Object.defineProperty;var x1=Object.getOwnPropertyDescriptor;var R1=Object.getOwnPropertyNames;var G1=Object.getPrototypeOf,Q1=Object.prototype.hasOwnProperty;var jt=(l,t)=>()=>{try{return t||l((t={exports:{}}).exports,t),t.exports}catch(u){throw t=0,u}};var X1=(l,t,u,a)=>{if(t&&typeof t=="object"||typeof t=="function")for(let e of R1(t))!Q1.call(l,e)&&e!==u&&l0(l,e,{get:()=>t[e],enumerable:!(a=x1(t,e))||a.enumerable});return l};var Ku=(l,t,u)=>(u=l!=null?q1(G1(l)):{},X1(t||!l||!l.__esModule?l0(u,"default",{value:l,enumerable:!0}):u,l));var h0=jt(_=>{"use strict";/**
  * @license React
@@ -2609,7 +2619,7 @@ initApp();
    original id, class and inline handler keeps working. The recommendation
    engine is not touched. */
 var FST=[], FSTI=0, FSTEPPED=false;
-var FST_DEFS=[{k:'rv', label:'Review your answers'}]; // questions come from ui/intake/schema.js
+var FST_DEFS=[{k:'rv', label:'Final step'}]; // questions come from ui/intake/schema.js
 function fstShown(st){return st.when?st.when():true;}
 function fstActive(){return FST.filter(fstShown);}
 function buildSteps(){
@@ -2623,7 +2633,10 @@ function buildSteps(){
   // review step
   var rv=document.getElementById('fstep-rv');
   rv.innerHTML='<div class="slbl"><i class="ti ti-circle-check" style="font-size:11px"></i>Review your answers</div>'+
-    '<div class="rvw"><div class="rvwh">Check your answers below. Choose <strong>Edit</strong> to make a change.</div><div id="rvwbody"></div></div>';
+    '<div class="rvw"><div class="rvw-intro"><div class="rvw-done"><i class="ti ti-circle-check" aria-hidden="true"></i> All questions answered</div>'+
+    '<h2 class="rvw-t">Almost done: check your answers</h2>'+
+    '<p class="rvwh">Your checklist of screenings and vaccines is based on these answers, so take a moment to make sure they\'re right. Tap <strong>Edit</strong> to change anything.</p></div>'+
+    '<div id="rvwbody"></div></div>';
   // nav bar
   var hint=document.createElement('div');
   hint.className='fhint'; hint.id='fnav-hint';
@@ -2658,14 +2671,8 @@ function goStep(i){
   var cur=act[i]; cur.el.classList.add('on');
   cur.el.setAttribute('tabindex','-1');
   if(cur.k==='rv')renderReview();
-  var back=document.getElementById('fnav-back'), next=document.getElementById('fnav-next');
+  var back=document.getElementById('fnav-back');
   if(back)back.disabled=(i===0);
-  if(next){
-    var last=(cur.k==='rv');
-    next.className='fnavb '+(last?'go':'pri');
-    next.innerHTML=last?'<i class="ti ti-clipboard-check" style="font-size:16px"></i> See my checklist'
-                       :'Next <i class="ti ti-chevron-right" style="font-size:14px"></i>';
-  }
   var vfe=document.getElementById('vf');
   if(vfe){ vfe.classList.toggle('fdeep', i>0); vfe.classList.toggle('frv', cur.k==='rv'); }
   var dsc=document.querySelector('.disc'); if(dsc)dsc.style.display=(cur.k==='rv')?'':'none';
@@ -2680,6 +2687,8 @@ function goStep(i){
    Each question's rule lives in ui/intake/schema.js. Deliberate exception: the smoking
    pack-year fields stay optional — the engine has a dedicated "check LDCT eligibility"
    card for exactly that missing-detail case. */
+/* True on the last question, so people are told the review screen comes next. */
+function fstLastQuestion(){ var act=fstActive(), nx=act[FSTI+1]; return !!(nx&&nx.k==='rv'); }
 function fstMissing(k){
   var question=FST.find(function(st){return st.k===k;});
   return question&&question.complete&&!question.complete()?['Choose an answer to continue']:[];
@@ -2689,11 +2698,20 @@ function fstSync(){
   var act=fstActive(), cur=act[FSTI]; if(!cur)return;
   var miss=fstMissing(cur.k), optional=cur.k.indexOf('smoke-')===0;
   var next=document.getElementById('fnav-next'), hint=document.getElementById('fnav-hint');
-  if(next)next.disabled=miss.length>0;
+  if(next){
+    // The label can change on an answer: a Yes may add a follow-up after what was the last question.
+    var last=(cur.k==='rv'), toReview=fstLastQuestion();
+    next.className='fnavb '+(last?'go':'pri');
+    next.innerHTML=last?'<i class="ti ti-clipboard-check" style="font-size:16px"></i> See my checklist'
+                  :toReview?'Review my answers <i class="ti ti-chevron-right" style="font-size:14px"></i>'
+                       :'Next <i class="ti ti-chevron-right" style="font-size:14px"></i>';
+    next.disabled=miss.length>0;
+  }
   if(hint){
     hint.classList.toggle('hcx-optional',optional);
     hint.classList.toggle('on', cur.k!=='rv');
-    hint.textContent=(optional||miss.length)&&cur.hint?cur.hint:"Tap Next when you're ready.";
+    hint.textContent=fstLastQuestion()?"Last question. Next, you'll check your answers before we build your checklist."
+      :(optional||miss.length)&&cur.hint?cur.hint:"Tap Next when you're ready.";
   }
 }
 function fstNext(){

@@ -134,6 +134,19 @@ test('saved answers come back after a reload and render on their questions',asyn
   await expect(page.locator('#cvn')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#cvy')).toHaveAttribute('aria-pressed','false');
 });
+test('the last question announces the review, which explains itself and keeps its finish button in view',async({browser})=>{
+  const page=await browser.newPage({viewport:{width:390,height:700},isMobile:true,hasTouch:true});
+  await toReview(page,false);
+  await expect(page.locator('.rvw-t')).toHaveText('Almost done: check your answers');
+  await expect(page.locator('#fprog-lbl')).toHaveText('Final step');
+  await expect(page.locator('.hcx-reset')).toBeHidden();
+  await expect(page.locator('#fnav-next')).toBeInViewport();
+  await expect(page.locator('#fnav-next')).toContainText('See my checklist');
+  await page.getByRole('button',{name:'Edit childhood vaccines',exact:true}).click();await advance(page);
+  await expect(page.locator('#fnav-hint')).toContainText('Last question');
+  await expect(page.locator('#fnav-next')).toContainText('Review my answers');
+  await page.close();
+});
 test('clearing unsaved answers resets every question',async({page})=>{
   await page.goto(url);
   await page.locator('#fn').fill('Temp');await advance(page);

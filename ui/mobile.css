@@ -15,11 +15,11 @@
 @media(max-width:600px){
 .brand{gap:10px;align-items:center}.brand small{font-size:.75rem;line-height:1.4;overflow-wrap:anywhere}
 #vf.fdeep{padding-top:12px}.fprog{margin-bottom:20px;padding:8px 0 16px}.fprog-row{gap:6px}.fprog-lbl{font-size:1.1875rem}.hcx-reset{padding:6px;min-height:44px}
-.hcx-section-card{padding:16px}.hcx-card-heading{gap:8px}.hcx-card-heading h2{font-size:1.125rem}.hcx-answer{grid-template-columns:1fr;gap:3px;padding:12px 0}.hcx-answer dt{font-size:.9375rem}.hcx-answer dd{font-size:1.0625rem}
+.hcx-section-card{padding:16px}.hcx-card-heading{gap:8px}.hcx-card-heading h2{font-size:1.125rem}.hcx-answer{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px;padding:10px 0}.hcx-answer dt{font-size:.9375rem}.hcx-answer dd{font-size:1.0625rem}
 .fnav{display:grid;grid-template-columns:1fr;gap:8px;margin-top:24px}.fnavb{width:100%;max-width:none;min-height:52px;padding:12px 16px}.fnavb.pri,.fnavb.go{margin:0;grid-row:1;font-size:1.0625rem}.fnavb#fnav-back{border-color:transparent;background:transparent;box-shadow:none;grid-row:2}
 .blk,.blkf{padding:16px}.ilbl,.bl{line-height:1.5}.famopt{padding:12px!important;margin-bottom:8px!important}.famopt-t{line-height:1.5}.famopt-s{line-height:1.5}.rcd{line-height:1.6}
 }
-@media(min-width:700px){.hcx-review-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hcx-section-card{align-self:start}.hcx-answer{grid-template-columns:1fr;gap:3px}}
+@media(min-width:700px){.hcx-review-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hcx-section-card{align-self:start}}
 }
 @media screen and (max-width:600px){
 .hero{flex-wrap:wrap;align-items:flex-start}.hero>div:nth-child(2){flex:1;min-width:0}.hero .ht{font-size:1.75rem;line-height:1.2}.hero .hs{font-size:1rem}.hero .hcx-import{flex-basis:100%;margin:0;padding:8px 0;justify-content:flex-start}
@@ -84,3 +84,13 @@ select.fi,.hcx-question select.fi,.hcx-question select.fi.v{appearance:none;-web
 @media(max-width:600px){.hcx-question .hcx-choices.many{flex-direction:column}}
 .hcx-help-t{font-size:.6875rem;color:var(--teal-ink);text-decoration:underline;font-weight:500;margin-right:1px}
 .hcx-pox-note{margin-top:12px;background:#F0FBF6;border:1px solid #1D9E75;border-radius:6px;padding:8px 10px;font-size:.9375rem;color:#085041;line-height:1.5}.hcx-pox-note .ti{margin-right:4px}
+/* Review step: say what it is for, keep the finish button in view, and keep Remove out of the way
+   (people are removed from the home screen or results). */
+@media screen{
+.rvw-intro{margin:0 0 20px}.rvw-intro .rvwh{margin:0}
+.rvw-done{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:4px 12px;border-radius:999px;background:var(--mint-3);color:var(--teal-ink);font-size:.9375rem;font-weight:650}
+.rvw-t{margin:0 0 8px;font-size:1.5rem;line-height:1.3;color:var(--ink);font-weight:700;letter-spacing:0}
+#vf.frv .fprog-cnt,#vf.frv .hcx-reset{display:none}
+#vf.frv .fnav{position:sticky;bottom:0;z-index:20;box-shadow:0 -10px 16px -14px rgba(23,46,50,.4)}
+}
+@media screen and (max-width:600px){.rvw-t{font-size:1.375rem}#vf.frv .fnavb#fnav-back{display:none}}
