@@ -10,9 +10,11 @@ A single-file, responsive preventive-health checklist web app for phones, tablet
 
 | Path | What it is |
 |---|---|
-| `index.html` | The entire app — HTML, CSS, and JavaScript in one self-contained file, including an inline PWA manifest and icon. This is the whole product. |
+| `index.html` | The deployable app — HTML, CSS, JavaScript, bundled React UI, and an inline PWA manifest and icon in one self-contained file. |
 | `validation/` | The validation harness (`appcore.js`, `oracle.js`, `run.js`) plus `boundaries.js`, a unit suite asserting the exact guideline cut points. Proves the recommendation engine matches the guidelines. Not shipped to users. |
 | `docs/` | Clinical spec workbook (`HealthyChex_App_v4_3_Oct2026.xlsx`), the ACS 2026 colorectal audit, the melanoma and pancreatic family-history audits, the v4.2 validation report, and the interface design review. |
+| `ui/` | Reusable React presentation components and shared mobile styles. |
+| `scripts/build-ui.mjs` | Bundles the UI into `index.html`; generated blocks should not be edited by hand. |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is. |
 
 ## Run it locally
@@ -63,3 +65,13 @@ MIT — see [LICENSE](LICENSE).
 ## Responsive interface (October 2026)
 
 The interface uses the full browser width with a readable content maximum, a single column on phones, and two recommendation columns on wide screens. Recommendation explanations use 17px text on phones and 18px on larger screens, with generous line spacing. The simulated iPhone bezel and preview scaling are removed. Intake, results, dialogs, and About use larger type and controls; clinical rules, saved-data formats, and print templates are unchanged. All styling is inline, so GitHub Pages still serves `index.html` without a build step.
+
+## UI development
+
+The review screen uses React `SectionCard`, `AnswerList`, and `Button` components in `ui/components.jsx`. Shared spacing, card, navigation, and mobile type rules live in `ui/mobile.css`. The existing intake and recommendation engine still own clinical state and saved profiles; the React screen receives plain display data and an edit callback. Other screens can move to these components gradually.
+
+After editing UI sources, run `npm ci` once, then `npm run build`. Commit the updated `index.html` together with its sources. The build embeds React and CSS locally, so the deployed app remains one self-contained page with no CDN dependency or production build service. Direct HTML edits outside the generated UI block remain supported. Run `npm test` for clinical validation.
+
+For browser checks, start `./start.sh` and run `npm run test:ui`. Set `CHROME_PATH` if Chrome is installed elsewhere. Tests use synthetic profiles at 320, 390, 768, and 1280 pixels, including editing answers and generating results.
+
+GitHub Pages can continue serving this app and a future React SPA. Next.js static export also works on static hosting, but server-dependent Next.js features would require a server host. React adoption does not require changing the host or the saved-data format.

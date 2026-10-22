@@ -1,0 +1,31 @@
+/* Shared components, independent of the clinical engine and legacy form markup. */
+@media screen {
+:root{--hcx-space:16px;--hcx-card-radius:16px;--hcx-control-height:48px}
+.hcx-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--hcx-control-height);padding:8px 14px;border:1px solid var(--line-2);border-radius:10px;background:var(--paper);color:var(--teal-ink);line-height:1.4;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;flex-shrink:0}
+.hcx-review-cards{display:grid;gap:16px}.hcx-section-card{min-width:0;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:var(--hcx-card-radius)}
+.hcx-card-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.hcx-card-heading h2{margin:0;font-size:1.125rem;line-height:1.4;color:var(--ink);font-weight:700;letter-spacing:0;text-transform:none}
+.hcx-answers{margin:0}.hcx-answer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.hcx-answer:last-child{border-bottom:0;padding-bottom:0}
+.hcx-answer dt{color:var(--ink-3);font-size:1rem;line-height:1.5;font-weight:400}.hcx-answer dd{margin:0;color:var(--ink);font-size:1.0625rem;line-height:1.55;overflow-wrap:anywhere;font-weight:500}.hcx-answer .hcx-missing{color:var(--rust-fill)}
+.rvw{padding:0;margin:0}.rvwh{margin:0 0 20px;font-size:1rem;line-height:1.6;color:var(--ink-3)}
+/* Navigation stays in document flow: every answer can scroll above the actions. */
+.fnav{position:static;flex-shrink:0;background:var(--canvas);padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.fnavb{min-width:0}.fnavb.go{max-width:none}
+.fprog-row{align-items:center}.fprog-lbl{flex:1;min-width:140px;line-height:1.4}.fprog-cnt{white-space:nowrap}
+@media(max-width:600px){
+.brand{gap:10px;align-items:center}.brand small{font-size:.75rem;line-height:1.4;overflow-wrap:anywhere}
+#vf.fdeep{padding-top:12px}.fprog{margin-bottom:20px;padding:8px 0 16px}.fprog-row{gap:6px}.fprog-lbl{font-size:1.1875rem}.hcx-reset{padding:6px;min-height:44px}
+.hcx-section-card{padding:16px}.hcx-card-heading{gap:8px}.hcx-card-heading h2{font-size:1.125rem}.hcx-answer{grid-template-columns:1fr;gap:3px;padding:12px 0}.hcx-answer dt{font-size:.9375rem}.hcx-answer dd{font-size:1.0625rem}
+.fnav{display:grid;grid-template-columns:1fr;gap:8px;margin-top:24px}.fnavb{width:100%;max-width:none;min-height:52px;padding:12px 16px}.fnavb.pri,.fnavb.go{margin:0;grid-row:1;font-size:1.0625rem}.fnavb#fnav-back{border-color:transparent;background:transparent;box-shadow:none;grid-row:2}
+.blk,.blkf{padding:16px}.ilbl,.bl{line-height:1.5}.famopt{padding:12px!important;margin-bottom:8px!important}.famopt-t{line-height:1.5}.famopt-s{line-height:1.5}.rcd{line-height:1.6}
+}
+@media(min-width:700px){.hcx-review-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hcx-section-card{align-self:start}.hcx-answer{grid-template-columns:1fr;gap:3px}}
+}
+@media screen and (max-width:600px){
+.hero{flex-wrap:wrap;align-items:flex-start}.hero>div:nth-child(2){flex:1;min-width:0}.hero .ht{font-size:1.75rem;line-height:1.2}.hero .hs{font-size:1rem}.hero .hcx-import{flex-basis:100%;margin:0;padding:8px 0;justify-content:flex-start}
+.famopt-d{font-size:1rem;line-height:1.5}.bsub,.bsubc{min-width:0}.tri{flex-wrap:wrap}.tri .tb{flex:1 1 100px;white-space:normal}
+}
+
+@media screen{.hcx-answer dd ul{padding-left:20px;margin:0}.hcx-answer dd li+li{margin-top:8px}}
+@media screen{.omodal-box,.disc-box,.smart-box{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
